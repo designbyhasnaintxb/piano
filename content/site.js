@@ -195,10 +195,10 @@ export default {
     videos: [
       { id: 'v1', student: ok('Wynnton', STU), piece: ok('"Seven of Hearts"', STU), composer: ok('Kevin Olson', STU),
         title: ok('Wynnton performing "Seven of Hearts" by Kevin Olson', STU),
-        src: '/media/wynnton-seven-of-hearts.mp4', youtube: '', poster: '/media/wynnton-poster.webp', captions: '/media/wynnton.vtt' },
+        src: '/media/wynnton-seven-of-hearts.mp4', webm: '/media/wynnton-seven-of-hearts.webm', youtube: '', poster: '/media/wynnton-poster.webp', captions: '/media/wynnton.vtt' },
       { id: 'v2', student: ok('Dexter', STU), piece: ok('"Romance Op. 24, No. 9"', STU), composer: ok('Jean Sibelius', STU),
         title: ok('Dexter performing "Romance Op. 24, No. 9" by Jean Sibelius', STU),
-        src: '/media/dexter-sibelius-romance.mp4', youtube: '', poster: '/media/dexter-poster.webp', captions: '/media/dexter.vtt' },
+        src: '/media/dexter-sibelius-romance.mp4', webm: '/media/dexter-sibelius-romance.webm', youtube: '', poster: '/media/dexter-poster.webp', captions: '/media/dexter.vtt' },
     ],
     after: draft('See what lessons can lead to'),
   },

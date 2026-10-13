@@ -3,3 +3,5 @@ dist
 .DS_Store
 *.log
 lisa-mott-site-dist.zip
+lisa-mott-preview.html
+dist-preview

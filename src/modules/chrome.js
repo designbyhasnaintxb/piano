@@ -9,8 +9,9 @@ export function initChrome() {
 
   /* nav background + light sections */
   ScrollTrigger.create({ start: 40, end: 'max', onToggle: (s) => nav.classList.toggle('is-scrolled', s.isActive) });
-  $$('.sec--ivory, .sec--paper').forEach((sec) => {
-    ScrollTrigger.create({ trigger: sec, start: 'top top+=36', end: 'bottom top+=36', onToggle: (s) => nav.classList.toggle('is-light', s.isActive) });
+  // The page is light; the nav flips to dark only over dark sections.
+  $$('.sec--dark, .sec--black, .foot').forEach((sec) => {
+    ScrollTrigger.create({ trigger: sec, start: 'top top+=36', end: 'bottom top+=36', onToggle: (s) => nav.classList.toggle('is-dark', s.isActive) });
   });
 
   /* active nav key */
@@ -30,7 +31,7 @@ export function initChrome() {
     btn.setAttribute('aria-expanded', open);
     menu.hidden = !open;
     document.body.style.overflow = open ? 'hidden' : '';
-    nav.classList.toggle('is-light', open || nav.classList.contains('is-light'));
+    if (open) nav.classList.remove('is-dark');
     if (open) {
       gsap.fromTo($$('.menu__key', menu), { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: 0.04, duration: 0.5 });
       $('.menu__key', menu).focus();

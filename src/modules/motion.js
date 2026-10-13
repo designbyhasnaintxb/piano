@@ -65,7 +65,7 @@ function hero() {
     .from('.hero__ctas > *', { y: 18, opacity: 0, stagger: SIXTEENTH, duration: 0.6 }, '-=0.6')
     .from('.hero__staff .staff__l', { drawSVG: '0%', stagger: SIXTEENTH / 2, duration: 1.2, ease: 'power2.inOut' }, '-=0.8')
     .from('.trust__i', { opacity: 0, y: 10, stagger: SIXTEENTH, duration: 0.6 }, '-=0.9')
-    .from('.hero__meta, .hero__cue', { opacity: 0, duration: 0.8 }, '-=0.5')
+    .from('.hero__cue', { opacity: 0, duration: 0.8 }, '-=0.5')
     .from('.hero__watch', { y: 24, opacity: 0, duration: 0.8, ease: 'back.out(1.4)' }, '-=0.6');
 
   // Hero copy drifts back as the camera starts to move.

@@ -37,6 +37,8 @@ export function createStage(canvas, { lite = false, reduced = false, instant = f
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
+  // Greige studio: the floor fades into the page's backdrop colour.
+  scene.fog = new THREE.Fog(0xe2ddd5, 6, 15);
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
   scene.environmentIntensity = 0.55;

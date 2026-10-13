@@ -118,7 +118,7 @@ export function buildPiano({ lite = false } = {}) {
   const damperMat = new THREE.MeshStandardMaterial({ color: 0x1a1817, roughness: 0.85 });
   const brass = new THREE.MeshStandardMaterial({ color: 0xc9a24d, metalness: 1, roughness: 0.25 });
   const steel = new THREE.MeshStandardMaterial({ color: 0xcfcfcf, metalness: 1, roughness: 0.28 });
-  const redFelt = new THREE.MeshStandardMaterial({ color: 0x6b2737, roughness: 1 });
+  const redFelt = new THREE.MeshStandardMaterial({ color: 0x9a7008, roughness: 1 });
 
   const cast = (m) => { m.castShadow = !lite; m.receiveShadow = !lite; return m; };
   const flat = (shape, depth, mat, y, opts = {}) => {
@@ -304,7 +304,7 @@ export function buildPiano({ lite = false } = {}) {
   [-0.055, 0, 0.055].forEach((x) => { const p = new THREE.Mesh(pedalGeo, brass); p.position.set(x, 0.075, -0.29); body.add(p); });
 
   /* ── floor ── */
-  const floor = new THREE.Mesh(new THREE.CircleGeometry(9, 64), new THREE.MeshStandardMaterial({ color: 0x15120f, roughness: 0.6, metalness: 0 }));
+  const floor = new THREE.Mesh(new THREE.CircleGeometry(30, 64), new THREE.MeshStandardMaterial({ color: 0xdcd6cc, roughness: 0.92, metalness: 0 }));
   floor.rotation.x = -Math.PI / 2;
   floor.receiveShadow = !lite;
   root.add(floor);

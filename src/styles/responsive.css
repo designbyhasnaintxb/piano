@@ -56,11 +56,11 @@
   .mkey__black { display: none; }
 
   /* packages become a tap selector */
-  .pkeys { grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; border-left: 0; border-top: 6px solid var(--wine); padding: 0; }
+  .pkeys { grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; border-left: 0; border-top: 6px solid var(--mustard); padding: 0; }
   .pkey { width: 100%; grid-template-columns: 1fr; grid-template-rows: auto; justify-items: center; text-align: center; padding: 18px 8px 22px; border-radius: 0 0 6px 6px;
     background: linear-gradient(180deg, #ddd5c5 0%, #fbf8f1 10%, #fffdf8 100%); box-shadow: inset 0 -8px 0 #e3dbcb, inset 0 -9px 0 #c9bea9; transform-origin: top; }
   .pkey:hover { transform: none; }
-  .pkey.is-on { width: 100%; transform: translateY(4px); box-shadow: inset 0 -3px 0 #e3dbcb, inset 0 -4px 0 #c9bea9, inset 0 22px 30px -24px rgba(107,39,55,.55); }
+  .pkey.is-on { width: 100%; transform: translateY(4px); box-shadow: inset 0 -3px 0 #e3dbcb, inset 0 -4px 0 #c9bea9, inset 0 22px 30px -24px rgba(201,151,27,.55); }
   .pkey__meter { grid-row: auto; font-size: 1.6rem; }
   .pkey__name { font-size: 1rem; }
   .pcard__top { grid-template-columns: 1fr; }

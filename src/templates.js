@@ -129,9 +129,6 @@ function hero(c) {
   const h = c.hero, v = c.recital.videos[0];
   return `
 <section class="hero" id="top" aria-labelledby="hero-title" data-scene="hero">
-  <div class="hero__meta" aria-hidden="true">
-    <span>Op. 1</span><span data-tempo>Tempo 72</span>
-  </div>
   <div class="hero__copy wrap">
     <p class="kicker hero__status"><span class="hero__dot" aria-hidden="true"></span><span class="kicker__t">${t(h.kicker)}</span></p>
     <h1 class="hero__title display" id="hero-title">${lines(h.headline, [2])}</h1>
@@ -375,7 +372,7 @@ function recital(c) {
     <p>${t(r.after)}</p>
     <a class="btn btn--key" href="#inquire">Start your lessons ${arrow}</a>
   </div>
-  <script type="application/json" data-videos>${JSON.stringify(r.videos.map((v) => ({ src: v.src, youtube: v.youtube, poster: v.poster, captions: v.captions, title: plain(v.title) }))).replace(/</g, '\\u003c')}</script>
+  <script type="application/json" data-videos>${JSON.stringify(r.videos.map((v) => ({ src: v.src, webm: v.webm || '', youtube: v.youtube, poster: v.poster, captions: v.captions, title: plain(v.title) }))).replace(/</g, '\\u003c')}</script>
 </section>`;
 }
 

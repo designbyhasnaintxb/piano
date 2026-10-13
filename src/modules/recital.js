@@ -39,7 +39,14 @@ export function initRecital() {
     dim(true);
     if (v.src) {
       const el = document.createElement('video');
-      Object.assign(el, { controls: true, playsInline: true, preload: 'metadata', src: v.src });
+      Object.assign(el, { controls: true, playsInline: true, preload: 'metadata' });
+      // WebM (VP9/Opus) first, H.264 MP4 as the universal fallback
+      for (const [src, type] of [[v.webm, 'video/webm'], [v.src, 'video/mp4']]) {
+        if (!src) continue;
+        const s = document.createElement('source');
+        Object.assign(s, { src, type });
+        el.appendChild(s);
+      }
       if (v.poster) el.poster = v.poster;
       if (v.captions) {
         const tr = document.createElement('track');

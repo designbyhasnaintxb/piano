@@ -62,10 +62,12 @@ await check('recital: play loads real video with captions, room dims', async () 
   await page.locator('[data-play]').click();
   await page.waitForTimeout(500);
   const dim = await page.locator('[data-recital]').evaluate((n) => n.classList.contains('is-dim'));
-  const v = await page.locator('[data-screen] video').getAttribute('src');
+  await page.waitForTimeout(2500);
+  const v = await page.locator('[data-screen] video').evaluate((n) => n.currentSrc);
+  const playing = await page.locator('[data-screen] video').evaluate((n) => n.readyState >= 2 && !n.error);
   const track = await page.locator('[data-screen] video track').getAttribute('src');
   await page.keyboard.press('Escape');
-  return dim && v.includes('dexter') && track.endsWith('.vtt');
+  return dim && v.includes('dexter') && playing && track.endsWith('.vtt');
 });
 await check('objection lid opens + icon morphs', async () => {
   await page.locator('#can-i').scrollIntoViewIfNeeded();
