@@ -609,7 +609,7 @@ function footer(c) {
   </div>
   <div class="wrap foot__base">${staff('foot__staff')}<p>© <span data-year>${new Date().getFullYear()}</span> ${t(c.brand.legalName)}</p><p>${t(c.footer.note)}</p></div>
 </footer>
-<a class="sticky-cta" href="#inquire" data-sticky><span data-sticky-label>Ask about lessons</span>${arrow}</a>`;
+<nav class="sticky-nav" aria-label="Quick action"><a class="sticky-cta" href="#inquire" data-sticky><span data-sticky-label>Ask about lessons</span>${arrow}</a></nav>`;
 }
 
 /* ───────────────────────────── page ───────────────────────────── */
@@ -620,10 +620,10 @@ export function renderPage(c) {
   const nFacts = open.filter((s) => s.__slot === 'fact').length;
   const nDraft = open.filter((s) => s.__slot === 'draft').length;
   const review = REVIEW && (nFacts || nDraft) ? `
-<div class="review" role="note" data-review>
+<aside class="review" aria-label="Draft review status" data-review>
   <p><strong>Draft build.</strong><span class="review__long"> ${nFacts} facts are waiting for content from the current site; ${nDraft} lines of new copy need approval.</span><span class="review__short"> ${nFacts} facts open.</span>
   <button type="button" class="review__btn" data-review-toggle aria-pressed="true">Hide markers</button></p>
-</div>` : '';
+</aside>` : '';
 
   // Data the client-side modules need (no unverified facts exposed as values).
   const data = {

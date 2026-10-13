@@ -86,7 +86,7 @@ ol, ul { padding: 0; list-style: none; }
   display: flex; align-items: center; gap: 14px; margin-bottom: clamp(20px, 3vw, 36px);
   font: 500 var(--step--1)/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
 }
-.kicker__n { display: inline-flex; align-items: center; gap: 14px; opacity: .6; }
+.kicker__n { display: inline-flex; align-items: center; gap: 14px; opacity: .74; }
 .kicker__n::after { content: ''; width: 36px; height: 1px; background: currentColor; }
 
 /* ─────────────────────────── buttons ─────────────────────────── */
@@ -122,6 +122,9 @@ ol, ul { padding: 0; list-style: none; }
   color: var(--rose); background: color-mix(in srgb, var(--rose) 8%, transparent);
   -webkit-box-decoration-break: clone; box-decoration-break: clone; vertical-align: .1em;
 }
+.sec--ivory .slot-fact, .sec--paper .slot-fact, .ph .slot-fact { color: var(--wine); background: color-mix(in srgb, var(--wine) 6%, transparent); }
+.sec--dark .slot-fact, .sec--black .slot-fact, .sec--wine .slot-fact, .hero .slot-fact, .foot .slot-fact, .pcard .slot-fact { color: #e2c2bf; background: rgba(226,194,191,.06); }
+.mresult .slot-fact { color: var(--wine); }
 .slot-fact::before { content: attr(data-cls) ' · '; opacity: .7; font-size: .85em; letter-spacing: .08em; }
 .slot-draft { text-decoration: underline dotted color-mix(in srgb, var(--rose) 70%, transparent); text-decoration-thickness: 1px; text-underline-offset: .18em; }
 .slot-draft--block { text-decoration: none; position: relative; }
@@ -130,7 +133,10 @@ ol, ul { padding: 0; list-style: none; }
   font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--rose); opacity: .8;
 }
 html.markers-off .slot-fact { border-color: transparent; background: none; }
-html.markers-off .slot-fact::before { content: none; }
+html.markers-off .sec--ivory .slot-fact, .sec--paper .slot-fact, .ph .slot-fact { color: var(--wine); background: color-mix(in srgb, var(--wine) 6%, transparent); }
+.sec--dark .slot-fact, .sec--black .slot-fact, .sec--wine .slot-fact, .hero .slot-fact, .foot .slot-fact, .pcard .slot-fact { color: #e2c2bf; background: rgba(226,194,191,.06); }
+.mresult .slot-fact { color: var(--wine); }
+.slot-fact::before { content: none; }
 html.markers-off .slot-draft { text-decoration: none; }
 html.markers-off .slot-draft--block::after { display: none; }
 
@@ -150,10 +156,10 @@ html.markers-off .slot-draft--block::after { display: none; }
   background: linear-gradient(160deg, #d9cfbf, #cdbfac); color: var(--walnut);
 }
 .ph__staff {
-  position: absolute; inset: 0; opacity: .55;
+  position: absolute; inset: 0; opacity: .74;
   background: repeating-linear-gradient(0deg, transparent 0 13px, rgba(112,76,61,.28) 13px 14px);
   -webkit-mask: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
           mask: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
 }
 .ph__label { position: relative; max-width: 80%; text-align: center; font: 500 12px/1.5 var(--mono); }
-.ph__label .slot-fact { color: var(--walnut); background: rgba(244,239,228,.7); }
+.ph__label .slot-fact { color: var(--wine); background: rgba(244,239,228,.82); }
