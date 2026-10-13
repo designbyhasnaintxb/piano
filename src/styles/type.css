@@ -1,78 +1,85 @@
 /* ─────────────────────────── type system ───────────────────────────
-   Loaded last. Archivo Variable carries the whole site:
-   · DISPLAY: width 62–68%, weight 800–900, caps (the poster's voice)
-   · TITLE:   width 82%, weight 650 (cards, questions, names)
-   · LABEL:   width 100%, weight 600, small caps-style tracking
-   · BODY:    width 100%, weight 400
-   No italics anywhere: emphasis is colour (mustard/ochre), not slant. */
+   Modelled on the iasoglobal.com reference:
+   · DISPLAY  Instrument Serif, CAPITALS, light-feeling, tight leading (≈1.02)
+   · LABEL    Hanken Grotesk 500, capitals, 12–13px, +0.06em
+   · BODY     Hanken Grotesk 400, 16px / 1.5
+   Instrument Serif has a single weight: never fake-bold it. No italics — the
+   accent line in a heading is set in ochre instead. */
 
-body { font-stretch: 100%; font-weight: 400; letter-spacing: -.003em; }
+body { font-family: var(--sans); font-weight: 400; letter-spacing: -.005em; }
 em, i, cite { font-style: normal; }
 
 /* DISPLAY */
-.display, .jcap__t, .about__statement, .mpanel__n, .pcard__name, .mstep__q, .mresult__name,
-.timer__time, .metro__bpm span, .stat dd, .finale__beat, .menu__key, .pkey__meter, .foot__giant {
-  font-family: var(--serif); font-stretch: 64%; font-weight: 850; font-style: normal;
-  text-transform: uppercase; letter-spacing: -.005em; font-variation-settings: normal;
+.display, .jcap__t, .about__statement, .mpanel__n, .mpanel__t, .pcard__name, .mstep__q, .mresult__name,
+.timer__time, .metro__bpm span, .stat dd, .finale__beat, .menu__key, .pkey__meter, .foot__giant,
+.aud__name, .wcard__t, .first__after-t, .recital__after p, .timer__done-t, .marquee__i, .brand__name, .foot__wm,
+.programme__t strong, .lisa__quote, .string__note, .mini__l, .navkey__note, .aud__n, .bar__n, .programme__n, .inquire__steps li > span {
+  font-family: var(--serif); font-weight: 400; font-style: normal; font-stretch: normal; font-variation-settings: normal;
+  text-transform: uppercase; letter-spacing: -.005em;
 }
-.display { line-height: .86; }
-.display--l { line-height: .88; }
-.display--m { line-height: .9; }
-.hero__title { font-size: clamp(3.4rem, 1.2rem + 8.6vw, 10.5rem); max-width: none; }
-.finale__t { font-size: clamp(3.4rem, 1.2rem + 8.6vw, 10.5rem); max-width: none; }
-.display--l { font-size: clamp(2.9rem, 1.2rem + 5.6vw, 7.4rem); }
-.display--m { font-size: clamp(2.5rem, 1.2rem + 4vw, 5.6rem); }
-.jcap__t { font-size: clamp(2.6rem, 1.2rem + 4.6vw, 6.4rem); line-height: .88; }
-.about__statement { font-size: clamp(2.2rem, 1rem + 3.9vw, 5.4rem); line-height: .92; max-width: 24ch; font-weight: 800; }
-.hl__line.is-italic { font-style: normal; font-weight: 850; letter-spacing: -.005em; color: var(--ochre-display); }
+.display { line-height: 1; }
+.hero__title, .finale__t { font-size: clamp(3.4rem, 1.4rem + 7.6vw, 9.6rem); line-height: .96; max-width: none; }
+.finale__t { font-size: clamp(3.2rem, 1.2rem + 5.8vw, 7.4rem); max-width: 11ch; }
+.display--l { font-size: clamp(2.8rem, 1.3rem + 4.8vw, 6.4rem); line-height: 1; }
+.display--m { font-size: clamp(2.4rem, 1.2rem + 3.6vw, 5rem); line-height: 1.02; }
+.jcap__t { font-size: clamp(2.6rem, 1.3rem + 4.2vw, 5.8rem); line-height: .98; }
+.about__statement { font-size: clamp(2.2rem, 1.1rem + 3.5vw, 4.9rem); line-height: 1.02; max-width: 26ch; }
+.hl__line.is-italic { font-style: normal; color: var(--ochre-display); }
 .sec--dark .hl__line.is-italic, .sec--black .hl__line.is-italic, .pcard .hl__line.is-italic { color: var(--gold); }
-.sec--wine .hl__line.is-italic { color: var(--black); -webkit-text-stroke: 0; opacity: .72; }
-.mpanel__n { font-size: clamp(5rem, 10vw, 9rem); line-height: .8; }
-.pcard__name { font-size: clamp(2.2rem, 3.4vw, 3.4rem); line-height: .9; }
-.mstep__q { font-size: clamp(2.2rem, 3.8vw, 3.8rem); line-height: .9; }
-.mresult__name { font-size: clamp(2.2rem, 3.6vw, 3.6rem); line-height: .9; }
-.timer__time { font-size: clamp(4.4rem, 8vw, 7.2rem); line-height: .85; font-variant-numeric: tabular-nums; }
-.metro__bpm span { font-size: 4rem; line-height: .9; display: block; }
-.stat dd { font-size: clamp(3rem, 4.6vw, 4.6rem); line-height: .85; }
-.finale__beat { font-size: clamp(1.6rem, 2.6vw, 2.6rem); letter-spacing: .01em; }
-.menu__key { font-size: clamp(2.4rem, 10vw, 3.6rem); line-height: 1; }
-.pkey__meter { font-size: 2.2rem; }
-
-/* TITLE */
-.aud__name, .wcard__t, .mkey__name, .pkey__name, .programme__t strong, .lid__q, .bar__q, .mopt > span,
-.hero__watch-t, .lisa__quote, .inquiry__ok, .string__note, .mini__l, .inquiry__chosen strong, .trust dd,
-.mpanel__t, .first__after-t, .recital__after p, .timer__done-t, .pcard__short, .metro__term,
-.inquire__steps li > span, .aud__n, .bar__n, .programme__n, .brand__name, .foot__wm, .pcard__amt {
-  font-family: var(--sans); font-stretch: 82%; font-weight: 650; font-style: normal; letter-spacing: -.01em; font-variation-settings: normal;
-}
-.mpanel__t { font-size: clamp(1.8rem, 2.8vw, 2.8rem); line-height: 1; text-transform: uppercase; font-stretch: 70%; font-weight: 800; }
-.lisa__quote { font-size: clamp(1.4rem, 2vw, 1.9rem); line-height: 1.15; font-weight: 600; }
-.first__after-t, .recital__after p, .timer__done-t { font-size: clamp(1.4rem, 2.2vw, 2rem); text-transform: uppercase; font-stretch: 70%; font-weight: 800; letter-spacing: 0; }
-.aud__name, .wcard__t { font-size: clamp(1.4rem, 1.9vw, 1.9rem); line-height: 1.05; }
-.lid__q, .bar__q { font-size: clamp(1.1rem, 1.4vw, 1.35rem); }
-.mopt > span { font-size: clamp(1.1rem, 1.4vw, 1.3rem); }
-.aud__n, .bar__n, .programme__n, .inquire__steps li > span { font-stretch: 100%; font-weight: 800; color: var(--ochre); }
+.sec--wine .hl__line.is-italic { color: var(--black); opacity: .7; }
+.mpanel__n { font-size: clamp(5rem, 10vw, 9rem); line-height: .82; }
+.mpanel__t { font-size: clamp(1.9rem, 3vw, 3rem); line-height: 1; }
+.pcard__name { font-size: clamp(2.2rem, 3.4vw, 3.4rem); line-height: .98; }
+.mstep__q { font-size: clamp(2.2rem, 3.8vw, 3.8rem); line-height: 1; }
+.mresult__name { font-size: clamp(2.2rem, 3.6vw, 3.6rem); line-height: 1; }
+.timer__time { font-size: clamp(4.6rem, 8vw, 7.4rem); line-height: .85; font-variant-numeric: lining-nums tabular-nums; text-transform: none; }
+.metro__bpm span { font-size: 4.2rem; line-height: .9; display: block; }
+.stat dd { font-size: clamp(3rem, 4.6vw, 4.6rem); line-height: .9; }
+.finale__beat { font-size: clamp(1.7rem, 2.8vw, 2.8rem); }
+.menu__key { font-size: clamp(2.4rem, 10vw, 3.6rem); line-height: 1.05; }
+.pkey__meter { font-size: 2.4rem; }
+.aud__name, .wcard__t { font-size: clamp(1.6rem, 2.2vw, 2.2rem); line-height: 1.02; }
+.first__after-t, .recital__after p, .timer__done-t { font-size: clamp(1.6rem, 2.4vw, 2.3rem); line-height: 1.05; }
+.programme__t strong { font-size: 1.6rem; line-height: 1; }
+.lisa__quote { font-size: clamp(1.6rem, 2.3vw, 2.2rem); line-height: 1.08; }
+.aud__n, .bar__n, .programme__n, .inquire__steps li > span { font-size: 1.25rem; color: var(--ochre); }
 .sec--dark .aud__n, .sec--black .programme__n { color: var(--gold); }
-.pcard__short { color: var(--gold); font-weight: 600; }
-.metro__term { text-transform: uppercase; letter-spacing: .08em; font-size: .9rem; font-stretch: 100%; }
-.brand__name { font-stretch: 68%; font-weight: 850; letter-spacing: .02em; font-size: 1.45rem; }
-.foot__wm { font-stretch: 68%; font-weight: 850; letter-spacing: .02em; font-size: 1.9rem; }
+.brand__name { font-size: 1.6rem; line-height: .9; letter-spacing: .01em; }
+.foot__wm { font-size: 2.2rem; letter-spacing: .01em; }
+.mini__l { font-size: 1.5rem; }
+.string__note { font-size: 2.4rem; }
 
-/* LABEL — everything that used the mono voice */
+/* TITLE — UI-level headings in the grotesk (like the reference's product names) */
+.pkey__name, .lid__q, .bar__q, .mopt > span, .hero__watch-t, .mkey__name, .inquiry__chosen strong, .trust dd,
+.inquiry__ok, .pcard__short, .metro__term, .pcard__amt {
+  font-family: var(--sans); font-weight: 500; font-style: normal; font-stretch: normal; letter-spacing: -.01em; font-variation-settings: normal; text-transform: none;
+}
+.lid__q, .bar__q { font-size: clamp(1.08rem, 1.3vw, 1.25rem); }
+.mopt > span { font-size: clamp(1.05rem, 1.3vw, 1.2rem); }
+.mkey__name { font-size: clamp(.95rem, 1.2vw, 1.15rem); text-transform: uppercase; letter-spacing: .04em; }
+.pkey__name { font-size: 1.15rem; }
+.trust dd { font-size: 1rem; }
+.pcard__short { color: var(--gold); }
+.metro__term { text-transform: uppercase; letter-spacing: .08em; font-size: .85rem; }
+
+/* LABEL — small capitals in the grotesk, like "SPECIALISTS IN SUN SHADING" / "DISCOVER MORE →" */
 .kicker, .kicker__t, .trust dt, .markers dt, .stat dt, .pcard__facts dt, .pcard__meter, .pcard__unit, .mpanel__lisa > span:first-child,
 .mkey__n, .jcap__n, .matcher__count, .mresult__k, .mresult__sum, .tool__t, .chip, .metro__bpm small, .first__prompt, .first__hint,
-.tool__note, .audiences__t, .lisa__cap, .students__src, .packages__foot, .inquiry__chosen span, .ff > span, .ff legend,
+.tool__note, .audiences__t, .lisa__cap, .packages__foot, .inquiry__chosen span, .ff > span, .ff legend,
 .inquire__contact dt, .foot__contact dt, .foot__base, .menu__n, .menu__contact, .sound-toggle, .navkey, .hero__watch-t small,
-.screen__label, .screen__play, .hero__cue, .review, .mini kbd, .brand__desc, .wcard__n, .why__media figcaption {
-  font-family: var(--sans); font-stretch: 100%; font-variation-settings: normal; font-variant-numeric: tabular-nums;
+.screen__label, .screen__play, .hero__cue, .review, .mini kbd, .brand__desc, .wcard__n, .why__media figcaption, .nav__status {
+  font-family: var(--sans); font-stretch: normal; font-variation-settings: normal; font-variant-numeric: tabular-nums; font-style: normal;
 }
-.kicker { font-weight: 700; letter-spacing: .16em; font-size: .78rem; }
+.kicker { font-weight: 500; letter-spacing: .06em; font-size: .8rem; }
 .trust dt, .markers dt, .pcard__facts dt, .inquire__contact dt, .foot__contact dt, .ff > span, .ff legend, .tool__t, .audiences__t,
-.mpanel__lisa > span:first-child, .mresult__k, .first__prompt, .lisa__cap, .hero__watch-t small, .navkey, .sound-toggle,
+.mpanel__lisa > span:first-child, .mresult__k, .first__prompt, .lisa__cap, .hero__watch-t small, .navkey, .sound-toggle, .nav__status,
 .mkey__n, .jcap__n, .matcher__count, .wcard__n, .pcard__meter, .metro__bpm small, .menu__n, .brand__desc, .chip {
-  font-weight: 700; letter-spacing: .14em;
+  font-weight: 500; letter-spacing: .06em;
 }
-.first__hint, .tool__note, .packages__foot, .students__src, .mresult__sum, .screen__label, .foot__base, .menu__contact { font-weight: 500; letter-spacing: .01em; }
-.lede { font-weight: 400; font-stretch: 100%; letter-spacing: -.01em; }
-.btn { font-family: var(--sans); font-stretch: 90%; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; font-size: .86rem; }
-.btn--line { letter-spacing: .08em; }
+.first__hint, .tool__note, .packages__foot, .mresult__sum, .screen__label, .foot__base, .menu__contact { font-weight: 400; letter-spacing: 0; }
+.lede { font-family: var(--sans); font-weight: 400; letter-spacing: -.01em; font-size: clamp(1rem, .95rem + .3vw, 1.18rem); line-height: 1.55; }
+.lisa__bio { font-size: clamp(1rem, .95rem + .25vw, 1.15rem); }
+
+/* buttons: small medium capitals, like "CONTACT US" */
+.btn { font-family: var(--sans); font-weight: 500; letter-spacing: .06em; text-transform: uppercase; font-size: .8rem; }
+.btn--line { letter-spacing: .06em; }

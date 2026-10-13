@@ -44,6 +44,13 @@ To finish the site: replace each `fact()` with `ok(…)`, approve or rewrite eac
 | — | Final call (3D) | "Ready to start your journey?" and "Hear it. Feel it. Read it." |
 | 11 | Inquiry | Her contact details, a 3-step "what happens next", and a form that opens an email to Lisa |
 
+## Design system
+
+- **Palette** (from the reference poster): greige `#e5e0d8`, surface `#f1ede6`, ink `#141312`, mustard `#c9971b`, ochre `#7a5806` / `#9a7008` for accent text (contrast-checked).
+- **Type** (modelled on iasoglobal.com): headings in **Instrument Serif**, in capitals; text, labels and buttons in **Hanken Grotesk**. These are free stand-ins for the reference's paid fonts (Items Condensed, Suisse Int'l). If you license those, change `--serif` and `--sans` in `src/styles/base.css`.
+- **Layout:** 1600px content width, with Lenis smooth scrolling (`src/lib/smooth.js`; off under reduced motion).
+- **Header:** the nav is a real octave. White keys C–G are the links, black keys sit where a keyboard has them, and hovering a key plays its note when sound is on. The header floats into a compact bar once you scroll.
+
 ## Technical notes
 
 - **3D**: `src/three/piano.js` builds an 88-key grand from code: instanced keys, hammers, dampers and ~230 strings. A shader makes the strings vibrate. There is no model download. `src/three/stage.js` handles camera poses, lighting and adaptive resolution. three.js is lazy-loaded after first paint.

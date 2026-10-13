@@ -113,3 +113,9 @@
   .pkey__short { display: none; }
 }
 @media (max-width: 760px) { .screen__play span { display: none; } .screen__label { font-size: 11px; } }
+@media (max-width: 760px) {
+  /* keep the headline crisp where the piano sits behind it */
+  .hero::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(229,224,216,.86) 0%, rgba(229,224,216,.78) 62%, rgba(229,224,216,0) 100%); }
+  .hero__copy, .hero__trust { position: relative; z-index: 1; }
+}
