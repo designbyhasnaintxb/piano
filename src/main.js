@@ -9,7 +9,6 @@ import { initMotion, refreshSoon } from './modules/motion.js';
 import { initPlayNote } from './modules/playnote.js';
 import { initMethod } from './modules/method.js';
 import { initPackages } from './modules/packages.js';
-import { initStudents } from './modules/students.js';
 import { initRecital } from './modules/recital.js';
 import { initAccordions } from './modules/accordions.js';
 import { initMatcher } from './modules/matcher.js';
@@ -41,7 +40,6 @@ if (params.has('pose')) {
   safe(initPlayNote);
   safe(initMethod);
   safe(initPackages, data);
-  safe(initStudents);
   safe(initRecital);
   safe(initAccordions);
   safe(initMatcher, data);

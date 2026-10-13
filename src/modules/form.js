@@ -58,8 +58,11 @@ export function initForm(data) {
         const r = await fetch(data.contact.endpoint, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
         if (!r.ok) throw new Error(String(r.status));
       } else if (data.contact.email) {
-        const body = [...fd.entries()].filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join('\n');
-        location.href = `mailto:${data.contact.email}?subject=${encodeURIComponent('Piano lesson inquiry')}&body=${encodeURIComponent(body)}`;
+        const LABELS = { who: 'Student', age: 'Age', experience: 'Experience', lesson: 'Lessons', goal: 'Main goal', name: 'Name', email: 'Email', phone: 'Phone', contact: 'Preferred contact', town: 'Town', path: 'Lesson path answers', message: 'Message' };
+        const body = [...fd.entries()].filter(([, v]) => v).map(([k, v]) => `${LABELS[k] || k}: ${v}`).join('\n');
+        const url = `mailto:${data.contact.email}?subject=${encodeURIComponent('Piano lesson inquiry')}&body=${encodeURIComponent(`Hi Lisa,\n\n${body}\n`)}`;
+        form.dataset.mailto = url; // kept for QA
+        location.href = url;
       } else {
         // Draft build: no destination configured yet. Be honest about it.
         throw new Error('not-configured');

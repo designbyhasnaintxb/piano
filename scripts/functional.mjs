@@ -42,29 +42,30 @@ await check('method tabs: click + arrow keys', async () => {
   const focused = await page.evaluate(() => document.activeElement.id);
   return a && sel === 'true' && focused === 'mkey-3' && await page.locator('#mpanel-3').isVisible();
 });
-await check('packages: select intro → card + remembered', async () => {
+await check('lesson options: select "at your home" → card + remembered', async () => {
   await page.locator('#options').scrollIntoViewIfNeeded();
-  await page.locator('.pkey[data-pkg="intro"]').click();
+  await page.locator('.pkey[data-pkg="your-home"]').click();
   await page.waitForTimeout(700);
-  const card = await page.locator('[data-pcard="intro"]').isVisible();
+  const card = await page.locator('[data-pcard="your-home"]').isVisible();
   const stored = await page.evaluate(() => JSON.parse(sessionStorage.getItem('lm-session')).interest.id);
-  return card && stored === 'intro';
+  return card && stored === 'your-home';
 });
 await check('form pre-fills chosen option', async () => {
-  return (await page.locator('[data-chosen-label]').textContent()) === 'Introductory lesson' && (await page.locator('[data-lesson-select]').inputValue()) === 'intro';
+  return (await page.locator('[data-chosen-label]').textContent()) === 'At your home' && (await page.locator('[data-lesson-select]').inputValue()) === 'your-home';
 });
-await check('students: open story shows quote/path', async () => {
+await check('recital: second performance selectable, poster swaps', async () => {
   await page.locator('#students').scrollIntoViewIfNeeded();
-  await page.locator('.story__open').first().click();
-  await page.waitForTimeout(800);
-  return (await page.locator('.story__open').first().getAttribute('aria-expanded')) === 'true' && await vis('#story-s1');
+  await page.locator('[data-video="1"]').click();
+  return (await page.locator('[data-screen-poster]').getAttribute('src')).includes('dexter') && (await page.locator('[data-screen-label]').textContent()).includes('Dexter');
 });
-await check('recital: play dims room, no fake video', async () => {
-  await page.locator('#recital').scrollIntoViewIfNeeded();
+await check('recital: play loads real video with captions, room dims', async () => {
   await page.locator('[data-play]').click();
-  await page.waitForTimeout(300);
+  await page.waitForTimeout(500);
   const dim = await page.locator('[data-recital]').evaluate((n) => n.classList.contains('is-dim'));
-  return dim && await vis('.screen__empty');
+  const v = await page.locator('[data-screen] video').getAttribute('src');
+  const track = await page.locator('[data-screen] video track').getAttribute('src');
+  await page.keyboard.press('Escape');
+  return dim && v.includes('dexter') && track.endsWith('.vtt');
 });
 await check('objection lid opens + icon morphs', async () => {
   await page.locator('#can-i').scrollIntoViewIfNeeded();
@@ -74,16 +75,16 @@ await check('objection lid opens + icon morphs', async () => {
   const d1 = await page.locator('.lid__lid').first().getAttribute('d');
   return (await page.locator('.lid__btn').first().getAttribute('aria-expanded')) === 'true' && await vis('#lid-0') && d0 !== d1;
 });
-await check('matcher: child → new → enjoy recommends intro', async () => {
+await check('matcher: child → new → online recommends virtual lessons', async () => {
   await page.locator('#path').scrollIntoViewIfNeeded();
   await page.locator('.mopt:has(input[value="child"])').click();
   await page.waitForTimeout(800);
   await page.locator('.mopt:has(input[value="new"])').click();
   await page.waitForTimeout(800);
-  await page.locator('.mopt:has(input[value="enjoy"])').click();
+  await page.locator('.mopt:has(input[value="virtual"])').click();
   await page.waitForTimeout(900);
   const name = await page.locator('[data-result-name]').textContent();
-  return name === 'Introductory lesson' && await vis('[data-result]');
+  return name === 'Virtual lessons' && await vis('[data-result]');
 });
 await check('matcher: restart returns to step 1', async () => {
   await page.locator('[data-restart]').click();
@@ -125,15 +126,17 @@ await check('form: empty submit lists errors + focuses first', async () => {
   const focused = await page.evaluate(() => document.activeElement.name);
   return err.startsWith('Please complete') && focused === 'who';
 });
-await check('form: valid submit is honest about missing destination', async () => {
+await check('form: valid submit opens an email to Lisa', async () => {
   await page.locator('.fchip:has(input[name="who"])').first().click();
   await page.selectOption('select[name="age"]', { index: 1 });
   await page.selectOption('select[name="experience"]', { index: 1 });
   await page.fill('input[name="name"]', 'Test Parent');
   await page.fill('input[name="email"]', 'parent@example.com');
   await page.locator('[data-inquiry] [type="submit"]').click();
-  await page.waitForTimeout(200);
-  return (await page.locator('[data-form-err]').textContent()).includes('isn\'t connected');
+  await page.waitForTimeout(300);
+  const url = await page.locator('[data-inquiry]').getAttribute('data-mailto');
+  console.log('    mailto →', decodeURIComponent(url).slice(0, 220).replace(/\n/g, ' | '));
+  return url.startsWith('mailto:mottgal@gmail.com') && decodeURIComponent(url).includes('Test Parent') && decodeURIComponent(url).includes('Virtual lessons') && await vis('[data-form-ok]');
 });
 await check('3D stage loaded or fell back', async () => page.evaluate(() => !!window.__stage || document.querySelector('[data-poster]').complete));
 await check('no horizontal page scroll', async () => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));

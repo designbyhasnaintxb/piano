@@ -33,11 +33,10 @@ export function initMatcher(data) {
   function recommend() {
     const rule = data.matcher.rules.find((r) => Object.entries(r.when).every(([k, vals]) => vals.includes(answers[k]?.value)));
     const pkg = data.packages.find((p) => p.id === rule?.package);
-    $('[data-result-name]', root).textContent = pkg ? pkg.name : 'A conversation with Lisa';
+    $('[data-result-name]', root).textContent = rule?.title || pkg?.name || 'A conversation with Lisa';
     $('[data-result-why]', root).textContent = rule?.why || '';
-    const facts = pkg ? [pkg.duration, pkg.frequency, pkg.price && `${pkg.price}`].filter(Boolean).join(' · ') : '';
     const path = Object.values(answers).map((a) => a.label).join(' · ');
-    $('[data-result-sum]', root).textContent = [path, facts].filter(Boolean).join('  →  ');
+    $('[data-result-sum]', root).textContent = path;
     store.set('path', path);
     if (pkg) store.set('interest', { id: pkg.id, label: pkg.name });
     [60, 64, 67, 72].forEach((m, k) => setTimeout(() => playNote(m, 0.5, 1.4), k * 110));

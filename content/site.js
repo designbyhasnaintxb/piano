@@ -1,295 +1,304 @@
 /**
  * SINGLE SOURCE OF CONTENT for the Lisa Mott site.
  *
- * Status: the source site could not be reached from the build environment
- * (see docs/CONTENT-AUDIT.md). Every Lisa-specific fact is therefore an
- * empty `fact()` slot, and every piece of new copy is a `draft()` awaiting
- * approval. Replace slots with `ok(value, 'source page')` as they are verified.
+ * Facts come from Lisa's current site (audited 2026-10-13, see
+ * docs/CONTENT-AUDIT.md) and are marked ok(value, page). New copy written for
+ * the redesign is marked draft() — it restates those facts in the section
+ * flow/voice of the Livepower reference, and needs Lisa's sign-off.
  *
- * Run `npm run check:content` for the outstanding list.
+ * Run `npm run check:content` for anything still open.
  */
 import { fact, draft, ok } from './slots.js';
 
-const SRC = 'https://pianolessonswithlisamott.com/';
-const STU = 'https://pianolessonswithlisamott.com/mystudents';
+const HOME = '/';
+const ABOUT = '/about';
+const PHIL = '/philosophy';
+const START = '/howto';
+const STU = '/mystudents';
+const CONTACT = '/contact';
+
+const AREAS = 'Eufaula, Alabama • Opelika • Auburn • Phenix City • Columbus, Georgia';
 
 export default {
   /* ───────────────────────────── identity ───────────────────────────── */
   brand: {
-    name: ok('Lisa Mott', 'client brief'),
-    descriptor: ok('Piano Lessons', 'client brief'),
-    // Domain implies "Piano Lessons with Lisa Mott". Confirm the exact trading name.
-    legalName: fact('Exact business name as written on the current site', { cls: 'VERIFY', source: SRC }),
+    name: ok('Lisa Mott', CONTACT),
+    descriptor: ok('Piano Lessons', HOME),
+    legalName: ok('Piano Lessons with Lisa', HOME),
   },
 
   meta: {
-    url: ok('https://pianolessonswithlisamott.com/', 'client brief'),
-    title: draft('Lisa Mott — Piano Lessons'),
-    description: draft('Piano lessons with Lisa Mott. Lesson options, real student stories and an easy way to ask about starting.'),
+    url: ok('https://pianolessonswithlisamott.com/', HOME),
+    title: draft('Piano Lessons with Lisa Mott — Eufaula, Opelika, Auburn, Phenix City, Columbus & Online'),
+    description: draft('Private piano lessons with Lisa Mott, teaching since 1993. Children age 5 and up and adults from beginner to early advanced — at your home, Lisa\'s home, or online.'),
   },
 
-  /* When true, unresolved slots are visibly marked and a review bar shows.
-     Production builds refuse to ship with unresolved fact slots unless
-     ALLOW_PLACEHOLDERS=1 is set (see vite.config.js). */
-  reviewMode: true,
+  // All facts are filled, so markers are off. Drafts are listed by `npm run check:content`.
+  reviewMode: false,
 
   contact: {
-    email: fact('Email address', { cls: 'KEEP', source: SRC }),
-    phone: fact('Phone number (if published)', { cls: 'KEEP', source: SRC }),
-    location: fact('Studio location / area served', { cls: 'KEEP', source: SRC }),
-    formats: fact('Lesson format: in person, online, or both', { cls: 'TURN INTO OFFER', source: SRC }),
-    responseNote: fact('How and when Lisa replies to inquiries', { cls: 'VERIFY', source: SRC }),
-    // If the current site uses a booking/calendar tool, put its URL here and
-    // the final CTA switches to it automatically.
+    name: ok('Lisa Mott', CONTACT),
+    email: ok('mottgal@gmail.com', CONTACT),
+    phone: ok('608-259-6924', CONTACT),
+    phoneHref: ok('+16082596924', CONTACT),
+    phoneNote: ok('Phone or text', CONTACT),
+    location: ok(AREAS, HOME),
+    areas: ok(['Eufaula, Alabama', 'Opelika', 'Auburn', 'Phenix City', 'Columbus, Georgia'], HOME),
+    virtualNote: ok('Virtual lessons are not limited to the areas listed above.', HOME),
+    formats: ok('At your home, my home, or virtually', START),
+    status: ok('Now Accepting Students', HOME),
+    responseNote: draft('Lisa will be in touch to talk through your goals.'),
     bookingUrl: null,
-    // Form endpoint (Formspree, Netlify, own API…). Empty → mailto fallback.
+    // No form service yet → the form opens a pre-written email to Lisa.
     formEndpoint: '',
   },
 
   /* ─────────────────────────────── hero ─────────────────────────────── */
   hero: {
-    kicker: draft('Piano lessons with Lisa Mott'),
-    // Alternatives kept for when Lisa's real voice is known:
-    //   "From first note to real music."  ·  "Learn to play. Learn to hear. Learn to love music."
-    headline: draft(['Your first note', 'can become', 'a lifetime', 'of music.']),
-    sub: draft('Piano lessons with Lisa Mott, built around each student — skill, confidence and a genuine relationship with music.',
-      { note: 'Only keep "built around each student" if it matches Lisa\'s stated philosophy.' }),
-    primaryCta: draft('Explore lessons'),
-    secondaryCta: draft('Meet Lisa'),
+    kicker: ok('Now Accepting Students', HOME),
+    headline: draft(['All people', 'are', 'musical.'], { note: 'From Lisa\'s philosophy page: "I Believe That All People are Musical".' }),
+    sub: draft('Private piano lessons with Lisa Mott for children age 5 and up and adults from beginner to early advanced — at your home, at Lisa\'s, or online.'),
+    primaryCta: draft('Start Your Lessons'),
+    secondaryCta: draft('How Lessons Work'),
+    watch: { label: draft('Watch a student perform'), title: ok('Wynnton — "Seven of Hearts"', STU) },
     trust: [
-      { label: draft('Teaching'), value: fact('Years teaching / experience', { cls: 'TURN INTO PROOF', source: SRC }) },
-      { label: draft('Students'), value: fact('Ages taught', { cls: 'TURN INTO OFFER', source: SRC }) },
-      { label: draft('Lessons'), value: fact('In person / online', { cls: 'TURN INTO OFFER', source: SRC }) },
-      { label: draft('Studio'), value: fact('Location', { cls: 'KEEP', source: SRC }) },
+      { label: draft('Teaching'), value: ok('Since 1993', ABOUT) },
+      { label: draft('Training'), value: ok('M.M. Piano Pedagogy', ABOUT) },
+      { label: draft('Students'), value: ok('Age 5 to adult', ABOUT) },
+      { label: draft('Lessons'), value: ok('Your home · Lisa\'s · Online', START) },
     ],
   },
 
-  /* ───────────────────────── 3D scroll journey ───────────────────────── */
+  /* ───────────── 3D scroll journey — Lisa's three experiences ───────────── */
   journey: [
-    { id: 'start', title: draft('The start.'), body: draft('Every pianist begins in front of the same eighty-eight keys.') },
-    { id: 'somewhere', title: draft('Every student starts somewhere.'), body: draft('A first lesson, a return after years away, a child\'s first week at the keys.') },
-    { id: 'foundations', title: draft('Foundations.'), body: draft('Notes, hand shape, pulse. Small things done well, in order.') },
-    { id: 'technique', title: draft('Technique turns motion into sound.'), body: draft('A key is a lever. A hammer meets a string. How you move decides what is heard.') },
-    { id: 'listening', title: draft('Listening.'), body: draft('Hearing the sound you make is half of making it.') },
-    { id: 'more', title: draft('Music is more than the right notes.'), body: draft('Phrasing, colour, balance — the string keeps singing after the key is down.') },
-    { id: 'confidence', title: draft('Practice becomes confidence.'), body: draft('Real students, real progress — see their stories below.') },
-    { id: 'music', title: draft('Confidence becomes music.'), body: draft('And music is something you keep for life.') },
+    { id: 'start', title: ok('All people are musical.', PHIL), body: draft('That belief is where every student\'s lessons begin.') },
+    { id: 'somewhere', title: draft('Different skills. Different starting points.'), body: ok('We all show up with different skills and deficits. Let\'s fill in the deficits and nurture the skills together.', PHIL) },
+    { id: 'foundations', title: ok('The spatial experience.', PHIL), body: ok('Reading music, and the geography of the keyboard.', PHIL) },
+    { id: 'technique', title: ok('The physical experience.', PHIL), body: ok('Do I have freedom, comfort, and ease while playing my instrument?', PHIL) },
+    { id: 'listening', title: ok('The aural experience.', PHIL), body: ok('What kind of sound am I making with my instrument?', PHIL) },
+    { id: 'more', title: ok('Curiosity, love, and enjoyment.', PHIL), body: draft('Lisa\'s approach is built first and foremost on nurturing them.') },
+    { id: 'confidence', title: draft('Real students. Real stages.'), body: ok('Wynnton and Dexter — their performances are below.', STU) },
+    { id: 'music', title: ok('An adventure and a journey.', PHIL), body: ok('Let\'s experience the process together!', PHIL) },
+  ],
+  journeyImages: [
+    { src: ok('/media/wynnton-still.webp', STU), alt: ok('Wynnton at the piano during a recital', STU) },
+    { src: ok('/media/dexter-poster.webp', STU), alt: ok('Dexter performing on stage at a grand piano', STU) },
+    { src: ok('/media/lisa-720.webp', ABOUT), alt: ok('Lisa Mott sitting at her piano', ABOUT) },
   ],
 
-  /* ─────────────────────── first note / audiences ─────────────────────── */
+  /* ───────────────────────────── about (02) ───────────────────────────── */
+  lisa: {
+    kicker: draft('About Lisa'),
+    statement: draft('Teaching private piano since 1993 — as a pedagogue, an accompanist, and a working musician.'),
+    headline: draft(['The person', 'behind the piano.']),
+    portrait: ok('/media/lisa-720.webp', ABOUT),
+    portraitLarge: ok('/media/lisa-1400.webp', ABOUT),
+    portraitAlt: ok('Lisa Mott, smiling, seated beside her piano with sheet music on the stand', ABOUT),
+    bio: [
+      ok('I have been teaching private piano lessons since 1993. In addition to teaching, I am also active as an accompanist and freelance musician.', ABOUT),
+      ok('I teach children age 5 and up, as well as adults of all skill levels from beginners through early advanced students.', ABOUT),
+      ok('I hold a master\'s degree in Piano Pedagogy from Columbus State University and have completed post-graduate studies in piano accompanying.', ABOUT),
+      ok('In addition to private teaching, I have taught early childhood music classes and university-level courses for both credit and non-credit programs.', ABOUT),
+    ],
+    philosophy: ok('Learning to play the piano is both an adventure and a journey — let\'s experience the process together!', PHIL),
+    stats: [
+      { value: ok('1993', ABOUT), label: draft('Teaching private piano since') },
+      { value: ok('M.M.', ABOUT), label: ok('Piano Pedagogy, Columbus State University', ABOUT) },
+      { value: ok('5+', ABOUT), label: draft('Children from age 5, and adults of all levels') },
+    ],
+  },
+
+  /* ───────────────────────────── why Lisa (03) ───────────────────────────── */
+  why: {
+    kicker: draft('Why Lisa'),
+    headline: draft(['What every student', 'gets with Lisa.']),
+    image: ok('/media/dexter-poster.webp', STU),
+    imageAlt: ok('Dexter performing on stage at a grand piano', STU),
+    imageCaption: ok('Dexter performing "Romance Op. 24, No. 9" by Jean Sibelius', STU),
+    items: [
+      { title: draft('Three decades of teaching'), body: draft('Private lessons since 1993, plus early childhood music classes and university-level courses.') },
+      { title: draft('Trained in how people learn'), body: draft('A master\'s degree in Piano Pedagogy from Columbus State University, and post-graduate study in piano accompanying.') },
+      { title: draft('A plan built for you'), body: ok('Each student has a unique set of goals and circumstances; therefore, each student has an individually tailored plan.', START) },
+      { title: draft('A working musician'), body: draft('Lisa is active as an accompanist and freelance musician — not only a teacher.') },
+    ],
+  },
+
+  /* ─────────────────────── who it's for (04) + first note ─────────────────────── */
   firstNote: {
+    kicker: draft('Who it\'s for'),
     headline: draft(['Every student', 'starts with', 'one note.']),
     prompt: draft('Play a note.'),
-    afterFirst: draft('Every player starts with one.'),
-    cta: draft('Start your lesson journey'),
-    audiencesIntro: draft('Who lessons are for'),
-    // Only keep audiences the current site confirms.
+    afterFirst: ok('All people are musical.', PHIL),
+    cta: draft('Find your lesson path'),
+    audiencesIntro: draft('Who Lisa teaches'),
     audiences: [
-      { id: 'young', name: draft('Young beginners'), detail: fact('Youngest age Lisa accepts / how she starts young children', { cls: 'VERIFY', source: SRC }) },
-      { id: 'teen', name: draft('Teens'), detail: fact('What teen students work toward with Lisa', { cls: 'VERIFY', source: SRC }) },
-      { id: 'adult', name: draft('Adult beginners'), detail: fact('Whether Lisa teaches adult beginners', { cls: 'VERIFY', source: SRC }) },
-      { id: 'returning', name: draft('Returning players'), detail: fact('Whether Lisa takes returning / experienced students', { cls: 'VERIFY', source: SRC }) },
+      { id: 'young', name: draft('Children, age 5 and up'), detail: draft('Lisa has also taught early childhood music classes, so young beginners are in experienced hands.') },
+      { id: 'adult', name: draft('Adult beginners'), detail: ok('Adults of all skill levels, starting from beginners.', ABOUT) },
+      { id: 'returning', name: draft('Adults, intermediate to early advanced'), detail: ok('Students through early advanced, each with an individually tailored plan.', ABOUT) },
     ],
   },
 
-  /* ───────────────────────────── meet Lisa ───────────────────────────── */
-  lisa: {
-    kicker: draft('Meet Lisa'),
-    headline: draft(['The person', 'behind the piano.']),
-    portrait: fact('Portrait of Lisa (from current site)', { cls: 'KEEP', source: SRC, kind: 'image' }),
-    portraitAlt: fact('Alt text describing the portrait', { cls: 'KEEP' }),
-    bio: [
-      fact('Biography paragraph 1 — Lisa\'s teaching story, verbatim or lightly edited from the current site', { cls: 'REWRITE LIGHTLY', source: SRC }),
-      fact('Biography paragraph 2 — background and training (only what the site states)', { cls: 'REWRITE LIGHTLY', source: SRC }),
-    ],
-    philosophy: fact('One sentence of Lisa\'s teaching philosophy, in her words', { cls: 'TURN INTO PROOF', source: SRC }),
-    markers: [
-      { label: draft('Background'), value: fact('Degree / training — only if stated', { cls: 'VERIFY', source: SRC }) },
-      { label: draft('Teaching since'), value: fact('Year or years of teaching — only if stated', { cls: 'VERIFY', source: SRC }) },
-      { label: draft('Affiliations'), value: fact('Memberships / certifications — only if stated', { cls: 'VERIFY', source: SRC }) },
-    ],
-  },
-
-  /* ─────────────────────── how lessons work (keys) ─────────────────────── */
+  /* ─────────────────────── how lessons work (05) — keys ─────────────────────── */
   method: {
     kicker: draft('How lessons work'),
-    headline: draft(['Five things', 'every lesson', 'builds.']),
-    intro: draft('Press a key to see what each part of a lesson is for.',
-      { note: 'Replace the five areas with the categories Lisa actually uses.' }),
+    headline: draft(['Three experiences.', 'One approach.']),
+    intro: ok('While each of my student\'s piano education is individualized, I do have a multifaceted approach encompassing three main concepts.', PHIL),
     steps: [
-      { n: '01', name: draft('Foundation'), body: draft('Posture, hand shape, finding your way around the keyboard, and a steady pulse.'), lisa: fact('How Lisa teaches this', { cls: 'TURN INTO INTERACTION', source: SRC }) },
-      { n: '02', name: draft('Technique'), body: draft('How fingers, wrists and arms turn movement into a clear, even sound.'), lisa: fact('How Lisa teaches this', { cls: 'TURN INTO INTERACTION', source: SRC }) },
-      { n: '03', name: draft('Reading'), body: draft('Reading notes and rhythm so new music opens up without guesswork.'), lisa: fact('How Lisa teaches this', { cls: 'TURN INTO INTERACTION', source: SRC }) },
-      { n: '04', name: draft('Musicality'), body: draft('Dynamics, phrasing and listening — making the notes say something.'), lisa: fact('How Lisa teaches this', { cls: 'TURN INTO INTERACTION', source: SRC }) },
-      { n: '05', name: draft('Confidence'), body: draft('Playing for others, at whatever level suits the student.'), lisa: fact('Recitals / performance opportunities Lisa offers', { cls: 'TURN INTO PROOF', source: SRC }) },
+      { n: '01', name: ok('The aural experience', PHIL), body: ok('What kind of sound am I making with my instrument?', PHIL), lisa: draft('Listening comes first — hearing the sound you make is part of making it.') },
+      { n: '02', name: ok('The physical experience', PHIL), body: ok('Do I have freedom, comfort, and ease while playing my instrument?', PHIL), lisa: draft('Playing should feel free and comfortable, not tense.') },
+      { n: '03', name: ok('The spatial experience', PHIL), body: ok('In our instance, as it relates to the reading of music and the geography of the keyboard.', PHIL), lisa: draft('Reading music and finding your way around the keys.') },
+      { n: '04', name: draft('Curiosity & enjoyment'), body: ok('My approach is contingent first and foremost upon nurturing a curiosity, love, and enjoyment of playing the piano.', PHIL), lisa: ok('Learning to play the piano is both an adventure and a journey.', PHIL) },
     ],
   },
 
-  /* ───────────────────────────── packages ───────────────────────────── */
+  /* ─────────────────────── lesson formats (06) — "services" ─────────────────────── */
   packages: {
     kicker: draft('Lesson options'),
-    headline: draft(['Choose', 'your rhythm.']),
-    intro: draft('Pick an option to see who it suits, what is included and what it costs.'),
-    currency: '$',
-    // One entry per option the current site actually lists. Names are drafts.
+    headline: draft(['Three ways', 'to take lessons.']),
+    intro: ok('Lessons occur at your home, my home, or virtually.', START),
     items: [
       {
-        id: 'intro', meter: '1', beats: 1,
-        name: draft('Introductory lesson', { note: 'Only if Lisa offers a trial / first lesson.' }),
-        whoFor: draft('Anyone who wants to meet Lisa and try a lesson before committing.'),
-        duration: fact('Length', { cls: 'TURN INTO OFFER', source: SRC }),
-        frequency: draft('Once'),
-        price: fact('Price', { cls: 'TURN INTO OFFER', source: SRC }),
-        priceUnit: draft('per lesson'),
-        includes: [fact('What the first lesson includes', { cls: 'TURN INTO OFFER', source: SRC })],
+        id: 'your-home', meter: '01',
+        name: draft('At your home'),
+        short: draft('Lisa comes to you'),
+        whoFor: draft('Families and adults who would rather learn on their own piano, at home.'),
+        where: ok(AREAS, HOME),
+        plan: ok('An individually tailored plan for your goals and circumstances.', START),
+        price: draft('Rates aren\'t published — contact Lisa to discuss your plan.'),
       },
       {
-        id: 'weekly', meter: '4/4', beats: 4, featured: true,
-        name: draft('Weekly lessons'),
-        whoFor: draft('Students who want steady progress with the same time each week.'),
-        duration: fact('Length', { cls: 'TURN INTO OFFER', source: SRC }),
-        frequency: draft('Weekly'),
-        price: fact('Price', { cls: 'TURN INTO OFFER', source: SRC }),
-        priceUnit: fact('Billing unit (per lesson / per month / per term)', { cls: 'TURN INTO OFFER', source: SRC }),
-        includes: [fact('What is included', { cls: 'TURN INTO OFFER', source: SRC })],
+        id: 'lisas-home', meter: '02', featured: true,
+        name: draft('At Lisa\'s home'),
+        short: draft('Lessons at Lisa\'s piano'),
+        whoFor: draft('Students who like a dedicated lesson space away from home.'),
+        where: draft('Lisa will share the location when you get in touch.'),
+        plan: ok('An individually tailored plan for your goals and circumstances.', START),
+        price: draft('Rates aren\'t published — contact Lisa to discuss your plan.'),
       },
       {
-        id: 'extended', meter: '6/8', beats: 6,
-        name: draft('Extended weekly lessons'),
-        whoFor: draft('More experienced students with longer pieces or performance goals.'),
-        duration: fact('Length', { cls: 'TURN INTO OFFER', source: SRC }),
-        frequency: draft('Weekly'),
-        price: fact('Price', { cls: 'TURN INTO OFFER', source: SRC }),
-        priceUnit: fact('Billing unit', { cls: 'TURN INTO OFFER', source: SRC }),
-        includes: [fact('What is included', { cls: 'TURN INTO OFFER', source: SRC })],
+        id: 'virtual', meter: '03',
+        name: draft('Virtual lessons'),
+        short: draft('Online, from anywhere'),
+        whoFor: draft('Students outside Lisa\'s local area, or anyone who prefers to learn online.'),
+        where: ok('Virtual lessons are not limited to the areas listed above.', HOME),
+        plan: ok('An individually tailored plan for your goals and circumstances.', START),
+        price: draft('Rates aren\'t published — contact Lisa to discuss your plan.'),
       },
     ],
-    footnote: fact('Payment / billing terms in one line', { cls: 'TURN INTO OFFER', source: SRC }),
+    footnote: ok('Each student has a unique set of goals and circumstances; therefore, each student has an individually tailored plan for their piano education. Please contact me to discuss yours.', START),
   },
 
-  /* ────────────────────────── student proof wall ────────────────────────── */
-  students: {
-    kicker: draft('My students'),
-    headline: draft(['A wall', 'of progress.']),
-    intro: draft('Real students of Lisa\'s, in their own words and moments.'),
-    // Fill from /mystudents. Use names/photos only with permission as published there.
-    items: Array.from({ length: 6 }, (_, i) => ({
-      id: `s${i + 1}`,
-      name: fact('Student name (as published)', { cls: 'TURN INTO PROOF', source: STU }),
-      photo: fact('Student photo', { cls: 'TURN INTO PROOF', source: STU, kind: 'image' }),
-      alt: fact('Photo description', { cls: 'TURN INTO PROOF' }),
-      caption: fact('Caption / milestone from /mystudents', { cls: 'TURN INTO PROOF', source: STU }),
-      quote: fact('Quote (student or parent), if published', { cls: 'TURN INTO PROOF', source: STU }),
-      // Progression stages – only the ones the student's story supports.
-      path: [
-        { stage: draft('First lesson'), when: fact('When', { cls: 'TURN INTO PROOF', source: STU }) },
-        { stage: draft('First song'), when: fact('Piece / when', { cls: 'TURN INTO PROOF', source: STU }) },
-        { stage: draft('Performance'), when: fact('Recital / event', { cls: 'TURN INTO PROOF', source: STU }) },
-      ],
-    })),
-  },
-
-  /* ─────────────────────────── recital room ─────────────────────────── */
+  /* ─────────────────────── my students (07) — recital room ─────────────────────── */
   recital: {
-    kicker: draft('The recital room'),
-    headline: draft(['What lessons', 'can lead to.']),
-    // { title, src (mp4) or youtube id, poster, captions (vtt) }
+    kicker: ok('Showcasing My Students', STU),
+    headline: draft(['Real students.', 'Real stages.']),
     videos: [
-      { id: 'v1', title: fact('Performance video title', { cls: 'TURN INTO PROOF', source: STU }), src: '', youtube: '', poster: '', captions: '' },
-      { id: 'v2', title: fact('Performance video title', { cls: 'TURN INTO PROOF', source: STU }), src: '', youtube: '', poster: '', captions: '' },
-      { id: 'v3', title: fact('Performance video title', { cls: 'TURN INTO PROOF', source: STU }), src: '', youtube: '', poster: '', captions: '' },
+      { id: 'v1', student: ok('Wynnton', STU), piece: ok('"Seven of Hearts"', STU), composer: ok('Kevin Olson', STU),
+        title: ok('Wynnton performing "Seven of Hearts" by Kevin Olson', STU),
+        src: '/media/wynnton-seven-of-hearts.mp4', youtube: '', poster: '/media/wynnton-poster.webp', captions: '/media/wynnton.vtt' },
+      { id: 'v2', student: ok('Dexter', STU), piece: ok('"Romance Op. 24, No. 9"', STU), composer: ok('Jean Sibelius', STU),
+        title: ok('Dexter performing "Romance Op. 24, No. 9" by Jean Sibelius', STU),
+        src: '/media/dexter-sibelius-romance.mp4', youtube: '', poster: '/media/dexter-poster.webp', captions: '/media/dexter.vtt' },
     ],
     after: draft('See what lessons can lead to'),
   },
 
-  /* ─────────────────────── objections (piano lids) ─────────────────────── */
+  /* ─────────────────────── can I really learn? (08) ─────────────────────── */
   objections: {
     kicker: draft('Can I really learn?'),
-    headline: draft(['You don\'t need', 'to be "naturally musical"', 'to start.'], { note: 'Keep only if it matches Lisa\'s philosophy.' }),
+    headline: draft(['You don\'t need', 'to be "naturally musical"', 'to start.'], { note: 'Lisa: "I Believe That All People are Musical."' }),
     items: [
-      { q: draft('"I\'m starting late."'), a: fact('Lisa\'s answer — does she teach adult beginners?', { cls: 'VERIFY', source: SRC }) },
-      { q: draft('"My child is a complete beginner."'), a: fact('How Lisa starts young beginners', { cls: 'VERIFY', source: SRC }) },
-      { q: draft('"We don\'t own the right piano yet."'), a: fact('Instrument requirements (acoustic / digital / weighted keys)', { cls: 'VERIFY', source: SRC }) },
-      { q: draft('"I\'ve never read music."'), a: fact('Whether reading is taught from zero', { cls: 'VERIFY', source: SRC }) },
-      { q: draft('"I tried lessons before and stopped."'), a: fact('How Lisa approaches returning students', { cls: 'VERIFY', source: SRC }) },
-      { q: draft('"I\'m nervous about performing."'), a: fact('Whether recitals are optional', { cls: 'VERIFY', source: SRC }) },
+      { q: draft('"I don\'t think I\'m musical."'), a: ok('I believe that all people are musical. We all show up with different skills and deficits. Let\'s fill in the deficits and nurture the skills together.', PHIL) },
+      { q: draft('"I\'m an adult. Is it too late?"'), a: draft('No. Lisa teaches adults of all skill levels, from beginners through early advanced students.') },
+      { q: draft('"My child is only five."'), a: draft('Lisa teaches children age 5 and up, and has also taught early childhood music classes.') },
+      { q: draft('"I\'ve never read music."'), a: draft('Reading music is part of Lisa\'s approach from the start — she calls it the spatial experience: the reading of music and the geography of the keyboard.') },
+      { q: draft('"We don\'t live in those towns."'), a: ok('Virtual lessons are not limited to the areas listed.', HOME) },
     ],
   },
 
-  /* ─────────────────────────── lesson matcher ─────────────────────────── */
+  /* ─────────────────────── lesson matcher (09) ─────────────────────── */
   matcher: {
     kicker: draft('Find your lesson path'),
     headline: draft(['Three questions.', 'One clear next step.']),
     steps: [
       { id: 'who', q: draft('Who is learning?'), options: [
-        { id: 'child', label: draft('A child') }, { id: 'teen', label: draft('A teen') }, { id: 'adult', label: draft('An adult') },
+        { id: 'child', label: draft('A child, 5 or older') }, { id: 'young', label: draft('A child under 5') }, { id: 'adult', label: draft('An adult') },
       ] },
       { id: 'level', q: draft('Where are they starting?'), options: [
         { id: 'new', label: draft('Brand new') }, { id: 'some', label: draft('Some experience') },
-        { id: 'returning', label: draft('Returning after a break') }, { id: 'advanced', label: draft('Advanced') },
+        { id: 'mid', label: draft('Intermediate') }, { id: 'advanced', label: draft('Advanced') },
       ] },
-      { id: 'goal', q: draft('What is the main goal?'), options: [
-        { id: 'enjoy', label: draft('Play for enjoyment') }, { id: 'fundamentals', label: draft('Build strong fundamentals') },
-        { id: 'perform', label: draft('Perform') }, { id: 'unsure', label: draft('Not sure yet') },
+      { id: 'where', q: draft('Where would lessons happen?'), options: [
+        { id: 'your-home', label: draft('At our home') }, { id: 'lisas-home', label: draft('At Lisa\'s home') },
+        { id: 'virtual', label: draft('Online') }, { id: 'unsure', label: draft('Not sure yet') },
       ] },
     ],
-    // First matching rule wins. `when` keys are step ids; values are option ids.
-    // These are a draft mapping onto the draft packages above — Lisa should confirm.
+    // First matching rule wins. Each answer is grounded in what Lisa's site says.
     rules: [
-      { when: { level: ['new'] }, package: 'intro', why: draft('Starting fresh: a first lesson is the simplest way to see if it feels right.') },
-      { when: { goal: ['perform'], level: ['some', 'advanced', 'returning'] }, package: 'extended', why: draft('Performance goals usually need longer lessons for repertoire work.') },
-      { when: {}, package: 'weekly', why: draft('A steady weekly slot is the usual way to keep progress moving.') },
+      { when: { who: ['young'] }, title: draft('Talk with Lisa first'), why: draft('Lisa teaches children from age 5. She has also taught early childhood music classes, so ask what she suggests until then.') },
+      { when: { level: ['advanced'] }, title: draft('Ask Lisa about fit'), why: draft('Lisa teaches students from beginners through early advanced — describe your level and she\'ll tell you honestly.') },
+      { when: { where: ['virtual'] }, package: 'virtual', why: ok('Virtual lessons are not limited to the areas listed.', HOME) },
+      { when: { where: ['your-home'] }, package: 'your-home', why: draft('Lisa comes to you in Eufaula, Opelika, Auburn, Phenix City and Columbus, Georgia.') },
+      { when: { where: ['lisas-home'] }, package: 'lisas-home', why: draft('Lessons at Lisa\'s home — she\'ll share the details when you get in touch.') },
+      { when: {}, title: draft('A tailored plan'), why: ok('Each student has a unique set of goals and circumstances; therefore, each student has an individually tailored plan.', START) },
     ],
     cta: draft('Ask Lisa about this path'),
-    disclaimer: draft('A starting suggestion based on your answers — Lisa will confirm what fits.'),
+    disclaimer: draft('A starting point based on your answers. Lisa will confirm what fits.'),
   },
 
   /* ─────────────────────────── practice tools ─────────────────────────── */
   practice: {
     kicker: draft('Practice room'),
-    headline: draft(['Ten good minutes', 'beat an hour of guessing.'], { note: 'General encouragement — not a claim about Lisa\'s method.' }),
-    intro: draft('A small timer and metronome you can use today. No account, no sign-up.'),
+    headline: draft(['A little practice.', 'Every day.']),
+    intro: draft('A free timer and metronome you can use today. No account, no sign-up.'),
     durations: [5, 10, 15],
     done: draft('Nice work. Consistency compounds.'),
-    cta: draft('Start learning with Lisa'),
+    cta: draft('Start lessons with Lisa'),
   },
 
   /* ─────────────────────────────── FAQ ─────────────────────────────── */
   faq: {
-    kicker: draft('Studio policies & questions'),
+    kicker: draft('Questions'),
     headline: draft(['Before you', 'ask.']),
     items: [
-      { q: draft('Where do lessons take place?'), a: fact('Location / online details', { cls: 'KEEP', source: SRC }) },
-      { q: draft('What ages do you teach?'), a: fact('Ages', { cls: 'KEEP', source: SRC }) },
-      { q: draft('What happens if we miss a lesson?'), a: fact('Make-up policy', { cls: 'KEEP', source: SRC }) },
-      { q: draft('What is the cancellation policy?'), a: fact('Cancellation policy', { cls: 'KEEP', source: SRC }) },
-      { q: draft('How much practice is expected?'), a: fact('Practice expectations', { cls: 'VERIFY', source: SRC }) },
-      { q: draft('Do we need an acoustic piano?'), a: fact('Instrument requirements', { cls: 'VERIFY', source: SRC }) },
-      { q: draft('How does payment work?'), a: fact('Payment terms', { cls: 'KEEP', source: SRC }) },
-      { q: draft('Are there recitals?'), a: fact('Recital opportunities', { cls: 'TURN INTO PROOF', source: SRC }) },
+      { q: draft('Is Lisa taking new students?'), a: ok('Yes — now accepting students.', HOME) },
+      { q: draft('Where do lessons take place?'), a: ok('Lessons occur at your home, my home, or virtually.', START) },
+      { q: draft('Which areas do you serve?'), a: ok(`${AREAS}. Virtual lessons are not limited to these areas.`, HOME) },
+      { q: draft('What ages and levels do you teach?'), a: ok('I teach children age 5 and up, as well as adults of all skill levels from beginners through early advanced students.', ABOUT) },
+      { q: draft('What is your background?'), a: ok('I have been teaching private piano lessons since 1993. I hold a master\'s degree in Piano Pedagogy from Columbus State University and have completed post-graduate studies in piano accompanying.', ABOUT) },
+      { q: draft('How much do lessons cost?'), a: ok('Each student has a unique set of goals and circumstances; therefore, each student has an individually tailored plan for their piano education. Please contact me to discuss yours.', START) },
+      { q: draft('How do I get in touch?'), a: ok('Email mottgal@gmail.com, or phone or text 608-259-6924.', CONTACT) },
     ],
   },
 
   /* ─────────────────────────── finale + form ─────────────────────────── */
   finale: {
-    headline: draft(['Your first note', 'can start here.']),
-    primaryCta: draft('Ask about piano lessons'),
-    secondaryCta: draft('View lesson options'),
+    kicker: draft('Get in touch'),
+    headline: draft(['Ready to', 'start your journey?']),
+    beat: draft(['Hear it.', 'Feel it.', 'Read it.'], { note: 'Lisa\'s aural, physical and spatial experiences.' }),
+    primaryCta: draft('Start Your Journey'),
+    secondaryCta: draft('Call or text Lisa'),
   },
 
   form: {
     kicker: draft('Start the conversation'),
-    intro: draft('A few details help Lisa reply with something useful. Nothing here commits you to anything.'),
+    headline: draft(['Tell Lisa', 'about you.']),
+    intro: ok('Each student has a unique set of goals and circumstances. Please contact me to discuss yours. I look forward to hearing from you!', START),
     whoOptions: [draft('Myself'), draft('My child'), draft('Someone else')],
-    ageOptions: [draft('Under 7'), draft('7–12'), draft('13–17'), draft('Adult')],
-    experienceOptions: [draft('Brand new'), draft('Some experience'), draft('Returning after a break'), draft('Advanced')],
-    goalOptions: [draft('Play for enjoyment'), draft('Build strong fundamentals'), draft('Perform'), draft('Not sure yet')],
+    ageOptions: [draft('5–8'), draft('9–12'), draft('13–17'), draft('Adult')],
+    experienceOptions: [draft('Brand new'), draft('Some experience'), draft('Intermediate'), draft('Early advanced')],
+    goalOptions: [draft('Play for enjoyment'), draft('Build strong fundamentals'), draft('Learn to read music'), draft('Not sure yet')],
     contactOptions: [draft('Email'), draft('Phone call'), draft('Text message')],
-    submit: draft('Start the conversation'),
-    success: draft('Thank you — your message is on its way to Lisa.'),
+    submit: draft('Send to Lisa'),
+    success: draft('Your email app should now be open with your message to Lisa — just press send.'),
+    steps: [
+      draft('Send this form, or call or text Lisa directly.'),
+      draft('Lisa gets in touch to talk through your goals and circumstances.'),
+      ok('You get an individually tailored plan for your piano education.', START),
+    ],
   },
 
   footer: {
-    note: draft('Piano lessons with Lisa Mott.'),
+    note: ok('Piano Lessons with Lisa', HOME),
   },
 };

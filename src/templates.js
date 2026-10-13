@@ -83,14 +83,19 @@ const soundIcon = `<svg class="ico ico--sound" viewBox="0 0 24 24" aria-hidden="
   <path class="ico--sound__off" d="M16 9.5l5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="1.4"/>
 </svg>`;
 
-/* ───────────────────────────── sections ───────────────────────────── */
+/* ───────────────────────────── sections ─────────────────────────────
+   Section flow follows the Livepower reference: promise → about statement →
+   why → who → method → options → proof → objections → path → tools → FAQ →
+   final call → contact. Visual design is this site's own. */
+
+const play = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10-6.5z" fill="currentColor"/></svg>`;
 
 function nav(c) {
-  const items = [['#lessons', 'Lessons'], ['#lisa', 'Lisa'], ['#options', 'Options'], ['#students', 'Students'], ['#faq', 'FAQ']];
+  const items = [['#lisa', 'About'], ['#lessons', 'Approach'], ['#options', 'Lessons'], ['#students', 'Students'], ['#faq', 'FAQ']];
   return `
 <a class="skip" href="#main">Skip to content</a>
 <header class="nav" data-nav>
-  <a class="brand" href="#top" aria-label="${a(c.brand.name)} — ${a(c.brand.descriptor)}, back to top">
+  <a class="brand" href="#top" aria-label="${a(c.brand.legalName)}, back to top">
     ${monogram('mono brand__mono')}
     <span class="brand__wm"><span class="brand__name">${t(c.brand.name)}</span><span class="brand__desc">${t(c.brand.descriptor)}</span></span>
   </a>
@@ -101,15 +106,16 @@ function nav(c) {
     <button class="sound-toggle" type="button" aria-pressed="false" data-sound-toggle>
       ${soundIcon}<span class="sound-toggle__label">Sound off</span>
     </button>
-    <a class="btn btn--key btn--sm nav__cta" href="#inquire" data-cta="nav">Ask about lessons</a>
+    <a class="btn btn--key btn--sm nav__cta" href="#inquire" data-cta="nav">Start lessons</a>
     <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn>
       <span class="nav__menu-bars" aria-hidden="true"></span><span class="sr">Menu</span>
     </button>
   </div>
 </header>
 <div class="menu" id="menu" hidden data-menu>
-  <ul class="menu__keys">${[...items, ['#path', 'Find your path'], ['#practice', 'Practice room'], ['#inquire', 'Ask about lessons']]
+  <ul class="menu__keys">${[...items, ['#path', 'Find your path'], ['#practice', 'Practice room'], ['#inquire', 'Start lessons']]
     .map(([h, l], i) => `<li><a href="${h}" class="menu__key"><span class="menu__n">${String(i + 1).padStart(2, '0')}</span>${l}</a></li>`).join('')}</ul>
+  <p class="menu__contact"><a href="tel:${a(c.contact.phoneHref)}">${t(c.contact.phoneNote)} · ${t(c.contact.phone)}</a><a href="mailto:${a(c.contact.email)}">${t(c.contact.email)}</a></p>
 </div>
 <div class="progress" aria-hidden="true" data-progress>
   <svg viewBox="0 0 1000 12" preserveAspectRatio="none" focusable="false">
@@ -120,21 +126,25 @@ function nav(c) {
 }
 
 function hero(c) {
-  const h = c.hero;
+  const h = c.hero, v = c.recital.videos[0];
   return `
 <section class="hero" id="top" aria-labelledby="hero-title" data-scene="hero">
   <div class="hero__meta" aria-hidden="true">
     <span>Op. 1</span><span data-tempo>Tempo 72</span>
   </div>
   <div class="hero__copy wrap">
-    ${kicker(h.kicker, '00')}
+    <p class="kicker hero__status"><span class="hero__dot" aria-hidden="true"></span><span class="kicker__t">${t(h.kicker)}</span></p>
     <h1 class="hero__title display" id="hero-title">${lines(h.headline, [2])}</h1>
     <p class="hero__sub lede">${t(h.sub)}</p>
     <div class="hero__ctas">
-      <a class="btn btn--key" href="#options" data-cta="hero">${t(h.primaryCta)} ${arrow}</a>
-      <a class="btn btn--line" href="#lisa">${t(h.secondaryCta)}</a>
+      <a class="btn btn--key" href="#inquire" data-cta="hero">${t(h.primaryCta)} ${arrow}</a>
+      <a class="btn btn--line" href="#lessons">${t(h.secondaryCta)}</a>
     </div>
   </div>
+  <a class="hero__watch" href="#students" data-watch="0">
+    <span class="hero__watch-media"><img src="${esc(v.poster)}" alt="" width="792" height="540" loading="lazy" decoding="async"><span class="hero__watch-play">${play}</span></span>
+    <span class="hero__watch-t"><small>${t(h.watch.label)}</small>${t(h.watch.title)}</span>
+  </a>
   <div class="hero__trust wrap">
     ${staff('hero__staff')}
     <dl class="trust">${h.trust.map((x) => `<div class="trust__i"><dt>${t(x.label)}</dt><dd>${t(x.value)}</dd></div>`).join('')}</dl>
@@ -146,7 +156,7 @@ function hero(c) {
 function journey(c) {
   const n = c.journey.length;
   return `
-<section class="journey" id="journey" aria-label="How a note becomes music" data-scene="journey">
+<section class="journey" id="journey" aria-label="Lisa's approach, told through the piano" data-scene="journey">
   <div class="journey__pin">
     <ol class="journey__caps">
       ${c.journey.map((s, i) => `
@@ -160,8 +170,52 @@ function journey(c) {
       ${c.journey.map((s, i) => `<span class="journey__tick" data-tick="${i}"><i></i></span>`).join('')}
     </div>
     <div class="journey__students" aria-hidden="true">
-      ${c.students.items.slice(0, 3).map((s) => img(s.photo, s.alt, 'jstudent')).join('')}
+      ${c.journeyImages.map((im) => img(im.src, im.alt, 'jstudent', '20vw')).join('')}
     </div>
+  </div>
+</section>`;
+}
+
+function lisa(c) {
+  const l = c.lisa;
+  return `
+<section class="lisa sec sec--paper" id="lisa" aria-labelledby="lisa-title">
+  ${divider()}
+  <div class="wrap about">
+    ${kicker(l.kicker, '01')}
+    <p class="about__statement">${t(l.statement)}</p>
+  </div>
+  <div class="wrap lisa__grid">
+    <figure class="lisa__portrait" data-reveal="portrait">
+      <img class="lisa__img" src="${a(l.portrait)}" srcset="${a(l.portrait)} 720w, ${a(l.portraitLarge)} 1400w" sizes="(min-width: 900px) 40vw, 82vw" alt="${a(l.portraitAlt)}" width="720" height="960" loading="lazy" decoding="async">
+      <figcaption class="lisa__cap">${t(c.contact.name)} · ${t(c.brand.legalName)}</figcaption>
+    </figure>
+    <div class="lisa__copy">
+      <h2 class="display display--l" id="lisa-title">${lines(l.headline, [1])}</h2>
+      <div class="lisa__bio">${l.bio.map((p) => `<p>${t(p)}</p>`).join('')}</div>
+      <blockquote class="lisa__quote"><p>${t(l.philosophy)}</p></blockquote>
+      <dl class="stats">${l.stats.map((m) => `<div class="stat"><dt>${t(m.label)}</dt><dd>${t(m.value)}</dd></div>`).join('')}</dl>
+    </div>
+  </div>
+</section>`;
+}
+
+function why(c) {
+  const w = c.why;
+  return `
+<section class="why sec sec--dark" id="why" aria-labelledby="why-title">
+  ${divider(true)}
+  <div class="wrap why__head">
+    <div>${kicker(w.kicker, '02')}<h2 class="display display--l" id="why-title">${lines(w.headline, [1])}</h2></div>
+  </div>
+  <div class="wrap why__grid">
+    <figure class="why__media">
+      ${img(w.image, w.imageAlt, 'why__img', '(min-width: 900px) 34vw, 100vw')}
+      <figcaption>${t(w.imageCaption)}</figcaption>
+    </figure>
+    <ul class="why__list">
+      ${w.items.map((x, i) => `<li class="wcard"><span class="wcard__n">${String(i + 1).padStart(2, '0')}</span><h3 class="wcard__t">${t(x.title)}</h3><p class="wcard__b">${t(x.body)}</p></li>`).join('')}
+    </ul>
   </div>
 </section>`;
 }
@@ -173,10 +227,9 @@ function firstNote(c) {
   const kb = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K'];
   return `
 <section class="first sec sec--ivory" id="first-note" aria-labelledby="first-title">
-  ${divider()}
   <div class="wrap first__grid">
     <div class="first__copy">
-      ${kicker(c.journey[1].title, '01')}
+      ${kicker(f.kicker, '03')}
       <h2 class="display display--l" id="first-title">${lines(f.headline, [2])}</h2>
       <div class="first__after" data-after hidden>
         <p class="first__after-t">${t(f.afterFirst)}</p>
@@ -209,28 +262,9 @@ function firstNote(c) {
   <div class="wrap audiences">
     <h3 class="audiences__t">${t(f.audiencesIntro)}</h3>
     <ol class="audiences__list">
-      ${f.audiences.map((x, i) => `<li class="aud"><span class="aud__n">${['I', 'II', 'III', 'IV', 'V'][i]}</span><h4 class="aud__name">${t(x.name)}</h4><p class="aud__d">${t(x.detail)}</p></li>`).join('')}
+      ${f.audiences.map((x, i) => `<li class="aud"><span class="aud__n">${['I', 'II', 'III', 'IV'][i]}</span><h4 class="aud__name">${t(x.name)}</h4><p class="aud__d">${t(x.detail)}</p></li>`).join('')}
     </ol>
-  </div>
-</section>`;
-}
-
-function lisa(c) {
-  const l = c.lisa;
-  return `
-<section class="lisa sec sec--paper" id="lisa" aria-labelledby="lisa-title">
-  <div class="wrap lisa__grid">
-    <figure class="lisa__portrait" data-reveal="portrait">
-      ${img(l.portrait, l.portraitAlt, 'lisa__img', '(min-width: 900px) 45vw, 100vw')}
-      <figcaption class="lisa__cap">${t(c.brand.name)}</figcaption>
-    </figure>
-    <div class="lisa__copy">
-      ${kicker(l.kicker, '02')}
-      <h2 class="display display--l" id="lisa-title">${lines(l.headline, [1])}</h2>
-      <div class="lisa__bio">${l.bio.map((p) => `<p>${t(p)}</p>`).join('')}</div>
-      <blockquote class="lisa__quote"><p>${t(l.philosophy)}</p></blockquote>
-      <dl class="markers">${l.markers.map((m) => `<div><dt>${t(m.label)}</dt><dd>${t(m.value)}</dd></div>`).join('')}</dl>
-    </div>
+    <p class="audiences__areas"><strong>${t(c.contact.status)}</strong> in ${t(c.contact.location)}. ${t(c.contact.virtualNote)}</p>
   </div>
 </section>`;
 }
@@ -242,7 +276,7 @@ function method(c) {
   ${divider(true)}
   <div class="wrap method__head">
     <div>
-      ${kicker(m.kicker, '03')}
+      ${kicker(m.kicker, '04')}
       <h2 class="display display--l" id="method-title">${lines(m.headline, [1])}</h2>
     </div>
     <p class="method__intro lede">${t(m.intro)}</p>
@@ -254,10 +288,10 @@ function method(c) {
         <p class="mpanel__n">${s.n}</p>
         <h3 class="mpanel__t">${t(s.name)}</h3>
         <p class="mpanel__b">${t(s.body)}</p>
-        <p class="mpanel__lisa"><span>In Lisa's lessons</span>${t(s.lisa)}</p>
+        <p class="mpanel__lisa"><span>In practice</span>${t(s.lisa)}</p>
       </div>`).join('')}
     </div>
-    <div class="mkeys" role="tablist" aria-label="Parts of a lesson">
+    <div class="mkeys" role="tablist" aria-label="Parts of Lisa's approach">
       ${m.steps.map((s, i) => `
       <button class="mkey" role="tab" id="mkey-${i}" aria-controls="mpanel-${i}" aria-selected="${i === 0}" tabindex="${i ? -1 : 0}" type="button" data-i="${i}">
         <span class="mkey__n">${s.n}</span><span class="mkey__name">${a(s.name)}</span>
@@ -269,41 +303,39 @@ function method(c) {
 
 function packages(c) {
   const p = c.packages;
-  const price = (v) => filled(v) ? `${esc(p.currency)}${a(v)}` : t(v);
   return `
 <section class="packages sec sec--ivory" id="options" aria-labelledby="pk-title">
   ${divider()}
   <div class="wrap packages__head">
-    <div>${kicker(p.kicker, '04')}<h2 class="display display--l" id="pk-title">${lines(p.headline, [1])}</h2></div>
+    <div>${kicker(p.kicker, '05')}<h2 class="display display--l" id="pk-title">${lines(p.headline, [1])}</h2></div>
     <p class="lede">${t(p.intro)}</p>
   </div>
   <div class="wrap packages__body" data-packages>
     <div class="pkeys" role="radiogroup" aria-label="Lesson options">
-      ${p.items.map((x, i) => `
+      ${p.items.map((x) => `
       <button class="pkey${x.featured ? ' is-on' : ''}" role="radio" aria-checked="${!!x.featured}" tabindex="${x.featured ? 0 : -1}" type="button" data-pkg="${x.id}">
-        <span class="pkey__meter" aria-hidden="true">${x.meter.split('/').map((d) => `<b>${esc(d)}</b>`).join('')}</span>
+        <span class="pkey__meter" aria-hidden="true"><b>${esc(x.meter)}</b></span>
         <span class="pkey__name">${t(x.name)}</span>
-        <span class="pkey__beats" aria-hidden="true">${'<i></i>'.repeat(x.beats)}</span>
-        <span class="pkey__price">${price(x.price)}</span>
+        <span class="pkey__short">${t(x.short)}</span>
       </button>`).join('')}
     </div>
     <div class="pdetail" aria-live="polite">
       ${p.items.map((x) => `
       <article class="pcard" data-pcard="${x.id}" ${x.featured ? '' : 'hidden'} aria-label="${a(x.name)}">
         <div class="pcard__top">
-          <p class="pcard__meter" aria-hidden="true">${esc(x.meter)}</p>
+          <p class="pcard__meter" aria-hidden="true">${esc(x.meter)} / ${String(p.items.length).padStart(2, '0')}</p>
           <h3 class="pcard__name">${t(x.name)}</h3>
-          <p class="pcard__price"><span class="pcard__amt">${price(x.price)}</span> <span class="pcard__unit">${t(x.priceUnit)}</span></p>
+          <p class="pcard__short">${t(x.short)}</p>
         </div>
         <dl class="pcard__facts">
           <div><dt>Who it's for</dt><dd>${t(x.whoFor)}</dd></div>
-          <div><dt>How long</dt><dd>${t(x.duration)}</dd></div>
-          <div><dt>How often</dt><dd>${t(x.frequency)}</dd></div>
-          <div><dt>What you get</dt><dd><ul>${x.includes.map((i) => `<li>${t(i)}</li>`).join('')}</ul></dd></div>
+          <div><dt>Where</dt><dd>${t(x.where)}</dd></div>
+          <div><dt>Your plan</dt><dd>${t(x.plan)}</dd></div>
+          <div><dt>Rates</dt><dd>${t(x.price)}</dd></div>
         </dl>
         <div class="pcard__next">
-          <a class="btn btn--key btn--dark" href="#inquire" data-choose="${x.id}" data-choose-label="${a(x.name)}">Ask about ${esc(plain(x.name)).toLowerCase()} ${arrow}</a>
-          <p class="pcard__then">Next: a short form — Lisa replies personally.</p>
+          <a class="btn btn--key btn--dark" href="#inquire" data-choose="${x.id}" data-choose-label="${a(x.name)}">Ask about lessons ${esc(plain(x.name)).replace(/^At /, 'at ').replace(/^Virtual lessons$/, 'online')} ${arrow}</a>
+          <p class="pcard__then">Or call or text <a href="tel:${a(c.contact.phoneHref)}">${t(c.contact.phone)}</a></p>
         </div>
       </article>`).join('')}
     </div>
@@ -312,46 +344,11 @@ function packages(c) {
 </section>`;
 }
 
-function students(c) {
-  const s = c.students;
-  const lanes = [0, 2, 1, 3, 0, 2];
-  return `
-<section class="students sec sec--paper" id="students" aria-labelledby="st-title">
-  <div class="wrap students__head">
-    <div>${kicker(s.kicker, '05')}<h2 class="display display--l" id="st-title">${lines(s.headline, [1])}</h2></div>
-    <div class="students__side">
-      <p class="lede">${t(s.intro)}</p>
-      <div class="students__nav" data-roll-nav>
-        <button type="button" class="rbtn" data-roll="-1" aria-label="Previous student">${arrow}</button>
-        <button type="button" class="rbtn" data-roll="1" aria-label="Next student">${arrow}</button>
-      </div>
-    </div>
-  </div>
-  <div class="roll" data-roll-track tabindex="0" aria-label="Student stories — scroll sideways or use the arrow buttons">
-    <div class="roll__staff" aria-hidden="true">${staff('roll__svg')}</div>
-    <ol class="roll__list">
-      ${s.items.map((x, i) => `
-      <li class="story" style="--lane:${lanes[i % lanes.length]}" data-story>
-        <button class="story__open" type="button" aria-expanded="false" aria-controls="story-${x.id}">
-          <span class="story__media">${img(x.photo, x.alt, 'story__img', '(min-width: 900px) 24vw, 80vw')}</span>
-          <span class="story__name">${t(x.name)}</span>
-          <span class="story__cap">${t(x.caption)}</span>
-        </button>
-        <div class="story__more" id="story-${x.id}" hidden>
-          <blockquote class="story__q">${t(x.quote)}</blockquote>
-          <ol class="story__path">${x.path.map((p) => `<li><span class="story__stage">${t(p.stage)}</span><span class="story__when">${t(p.when)}</span></li>`).join('')}</ol>
-        </div>
-      </li>`).join('')}
-    </ol>
-  </div>
-  <p class="wrap students__src">Every name, photo and quote on this wall comes from Lisa's <em>My Students</em> page.</p>
-</section>`;
-}
-
 function recital(c) {
   const r = c.recital;
+  const v0 = r.videos[0];
   return `
-<section class="recital sec sec--black" id="recital" aria-labelledby="rc-title" data-recital>
+<section class="recital sec sec--black" id="students" aria-labelledby="rc-title" data-recital>
   <div class="recital__spot" aria-hidden="true"></div>
   <div class="wrap recital__head">
     ${kicker(r.kicker, '06')}
@@ -359,24 +356,26 @@ function recital(c) {
   </div>
   <div class="wrap recital__stage">
     <div class="screen" data-screen>
-      <div class="screen__poster">
-        <span class="ph__staff" aria-hidden="true"></span>
-        <span class="screen__label">${t(r.videos[0].title)}</span>
-      </div>
-      <button class="screen__play" type="button" data-play aria-label="Play performance video">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10-6.5z" fill="currentColor"/></svg>
-        <span>Play — sound only starts when you press play</span>
+      <img class="screen__img" src="${esc(v0.poster)}" alt="" loading="lazy" decoding="async" data-screen-poster>
+      <div class="screen__shade" aria-hidden="true"></div>
+      <p class="screen__label" data-screen-label>${t(v0.title)}</p>
+      <button class="screen__play" type="button" data-play aria-label="Play: ${a(v0.title)}">
+        ${play.replace('<svg', '<svg class="screen__play-ico"')}
+        <span>Play with sound · captions included</span>
       </button>
     </div>
     <ol class="programme" aria-label="Programme">
-      ${r.videos.map((v, i) => `<li><button type="button" class="programme__i${i ? '' : ' is-on'}" data-video="${i}" aria-pressed="${i === 0}"><span class="programme__n">${['I', 'II', 'III', 'IV'][i]}.</span><span class="programme__t">${t(v.title)}</span></button></li>`).join('')}
+      ${r.videos.map((v, i) => `<li><button type="button" class="programme__i${i ? '' : ' is-on'}" data-video="${i}" aria-pressed="${i === 0}">
+        <span class="programme__n">${['I', 'II', 'III', 'IV'][i]}.</span>
+        <span class="programme__t"><strong>${t(v.student)}</strong> ${t(v.piece)}<em>${t(v.composer)}</em></span>
+      </button></li>`).join('')}
     </ol>
   </div>
   <div class="wrap recital__after">
     <p>${t(r.after)}</p>
-    <a class="btn btn--key" href="#options">Explore lessons ${arrow}</a>
+    <a class="btn btn--key" href="#inquire">Start your lessons ${arrow}</a>
   </div>
-  <script type="application/json" data-videos>${JSON.stringify(r.videos.map((v) => ({ src: v.src, youtube: v.youtube, poster: v.poster, captions: v.captions, title: plain(v.title) })))}</script>
+  <script type="application/json" data-videos>${JSON.stringify(r.videos.map((v) => ({ src: v.src, youtube: v.youtube, poster: v.poster, captions: v.captions, title: plain(v.title) }))).replace(/</g, '\\u003c')}</script>
 </section>`;
 }
 
@@ -433,7 +432,7 @@ function matcher(c) {
         ${i ? '<button type="button" class="btn btn--line btn--light mstep__back" data-back>Back</button>' : ''}
       </fieldset>`).join('')}
       <div class="mresult" data-result hidden tabindex="-1">
-        <p class="mresult__k">Suggested starting point</p>
+        <p class="mresult__k">Suggested next step</p>
         <h3 class="mresult__name" data-result-name></h3>
         <p class="mresult__why" data-result-why></p>
         <p class="mresult__sum" data-result-sum></p>
@@ -527,10 +526,12 @@ function finale(c) {
   return `
 <section class="finale" id="finale" aria-labelledby="fin-title" data-scene="finale">
   <div class="wrap finale__inner">
+    <p class="kicker"><span class="kicker__t">${t(f.kicker)}</span></p>
     <h2 class="display finale__t" id="fin-title">${lines(f.headline, [1])}</h2>
+    <p class="finale__beat">${plain(f.beat).map((b) => `<span>${esc(b)}</span>`).join('')}</p>
     <div class="finale__ctas">
       <a class="btn btn--key" href="${booking ? esc(booking) : '#inquire'}" data-cta="finale">${t(f.primaryCta)} ${arrow}</a>
-      <a class="btn btn--line btn--light" href="#options">${t(f.secondaryCta)}</a>
+      <a class="btn btn--line btn--light" href="tel:${a(c.contact.phoneHref)}">${t(f.secondaryCta)} · ${t(c.contact.phone)}</a>
     </div>
   </div>
 </section>`;
@@ -546,18 +547,16 @@ function inquire(c) {
   <div class="wrap inquire__grid">
     <div class="inquire__copy">
       ${kicker(fm.kicker, '11')}
-      <h2 class="display display--m" id="inq-title">${lines(c.finale.primaryCta)}</h2>
+      <h2 class="display display--m" id="inq-title">${lines(fm.headline, [1])}</h2>
       <p class="lede">${t(fm.intro)}</p>
       <dl class="inquire__contact">
-        <div><dt>Email</dt><dd>${t(c.contact.email)}</dd></div>
-        <div><dt>Phone</dt><dd>${t(c.contact.phone)}</dd></div>
-        <div><dt>Studio</dt><dd>${t(c.contact.location)}</dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:${a(c.contact.email)}">${t(c.contact.email)}</a></dd></div>
+        <div><dt>${t(c.contact.phoneNote)}</dt><dd><a href="tel:${a(c.contact.phoneHref)}">${t(c.contact.phone)}</a></dd></div>
+        <div><dt>Areas</dt><dd>${t(c.contact.location)}</dd></div>
         <div><dt>Lessons</dt><dd>${t(c.contact.formats)}</dd></div>
       </dl>
       <ol class="inquire__steps">
-        <li><span>1</span><p>Send the form — it takes about a minute.</p></li>
-        <li><span>2</span><p>Lisa replies personally. ${t(c.contact.responseNote)}</p></li>
-        <li><span>3</span><p>You decide on a first lesson only if it feels right.</p></li>
+        ${fm.steps.map((s, i) => `<li><span>${i + 1}</span><p>${t(s)}</p></li>`).join('')}
       </ol>
     </div>
     <form class="inquiry" id="inquiry-form" data-inquiry novalidate aria-label="Lesson inquiry">
@@ -567,11 +566,11 @@ function inquire(c) {
       </div>
       <fieldset class="ff"><legend>Who is the student?</legend><div class="fchips">${radios('who', fm.whoOptions)}</div></fieldset>
       <div class="frow">
-        <label class="ff"><span>Age range</span><select name="age" required><option value="">Choose…</option>${opts(fm.ageOptions)}</select></label>
+        <label class="ff"><span>Age</span><select name="age" required><option value="">Choose…</option>${opts(fm.ageOptions)}</select></label>
         <label class="ff"><span>Current experience</span><select name="experience" required><option value="">Choose…</option>${opts(fm.experienceOptions)}</select></label>
       </div>
       <div class="frow">
-        <label class="ff"><span>Lesson interest</span><select name="lesson" data-lesson-select><option value="">Not sure yet</option>${c.packages.items.map((p) => `<option value="${p.id}">${a(p.name)}</option>`).join('')}</select></label>
+        <label class="ff"><span>Where would lessons happen?</span><select name="lesson" data-lesson-select><option value="">Not sure yet</option>${c.packages.items.map((p) => `<option value="${p.id}">${a(p.name)}</option>`).join('')}</select></label>
         <label class="ff"><span>Main goal</span><select name="goal"><option value="">Choose…</option>${opts(fm.goalOptions)}</select></label>
       </div>
       <div class="frow">
@@ -582,11 +581,13 @@ function inquire(c) {
         <label class="ff"><span>Phone <em>(optional)</em></span><input name="phone" type="tel" autocomplete="tel"></label>
         <label class="ff"><span>Preferred contact</span><select name="contact">${opts(fm.contactOptions)}</select></label>
       </div>
+      <label class="ff"><span>Town, or "online" <em>(optional)</em></span><input name="town" autocomplete="address-level2"></label>
       <label class="ff"><span>Message <em>(optional)</em></span><textarea name="message" rows="3"></textarea></label>
       <input type="hidden" name="path" data-path-field>
       <p class="form-err" data-form-err role="alert" hidden></p>
       <button class="btn btn--key btn--dark btn--wide" type="submit">${t(fm.submit)} ${arrow}</button>
-      <div class="inquiry__ok" data-form-ok hidden tabindex="-1"><p>${t(fm.success)}</p></div>
+      <p class="inquiry__alt">Prefer to talk? ${t(c.contact.phoneNote)} <a href="tel:${a(c.contact.phoneHref)}">${t(c.contact.phone)}</a>.</p>
+      <div class="inquiry__ok" data-form-ok hidden tabindex="-1"><p>${t(fm.success)}</p><p class="inquiry__ok-s">${t(c.contact.responseNote)}</p></div>
     </form>
   </div>
 </section>`;
@@ -598,18 +599,19 @@ function footer(c) {
   <div class="wrap foot__grid">
     <div class="foot__brand">${monogram('mono foot__mono')}<p class="foot__wm">${t(c.brand.name)}<span>${t(c.brand.descriptor)}</span></p></div>
     <nav aria-label="Footer"><ul class="foot__nav">
-      <li><a href="#lessons">How lessons work</a></li><li><a href="#options">Lesson options</a></li>
-      <li><a href="#students">Students</a></li><li><a href="#path">Find your path</a></li>
-      <li><a href="#practice">Practice room</a></li><li><a href="#faq">FAQ</a></li><li><a href="#inquire">Ask about lessons</a></li>
+      <li><a href="#lisa">About Lisa</a></li><li><a href="#lessons">Lisa's approach</a></li><li><a href="#options">Lesson options</a></li>
+      <li><a href="#students">My students</a></li><li><a href="#path">Find your path</a></li>
+      <li><a href="#practice">Practice room</a></li><li><a href="#faq">FAQ</a></li><li><a href="#inquire">Start lessons</a></li>
     </ul></nav>
     <dl class="foot__contact">
-      <div><dt>Email</dt><dd>${t(c.contact.email)}</dd></div>
-      <div><dt>Studio</dt><dd>${t(c.contact.location)}</dd></div>
+      <div><dt>Email</dt><dd><a href="mailto:${a(c.contact.email)}">${t(c.contact.email)}</a></dd></div>
+      <div><dt>${t(c.contact.phoneNote)}</dt><dd><a href="tel:${a(c.contact.phoneHref)}">${t(c.contact.phone)}</a></dd></div>
+      <div><dt>Areas</dt><dd>${t(c.contact.location)}<br>${t(c.contact.virtualNote)}</dd></div>
     </dl>
   </div>
-  <div class="wrap foot__base">${staff('foot__staff')}<p>© <span data-year>${new Date().getFullYear()}</span> ${t(c.brand.legalName)}</p><p>${t(c.footer.note)}</p></div>
+  <div class="wrap foot__base">${staff('foot__staff')}<p>© <span data-year>${new Date().getFullYear()}</span> ${t(c.brand.legalName)}</p><p>${t(c.contact.status)}</p></div>
 </footer>
-<nav class="sticky-nav" aria-label="Quick action"><a class="sticky-cta" href="#inquire" data-sticky><span data-sticky-label>Ask about lessons</span>${arrow}</a></nav>`;
+<nav class="sticky-nav" aria-label="Quick action"><a class="sticky-cta" href="#inquire" data-sticky><span data-sticky-label>Start lessons</span>${arrow}</a></nav>`;
 }
 
 /* ───────────────────────────── page ───────────────────────────── */
@@ -621,22 +623,21 @@ export function renderPage(c) {
   const nDraft = open.filter((s) => s.__slot === 'draft').length;
   const review = REVIEW && (nFacts || nDraft) ? `
 <aside class="review" aria-label="Draft review status" data-review>
-  <p><strong>Draft build.</strong><span class="review__long"> ${nFacts} facts are waiting for content from the current site; ${nDraft} lines of new copy need approval.</span><span class="review__short"> ${nFacts} facts open.</span>
+  <p><strong>Draft build.</strong><span class="review__long"> ${nFacts} facts are waiting for content; ${nDraft} lines of new copy need approval.</span><span class="review__short"> ${nFacts} facts open.</span>
   <button type="button" class="review__btn" data-review-toggle aria-pressed="true">Hide markers</button></p>
 </aside>` : '';
 
-  // Data the client-side modules need (no unverified facts exposed as values).
   const data = {
-    packages: c.packages.items.map((p) => ({ id: p.id, name: plain(p.name), price: filled(p.price) ? plain(p.price) : '', duration: filled(p.duration) ? plain(p.duration) : '', frequency: plain(p.frequency) })),
-    matcher: { rules: c.matcher.rules.map((r) => ({ ...r, why: plain(r.why) })) },
-    contact: { email: filled(c.contact.email) ? plain(c.contact.email) : '', endpoint: c.contact.formEndpoint || '' },
+    packages: c.packages.items.map((p) => ({ id: p.id, name: plain(p.name), short: plain(p.short) })),
+    matcher: { rules: c.matcher.rules.map((r) => ({ when: r.when, package: r.package || '', title: plain(r.title) || '', why: plain(r.why) })) },
+    contact: { email: plain(c.contact.email), phone: plain(c.contact.phone), endpoint: c.contact.formEndpoint || '' },
     journey: c.journey.map((j) => j.id),
     review: REVIEW,
   };
 
   return {
-    body: [nav(c), review, '<main id="main">', hero(c), journey(c), firstNote(c), lisa(c), method(c), packages(c),
-      students(c), recital(c), objections(c), matcher(c), practice(c), faq(c), finale(c), inquire(c), '</main>', footer(c),
+    body: [nav(c), review, '<main id="main">', hero(c), journey(c), lisa(c), why(c), firstNote(c), method(c), packages(c),
+      recital(c), objections(c), matcher(c), practice(c), faq(c), finale(c), inquire(c), '</main>', footer(c),
       `<script type="application/json" id="site-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`].join('\n'),
     title: plain(c.meta.title),
     description: plain(c.meta.description),

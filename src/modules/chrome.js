@@ -81,7 +81,7 @@ export function initChrome() {
   const sync = () => sticky.classList.toggle('is-on', pastHero && !atForm);
   ScrollTrigger.create({ trigger: '#first-note', start: 'top bottom', end: 'max', onToggle: (s) => { pastHero = s.isActive; sync(); } });
   ScrollTrigger.create({ trigger: '#finale', start: 'top 80%', end: 'max', onToggle: (s) => { atForm = s.isActive; sync(); } });
-  const syncLabel = () => { const i = store.get('interest'); label.textContent = i?.label ? `Ask about ${i.label.toLowerCase()}` : 'Ask about lessons'; };
+  const syncLabel = () => { const i = store.get('interest'); label.textContent = i?.label ? `Start lessons · ${i.label}` : 'Start lessons'; };
   store.subscribe(syncLabel);
   syncLabel();
 }

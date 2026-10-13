@@ -2,7 +2,7 @@
 
 A new website for Lisa Mott's piano lessons. It opens with a procedural 3D grand piano, follows the instrument through a scroll journey (keys → hammers → strings → performance), and lands on the business: lesson options, student proof, a lesson-path matcher, and an inquiry form that remembers the visitor's choices.
 
-> **Content status: draft.** The source site (`pianolessonswithlisamott.com`) could not be reached from the build environment, so **no Lisa-specific facts are on the page yet**. Every fact is an empty, labelled slot. See [`docs/CONTENT-AUDIT.md`](docs/CONTENT-AUDIT.md).
+> **Content status:** every fact comes from Lisa's current site (audited 2026-10-13; see [`docs/CONTENT-AUDIT.md`](docs/CONTENT-AUDIT.md)). New copy is marked `draft()` in `content/site.js` and still needs her approval. Section order and voice follow the [Livepower](https://livepower.webflow.io/) reference; the visual design is this site's own.
 
 ## Run
 
@@ -10,7 +10,7 @@ A new website for Lisa Mott's piano lessons. It opens with a procedural 3D grand
 npm install
 npm run dev                         # http://localhost:5173
 npm run check:content               # list every empty fact / draft line
-ALLOW_PLACEHOLDERS=1 npm run build  # review build (a normal build fails while facts are empty)
+npm run build                       # fails if any fact slot is ever left empty
 ```
 
 ## How content works
@@ -25,24 +25,24 @@ All copy lives in **`content/site.js`**. At dev and build time it is rendered in
 
 To finish the site: replace each `fact()` with `ok(…)`, approve or rewrite each `draft()`, set `reviewMode: false`, and add `contact.formEndpoint` or `contact.email`. If Lisa uses a booking tool, `contact.bookingUrl` switches the final CTA to it.
 
-## Page structure
+## Page structure (Livepower flow)
 
-| # | Section | What it does |
+| # | Section | Lisa's content |
 |---|---|---|
-| 01 | Hero | 3D piano, headline words land one per sixteenth note (72 BPM) and the piano plays them silently |
-| — | Journey | 8 scroll scenes: the camera moves to the keys, then the hammers, then the strings, then a performance view. Captions change with each scene |
-| 02 | First note | 8-key playable piano (mouse, touch, A–K keys). Works with sound off. After the first note, a CTA appears |
-| 03 | Meet Lisa | Portrait, bio and credentials (slots) |
-| 04 | How lessons work | Five lesson areas as white keys (ARIA tabs) |
-| 05 | Choose your rhythm | Lesson options as keys with time signatures. The selection is remembered |
-| 06 | Wall of progress | Horizontal piano-roll of student stories on desktop, vertical list on phones |
-| 07 | Recital room | Click-to-load video. The room dims, and nothing autoplays |
-| 08 | Can I really learn? | Objections open like piano lids (the icon morphs) |
-| 09 | Find your path | 3 questions map to an option through rules in `content/site.js` (no "AI" claims) |
-| 10 | Practice room | 5/10/15-min timer and metronome. Visual first, audio only if sound is on |
-| 11 | FAQ | Sheet-music measures that expand |
-| 12 | Finale | Wide 3D shot. The notes the visitor played earlier are held as a chord |
-| 13 | Inquiry | Intake form, pre-filled with the chosen option and matcher path |
+| 00 | Hero (3D) | "Now Accepting Students", "All people are musical.", who she teaches, where, a "watch a student" card, trust strip |
+| — | Journey (3D) | 8 scenes that tell her philosophy: all people are musical → different starting points → spatial → physical → aural → curiosity and enjoyment → real students → "an adventure and a journey" |
+| 01 | About | Statement, portrait, her bio (verbatim), quote, stat tiles |
+| 02 | Why Lisa | 4 cards: teaching since 1993, pedagogy degree, tailored plan, working musician |
+| 03 | Who it's for | Playable 8-key piano, the three audiences, service areas |
+| 04 | How lessons work | Her aural / physical / spatial approach plus enjoyment, as four piano keys |
+| 05 | Lesson options | At your home, at Lisa's home, virtual. Rates aren't published, and the site says so |
+| 06 | My students | Recital room with Wynnton's and Dexter's real performances, with captions |
+| 07 | Can I really learn? | 5 objections answered from her own pages |
+| 08 | Find your path | 3 questions, with fit rules grounded in her facts |
+| 09 | Practice room | Timer and metronome |
+| 10 | FAQ | 7 answers, all from her site |
+| — | Final call (3D) | "Ready to start your journey?" and "Hear it. Feel it. Read it." |
+| 11 | Inquiry | Her contact details, a 3-step "what happens next", and a form that opens an email to Lisa |
 
 ## Technical notes
 

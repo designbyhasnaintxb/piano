@@ -27,11 +27,10 @@ export function initPackages(data) {
       if (!reduced) {
         gsap.fromTo(next, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 0.6, ease: 'expo.out' });
         gsap.from($$('.pcard__facts > div, .pcard__next', next), { y: 16, opacity: 0, stagger: 0.05, duration: 0.5, delay: 0.1 });
-        gsap.from($$('.pkey__beats i', keys[i]), { scale: 0, stagger: 0.06, duration: 0.4, ease: 'back.out(3)' });
+        gsap.fromTo($('.pkey__meter', keys[i]), { scale: 0.7 }, { scale: 1, duration: 0.5, ease: 'back.out(3)' });
       }
-      // the meter, played: 1 note, 4 notes, 6 notes
-      const beats = $$('.pkey__beats i', keys[i]).length;
-      for (let b = 0; b < Math.min(beats, 6); b++) setTimeout(() => playNote(b === 0 ? 60 : 67, b === 0 ? 0.6 : 0.35, 0.3), b * 140);
+      // option 1, 2, 3 → a rising one-, two-, three-note motif
+      for (let b = 0; b <= i; b++) setTimeout(() => playNote([60, 64, 67][b], 0.5, 0.35), b * 140);
     }
     if (remember) store.set('interest', { id, label: byId.get(id)?.name || '' });
   }

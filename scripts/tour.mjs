@@ -14,7 +14,7 @@ await page.goto('http://localhost:5173/?qa', { waitUntil: 'networkidle' });
 await page.waitForTimeout(3500);
 const shots = [
   ['hero', null], ['j1', '#journey', 0.02], ['j3', '#journey', 0.29], ['j4', '#journey', 0.43], ['j5', '#journey', 0.57], ['j6', '#journey', 0.71], ['j7', '#journey', 0.86], ['j8', '#journey', 0.995],
-  ['first', '#first-note'], ['lisa', '#lisa'], ['method', '#lessons'], ['options', '#options'], ['students', '#students'], ['recital', '#recital'],
+  ['lisa', '#lisa'], ['why', '#why'], ['first', '#first-note'], ['method', '#lessons'], ['options', '#options'], ['recital', '#students'],
   ['canI', '#can-i'], ['path', '#path'], ['practice', '#practice'], ['faq', '#faq'], ['finale', '#finale', 0.35], ['inquire', '#inquire'], ['footer', '.foot'],
 ];
 for (const [name, sel, frac] of shots) {

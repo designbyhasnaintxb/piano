@@ -7,7 +7,8 @@ export function initRecital() {
   if (!root) return;
   const screen = $('[data-screen]', root);
   const playBtn = $('[data-play]', root);
-  const label = $('.screen__label', root);
+  const label = $('[data-screen-label]', root);
+  const poster = $('[data-screen-poster]', root);
   const videos = JSON.parse($('[data-videos]', root).textContent);
   const items = $$('[data-video]', root);
   let cur = 0;
@@ -29,6 +30,8 @@ export function initRecital() {
     clearMedia();
     const v = videos[i];
     label.textContent = v.title || 'Performance video';
+    if (v.poster) poster.src = v.poster;
+    playBtn.setAttribute('aria-label', `Play: ${v.title}`);
   }
 
   function play() {
@@ -66,6 +69,8 @@ export function initRecital() {
   }
 
   playBtn.addEventListener('click', play);
+  // "Watch a student perform" in the hero picks the performance; the visitor presses play.
+  $$('[data-watch]').forEach((a) => a.addEventListener('click', () => select(+a.dataset.watch)));
   items.forEach((b, i) => b.addEventListener('click', () => select(i)));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && root.classList.contains('is-dim')) clearMedia(); });
   dimmer.addEventListener('click', clearMedia);
