@@ -42,7 +42,7 @@ export function initMotion() {
   });
 
   // Lists that read as a sequence get played in sequence.
-  [['.aud', '.audiences'], ['.stat', '.stats'], ['.wcard', '.why__list'], ['.pkey', '.pkeys'], ['.mkey', '.mkeys'], ['.lid', '.lids__list'], ['.bar', '.score'], ['.programme li', '.programme'], ['.inquire__steps li', '.inquire__steps']]
+  [['.aud', '.audiences'], ['.offer__i', '.offer__stack'], ['.stat', '.stats'], ['.wcard', '.why__list'], ['.pkey', '.pkeys'], ['.mkey', '.mkeys'], ['.lid', '.lids__list'], ['.bar', '.score'], ['.programme li', '.programme'], ['.inquire__steps li', '.inquire__steps']]
     .forEach(([item, trig]) => {
       const t = $(trig);
       if (!t) return;

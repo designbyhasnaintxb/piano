@@ -73,3 +73,42 @@
 
 .brand__name, .brand__desc { white-space: nowrap; }
 .nav:not(.is-scrolled) .nav__status { display: none; }
+
+/* ─────────────────────────── logo mark ─────────────────────────── */
+.mark { overflow: visible; }
+.brand .mark { width: 46px; height: 46px; }
+.foot__mono.mark { width: 84px; height: 84px; }
+.mark__lid { transform-box: view-box; transform-origin: 12px 33px; }
+.mark__bar { transform-box: fill-box; transform-origin: 50% 100%; }
+
+/* draw on once, then the bars breathe forever (2 beats at 72 BPM = 1.667s) */
+.mark__line { stroke-dasharray: 100; stroke-dashoffset: 0; }
+.mark__bars { opacity: 1; stroke: var(--mustard); }
+@media (prefers-reduced-motion: no-preference) {
+  .mark__line { animation: mark-draw 1.6s cubic-bezier(.6, 0, .2, 1) both; }
+  .mark__line:nth-child(2) { animation-delay: .25s; }
+  .mark__line:nth-child(3) { animation-delay: .4s; }
+  .mark__lid .mark__line { animation-delay: .55s; }
+  .mark__bars { animation: mark-fade .4s 1.3s both; }
+  .mark__bar { animation: mark-bar 1.667s cubic-bezier(.45, 0, .55, 1) infinite alternate; }
+  .mark__bar--1 { animation-delay: 1.4s; }
+  .mark__bar--2 { animation-delay: calc(1.4s - .42s); }
+  .mark__bar--3 { animation-delay: calc(1.4s - .83s); }
+  .mark__bar--4 { animation-delay: calc(1.4s - 1.25s); }
+  /* the prop bar and the lid move together: the sound holds the lid up */
+  .mark__bar--5 { animation-name: mark-prop; animation-delay: 1.4s; }
+  .mark__lid { animation: mark-lid 1.667s cubic-bezier(.45, 0, .55, 1) 1.4s infinite alternate; }
+  .brand:hover .mark__bar, .brand:hover .mark__lid { animation-duration: .42s; }
+}
+@keyframes mark-draw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+@keyframes mark-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mark-bar { from { transform: scaleY(1); } to { transform: scaleY(.32); } }
+@keyframes mark-prop { from { transform: scaleY(1); } to { transform: scaleY(.86); } }
+@keyframes mark-lid { from { transform: rotate(0deg); } to { transform: rotate(5.3deg); } }
+
+/* wordmark: widely spaced serif capitals (the airy feel of the reference) */
+.brand__name { font-size: 1.15rem; letter-spacing: .3em; line-height: 1; }
+.brand__desc { margin-top: 6px; font-size: 8.5px; letter-spacing: .46em; }
+.foot__wm { font-size: 1.9rem; letter-spacing: .3em; }
+.foot__wm span { letter-spacing: .46em; }
+@media (max-width: 760px) { .brand .mark { width: 38px; height: 38px; } .brand__name { font-size: 1rem; letter-spacing: .24em; } }

@@ -57,9 +57,9 @@ export default {
   hero: {
     kicker: ok('Now Accepting Students', HOME),
     headline: draft(['All people', 'are', 'musical.'], { note: 'From Lisa\'s philosophy page: "I Believe That All People are Musical".' }),
-    sub: draft('Private piano lessons with Lisa Mott for children age 5 and up and adults from beginner to early advanced — at your home, at Lisa\'s, or online.'),
+    sub: draft('Private piano lessons with Lisa Mott — teaching since 1993, with a master\'s in Piano Pedagogy. For children age 5 and up and adults from beginner to early advanced, at your home, at Lisa\'s, or online.'),
     primaryCta: draft('Start Your Lessons'),
-    secondaryCta: draft('How Lessons Work'),
+    secondaryCta: draft('Text Lisa'),
     watch: { label: draft('Watch a student perform'), title: ok('Wynnton — "Seven of Hearts"', STU) },
     trust: [
       { label: draft('Teaching'), value: ok('Since 1993', ABOUT) },
@@ -121,6 +121,30 @@ export default {
       { title: draft('A plan built for you'), body: ok('Each student has a unique set of goals and circumstances; therefore, each student has an individually tailored plan.', START) },
       { title: draft('A working musician'), body: draft('Lisa is active as an accompanist and freelance musician — not only a teacher.') },
     ],
+  },
+
+  /* ─────────────────────── the offer (Hormozi-style value stack) ───────────────────────
+     Every line is a fact from Lisa's site. Price, guarantee, bonuses and limited
+     spots are NOT here on purpose — see docs/OFFER-PLAN.md for what Lisa must decide. */
+  offer: {
+    kicker: draft('The offer'),
+    name: draft('Private Piano, Built Around You'),
+    headline: draft(['Everything you get', 'when you learn with Lisa.']),
+    promise: draft('Learn to play with ease, read music with confidence, and actually enjoy practising — with one experienced teacher who builds the plan around you.'),
+    stack: [
+      { t: draft('A teacher with over 30 years of private teaching'), d: ok('Teaching private piano lessons since 1993.', ABOUT) },
+      { t: draft('Trained in how people learn piano'), d: ok('Master\'s degree in Piano Pedagogy from Columbus State University, plus post-graduate study in piano accompanying.', ABOUT) },
+      { t: draft('A plan built for your goals'), d: ok('Each student has an individually tailored plan for their piano education.', START) },
+      { t: draft('Lessons where it\'s easiest for you'), d: ok('At your home, at Lisa\'s home, or virtually — and virtual lessons aren\'t limited to her local area.', START) },
+      { t: draft('A complete approach, not just notes'), d: draft('Hear it, feel it, read it: the aural, physical and spatial experience of playing.') },
+      { t: draft('A teacher for every stage'), d: ok('Children age 5 and up, and adults from beginners through early advanced students.', ABOUT) },
+      { t: draft('Students who get on stage'), d: ok('Like Wynnton ("Seven of Hearts", Kevin Olson) and Dexter ("Romance Op. 24, No. 9", Jean Sibelius).', STU) },
+      { t: draft('Free practice tools on this site'), d: draft('A practice timer and metronome you can use between lessons.') },
+    ],
+    notIncluded: draft('What you won\'t get: a one-size-fits-all method book and a teacher who rushes you through it.'),
+    investment: draft('Your plan and rates are set after a short conversation about your goals. Asking costs nothing and commits you to nothing.'),
+    cta: draft('Claim your spot'),
+    textCta: draft('Text Lisa'),
   },
 
   /* ─────────────────────── who it's for (04) + first note ─────────────────────── */

@@ -46,15 +46,16 @@ function img(slot, altSlot, cls = '', sizes = '100vw') {
 
 /* ───────────────────────── shared graphics ───────────────────────── */
 
+/* Logo: a thin-line grand piano whose open lid is held up by sound.
+   Five bars breathe at 72 BPM; the tallest one is the lid's prop. */
+const BARS = [[19, 29.6], [23.5, 26.6], [28, 24.2], [32.5, 21.5], [37, 15.6]];
 export const monogram = (cls = 'mono') => `
-<svg class="${cls}" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-  <g class="mono__staff" stroke="currentColor" stroke-width=".6" opacity=".42">
-    <path d="M2 12.5H46M2 18.5H46M2 24.5H46M2 30.5H46M2 36.5H46"/>
-  </g>
-  <g fill="currentColor">
-    <path class="mono__l" d="M7 5h6.2v26H20v12H7z"/>
-    <path class="mono__m" d="M23 5h20v4h-2.6v34H36.4V9h-1.8v20h-4V9h-1.8v34H23z"/>
-  </g>
+<svg class="mark ${cls}" viewBox="0 0 64 64" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
+  <path class="mark__line" pathLength="100" d="M12 33H44C51 33 55 36.6 55 40.4V42H12Z"/>
+  <path class="mark__line" pathLength="100" d="M12 36H7V38.6H12"/>
+  <path class="mark__line" pathLength="100" d="M15 42V54M51.5 42V54M33 42V48.5M30.8 48.5H35.2"/>
+  <g class="mark__lid"><path class="mark__line" pathLength="100" d="M12 33L42.5 11.2C45.6 9 49.4 10.6 48.2 13.8"/></g>
+  <g class="mark__bars" stroke-width="2">${BARS.map(([x, y], i) => `<path class="mark__bar mark__bar--${i + 1}" d="M${x} 32V${y}"/>`).join('')}</g>
 </svg>`;
 
 const staff = (cls = '') => `
@@ -132,7 +133,7 @@ function hero(c) {
     <p class="hero__sub lede">${t(h.sub)}</p>
     <div class="hero__ctas">
       <a class="btn btn--key" href="#inquire" data-cta="hero">${t(h.primaryCta)} ${arrow}</a>
-      <a class="btn btn--line" href="#lessons">${t(h.secondaryCta)}</a>
+      <a class="btn btn--line" href="sms:${a(c.contact.phoneHref)}">${t(h.secondaryCta)} · ${t(c.contact.phone)}</a>
     </div>
   </div>
   <a class="hero__watch" href="#students" data-watch="0">
@@ -223,6 +224,37 @@ function why(c) {
 </section>`;
 }
 
+function offer(c) {
+  const o = c.offer;
+  const tick = `<svg class="offer__tick" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  return `
+<section class="offer sec sec--paper" id="offer" aria-labelledby="offer-title">
+  ${divider()}
+  <div class="wrap offer__grid">
+    <div class="offer__head">
+      ${kicker(o.kicker, '03')}
+      <p class="offer__name">${t(o.name)}</p>
+      <h2 class="display display--l" id="offer-title">${lines(o.headline, [1])}</h2>
+      <p class="lede offer__promise">${t(o.promise)}</p>
+      <p class="offer__status"><span class="hero__dot" aria-hidden="true"></span>${t(c.contact.status)}</p>
+    </div>
+    <div class="offer__card">
+      <ol class="offer__stack">
+        ${o.stack.map((x) => `<li class="offer__i">${tick}<div><h3 class="offer__t">${t(x.t)}</h3><p class="offer__d">${t(x.d)}</p></div></li>`).join('')}
+      </ol>
+      <p class="offer__not">${t(o.notIncluded)}</p>
+      <div class="offer__foot">
+        <p class="offer__inv"><span>Your investment</span>${t(o.investment)}</p>
+        <div class="offer__ctas">
+          <a class="btn btn--key btn--dark" href="#inquire" data-cta="offer">${t(o.cta)} ${arrow}</a>
+          <a class="btn btn--line" href="sms:${a(c.contact.phoneHref)}">${t(o.textCta)} · ${t(c.contact.phone)}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>`;
+}
+
 function firstNote(c) {
   const f = c.firstNote;
   const whites = [['C4', 'C'], ['D4', 'D'], ['E4', 'E'], ['F4', 'F'], ['G4', 'G'], ['A4', 'A'], ['B4', 'B'], ['C5', 'C']];
@@ -232,7 +264,7 @@ function firstNote(c) {
 <section class="first sec sec--ivory" id="first-note" aria-labelledby="first-title">
   <div class="wrap first__grid">
     <div class="first__copy">
-      ${kicker(f.kicker, '03')}
+      ${kicker(f.kicker, '04')}
       <h2 class="display display--l" id="first-title">${lines(f.headline, [2])}</h2>
       <div class="first__after" data-after hidden>
         <p class="first__after-t">${t(f.afterFirst)}</p>
@@ -279,7 +311,7 @@ function method(c) {
   ${divider(true)}
   <div class="wrap method__head">
     <div>
-      ${kicker(m.kicker, '04')}
+      ${kicker(m.kicker, '05')}
       <h2 class="display display--l" id="method-title">${lines(m.headline, [1])}</h2>
     </div>
     <p class="method__intro lede">${t(m.intro)}</p>
@@ -310,7 +342,7 @@ function packages(c) {
 <section class="packages sec sec--ivory" id="options" aria-labelledby="pk-title">
   ${divider()}
   <div class="wrap packages__head">
-    <div>${kicker(p.kicker, '05')}<h2 class="display display--l" id="pk-title">${lines(p.headline, [1])}</h2></div>
+    <div>${kicker(p.kicker, '06')}<h2 class="display display--l" id="pk-title">${lines(p.headline, [1])}</h2></div>
     <p class="lede">${t(p.intro)}</p>
   </div>
   <div class="wrap packages__body" data-packages>
@@ -354,7 +386,7 @@ function recital(c) {
 <section class="recital sec sec--black" id="students" aria-labelledby="rc-title" data-recital>
   <div class="recital__spot" aria-hidden="true"></div>
   <div class="wrap recital__head">
-    ${kicker(r.kicker, '06')}
+    ${kicker(r.kicker, '07')}
     <h2 class="display display--l" id="rc-title">${lines(r.headline, [1])}</h2>
   </div>
   <div class="wrap recital__stage">
@@ -395,7 +427,7 @@ function objections(c) {
   ${divider()}
   <div class="wrap lids__grid">
     <div class="lids__head">
-      ${kicker(o.kicker, '07')}
+      ${kicker(o.kicker, '08')}
       <h2 class="display display--m" id="ob-title">${lines(o.headline, [1])}</h2>
     </div>
     <ul class="lids__list" data-lids>
@@ -417,7 +449,7 @@ function matcher(c) {
 <section class="matcher sec sec--wine" id="path" aria-labelledby="mt-title">
   <div class="wrap matcher__grid" data-matcher>
     <div class="matcher__head">
-      ${kicker(m.kicker, '08')}
+      ${kicker(m.kicker, '09')}
       <h2 class="display display--m" id="mt-title">${lines(m.headline, [1])}</h2>
       <div class="measures" aria-hidden="true">
         ${m.steps.map((s, i) => `<span class="measure" data-measure="${i}"><i class="measure__note"></i></span>`).join('')}
@@ -455,7 +487,7 @@ function practice(c) {
   return `
 <section class="practice sec sec--paper" id="practice" aria-labelledby="pr-title">
   <div class="wrap practice__head">
-    <div>${kicker(p.kicker, '09')}<h2 class="display display--m" id="pr-title">${lines(p.headline, [1])}</h2></div>
+    <div>${kicker(p.kicker, '10')}<h2 class="display display--m" id="pr-title">${lines(p.headline, [1])}</h2></div>
     <p class="lede">${t(p.intro)}</p>
   </div>
   <div class="wrap practice__grid">
@@ -509,7 +541,7 @@ function faq(c) {
 <section class="faq sec sec--ivory" id="faq" aria-labelledby="faq-title">
   ${divider()}
   <div class="wrap faq__grid">
-    <div class="faq__head">${kicker(f.kicker, '10')}<h2 class="display display--m" id="faq-title">${lines(f.headline, [1])}</h2></div>
+    <div class="faq__head">${kicker(f.kicker, '11')}<h2 class="display display--m" id="faq-title">${lines(f.headline, [1])}</h2></div>
     <div class="score" data-faq>
       ${f.items.map((x, i) => `
       <div class="bar">
@@ -549,7 +581,7 @@ function inquire(c) {
   ${divider()}
   <div class="wrap inquire__grid">
     <div class="inquire__copy">
-      ${kicker(fm.kicker, '11')}
+      ${kicker(fm.kicker, '12')}
       <h2 class="display display--m" id="inq-title">${lines(fm.headline, [1])}</h2>
       <p class="lede">${t(fm.intro)}</p>
       <dl class="inquire__contact">
@@ -615,7 +647,7 @@ function footer(c) {
   <p class="foot__giant wrap" aria-hidden="true" data-giant>${t(c.brand.name)}</p>
   <div class="wrap foot__base">${staff('foot__staff')}<p>© <span data-year>${new Date().getFullYear()}</span> ${t(c.brand.legalName)}</p><p>${t(c.contact.status)}</p></div>
 </footer>
-<nav class="sticky-nav" aria-label="Quick action"><a class="sticky-cta" href="#inquire" data-sticky><span data-sticky-label>Start lessons</span>${arrow}</a></nav>`;
+<nav class="sticky-nav" aria-label="Quick action"><div class="sticky-cta" data-sticky><a class="sticky-cta__text" href="sms:${a(c.contact.phoneHref)}">Text Lisa</a><a class="sticky-cta__go" href="#inquire"><span data-sticky-label>Start lessons</span>${arrow}</a></div></nav>`;
 }
 
 /* ───────────────────────────── page ───────────────────────────── */
@@ -640,7 +672,7 @@ export function renderPage(c) {
   };
 
   return {
-    body: [nav(c), review, '<main id="main">', hero(c), journey(c), marquee(c), lisa(c), why(c), firstNote(c), method(c), packages(c),
+    body: [nav(c), review, '<main id="main">', hero(c), journey(c), marquee(c), lisa(c), why(c), offer(c), firstNote(c), method(c), packages(c),
       recital(c), objections(c), matcher(c), practice(c), faq(c), finale(c), inquire(c), '</main>', footer(c),
       `<script type="application/json" id="site-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`].join('\n'),
     title: plain(c.meta.title),

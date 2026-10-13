@@ -44,8 +44,6 @@ em, i, cite { font-style: normal; }
 .lisa__quote { font-size: clamp(1.6rem, 2.3vw, 2.2rem); line-height: 1.08; }
 .aud__n, .bar__n, .programme__n, .inquire__steps li > span { font-size: 1.25rem; color: var(--ochre); }
 .sec--dark .aud__n, .sec--black .programme__n { color: var(--gold); }
-.brand__name { font-size: 1.6rem; line-height: .9; letter-spacing: .01em; }
-.foot__wm { font-size: 2.2rem; letter-spacing: .01em; }
 .mini__l { font-size: 1.5rem; }
 .string__note { font-size: 2.4rem; }
 
@@ -83,3 +81,7 @@ em, i, cite { font-style: normal; }
 /* buttons: small medium capitals, like "CONTACT US" */
 .btn { font-family: var(--sans); font-weight: 500; letter-spacing: .06em; text-transform: uppercase; font-size: .8rem; }
 .btn--line { letter-spacing: .06em; }
+/* wordmark keeps its airy spacing (after the generic display rule) */
+.brand__name { letter-spacing: .3em; font-size: 1.15rem; }
+.foot__wm { letter-spacing: .3em; }
+@media (max-width: 760px) { .brand__name { font-size: 1rem; letter-spacing: .24em; } }
