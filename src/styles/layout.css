@@ -1,0 +1,116 @@
+/* ─────────────────────────── stage (WebGL) ─────────────────────────── */
+.stage { position: fixed; inset: 0; z-index: 0; background: radial-gradient(120% 90% at 70% 35%, #2a2522 0%, #171514 45%, #0f0e0e 100%); pointer-events: none; }
+.stage__poster, .stage__canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.stage__canvas { opacity: 0; transition: opacity 1.2s var(--ease); }
+.stage.is-live .stage__canvas { opacity: 1; }
+.stage.is-live .stage__poster { opacity: 0; transition: opacity 1.2s .2s; }
+.stage__vignette { position: absolute; inset: 0; background:
+  linear-gradient(90deg, rgba(15,14,14,.82) 0%, rgba(15,14,14,.35) 38%, transparent 60%),
+  linear-gradient(0deg, rgba(15,14,14,.75) 0%, transparent 30%); }
+.stage.is-hidden { visibility: hidden; }
+@media (max-aspect-ratio: 9/10) {
+  .stage__vignette { background: linear-gradient(0deg, rgba(15,14,14,.92) 0%, rgba(15,14,14,.55) 45%, rgba(15,14,14,.1) 75%, rgba(15,14,14,.5) 100%); }
+}
+
+main, .foot { position: relative; z-index: 1; }
+.sec { position: relative; z-index: 2; padding-block: var(--sec-pad); }
+.sec--ivory { background: var(--ivory); color: var(--black); }
+.sec--paper { background: var(--paper); color: var(--black); }
+.sec--dark { background: var(--graphite); color: var(--ivory); }
+.sec--black { background: var(--black); color: var(--ivory); }
+.sec--wine { background: var(--wine-deep); color: var(--ivory); }
+.sec--ivory :focus-visible, .sec--paper :focus-visible { outline-color: var(--wine); }
+
+/* ─────────────────────────── nav ─────────────────────────── */
+.nav {
+  position: fixed; inset: 0 0 auto; z-index: 50; height: var(--nav-h);
+  display: flex; align-items: center; gap: 24px; padding-inline: var(--gutter);
+  color: var(--ivory); transition: color .35s, background-color .35s, transform .45s var(--ease);
+}
+.nav::before { content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .35s;
+  background: rgba(21,21,21,.72); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom: 1px solid var(--line-dark); }
+.nav.is-scrolled::before { opacity: 1; }
+.nav.is-light { color: var(--black); }
+.nav.is-light::before { background: rgba(244,239,228,.78); border-bottom-color: var(--line-light); }
+.nav.is-tucked { transform: translateY(-100%); }
+
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; }
+.mono { width: 40px; height: 40px; }
+.brand__wm { display: flex; flex-direction: column; line-height: 1; }
+.brand__name { font: 420 1.28rem/1 var(--serif); font-variation-settings: 'opsz' 40; letter-spacing: .14em; text-transform: uppercase; }
+.brand__desc { margin-top: 5px; font: 500 9.5px/1 var(--mono); letter-spacing: .42em; text-transform: uppercase; opacity: .7; }
+.brand .slot-draft, .brand .slot-fact { all: unset; }
+
+.nav__keys ul { display: flex; border-top: 2px solid var(--wine); }
+.navkey {
+  position: relative; display: flex; align-items: flex-end; justify-content: center;
+  width: 82px; height: 38px; padding-bottom: 7px; text-decoration: none;
+  font: 500 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-top: 0; margin-left: -1px;
+  border-radius: 0 0 4px 4px; transition: transform .16s var(--ease-key), background-color .2s, box-shadow .16s;
+  box-shadow: inset 0 -3px 0 color-mix(in srgb, currentColor 12%, transparent);
+}
+.navkey:hover, .navkey:focus-visible { transform: translateY(3px); background: color-mix(in srgb, currentColor 8%, transparent); box-shadow: inset 0 -1px 0 color-mix(in srgb, currentColor 12%, transparent); }
+.navkey.is-active { background: color-mix(in srgb, currentColor 12%, transparent); }
+.navkey.is-active::after { content: ''; position: absolute; top: 6px; left: 50%; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--gold); }
+
+.nav__end { display: flex; align-items: center; gap: 14px; }
+.sound-toggle {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px; border-radius: 20px;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; transition: background-color .2s, border-color .2s;
+}
+.sound-toggle:hover { background: color-mix(in srgb, currentColor 8%, transparent); }
+.ico--sound__on { display: none; }
+.sound-toggle[aria-pressed='true'] { border-color: var(--gold); }
+.sound-toggle[aria-pressed='true'] .ico--sound__on { display: block; }
+.sound-toggle[aria-pressed='true'] .ico--sound__off { display: none; }
+.nav__menu { display: none; width: 44px; height: 44px; place-items: center; }
+.nav__menu-bars, .nav__menu-bars::before, .nav__menu-bars::after { display: block; width: 22px; height: 1.5px; background: currentColor; transition: transform .3s var(--ease); }
+.nav__menu-bars { position: relative; }
+.nav__menu-bars::before, .nav__menu-bars::after { content: ''; position: absolute; left: 0; }
+.nav__menu-bars::before { top: -7px; } .nav__menu-bars::after { top: 7px; }
+.nav__menu[aria-expanded='true'] .nav__menu-bars { background: transparent; }
+.nav__menu[aria-expanded='true'] .nav__menu-bars::before { transform: translateY(7px) rotate(45deg); }
+.nav__menu[aria-expanded='true'] .nav__menu-bars::after { transform: translateY(-7px) rotate(-45deg); }
+
+.menu { position: fixed; inset: 0; z-index: 45; padding: calc(var(--nav-h) + 16px) var(--gutter) 32px; background: var(--ivory); color: var(--black); overflow-y: auto; }
+.menu__keys { border-top: 3px solid var(--wine); }
+.menu__key {
+  display: flex; align-items: baseline; gap: 16px; padding: 18px 4px; text-decoration: none;
+  border-bottom: 1px solid var(--line-light); font: 380 clamp(1.7rem, 7vw, 2.6rem)/1.1 var(--serif); letter-spacing: -.02em;
+}
+.menu__n { font: 500 11px/1 var(--mono); letter-spacing: .12em; opacity: .5; }
+
+/* scroll progress: a thin staff with one note */
+.progress { position: fixed; z-index: 51; left: 0; right: 0; top: 0; height: 12px; pointer-events: none; color: var(--ivory); opacity: .55; transition: color .35s; }
+.progress svg { width: 100%; height: 100%; }
+.progress path { stroke: currentColor; stroke-width: .5; vector-effect: non-scaling-stroke; opacity: .45; }
+.progress__note { position: absolute; top: 2px; left: 0; width: 9px; height: 7px; margin-left: -4px; border-radius: 50%; background: var(--gold); transform: rotate(-20deg); will-change: transform; }
+.nav.is-light ~ .progress { color: var(--black); }
+
+/* ─────────────────────────── staff & dividers ─────────────────────────── */
+.staff { width: 100%; height: 40px; }
+.staff__l { stroke: currentColor; stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .28; }
+.divider { position: absolute; top: 0; left: 0; right: 0; height: 60px; transform: translateY(-50%); color: var(--black); pointer-events: none; z-index: 3; }
+.divider--dark { color: var(--ivory); }
+.divider__svg { width: 100%; height: 100%; overflow: visible; }
+.divider__line { stroke: currentColor; stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .22; }
+.divider__phrase { stroke: none; }
+.divider__note { fill: var(--wine); }
+.divider--dark .divider__note { fill: var(--gold); }
+
+/* ─────────────────────────── sticky CTA (mobile) ─────────────────────────── */
+.sticky-cta {
+  position: fixed; z-index: 40; left: 12px; right: 12px; bottom: 12px; display: none; align-items: center; justify-content: space-between;
+  min-height: 56px; padding: 0 20px; border-radius: 4px 4px 8px 8px; text-decoration: none;
+  background: var(--ivory); color: var(--black); font: 600 1rem/1 var(--sans);
+  box-shadow: 0 4px 0 #cfc6b5, 0 16px 32px -12px rgba(0,0,0,.5);
+  transform: translateY(140%); transition: transform .45s var(--ease);
+}
+.sticky-cta.is-on { transform: none; }
+
+/* still-render mode (scripts/render-stills.mjs) */
+html.still body > :not(.stage) { visibility: hidden; }
+html.still .stage__vignette, html.still .stage__poster { display: none; }

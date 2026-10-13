@@ -1,0 +1,159 @@
+@import '@fontsource-variable/fraunces/opsz.css';
+@import '@fontsource-variable/fraunces/opsz-italic.css';
+@import '@fontsource-variable/source-sans-3/wght.css';
+@import '@fontsource/ibm-plex-mono/latin-400.css';
+@import '@fontsource/ibm-plex-mono/latin-500.css';
+
+/* ─────────────────────────── tokens ─────────────────────────── */
+:root {
+  --black: #151515;
+  --ink: #1d1b1a;
+  --graphite: #2d2b2a;
+  --ivory: #f4efe4;
+  --paper: #e7dfd2;
+  --walnut: #704c3d;
+  --wine: #6b2737;
+  --wine-deep: #3e1620;
+  --gold: #c4a15a;
+  --rose: #b98f8d;
+  --line-dark: rgba(244, 239, 228, .16);
+  --line-light: rgba(21, 21, 21, .16);
+
+  --serif: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --sans: 'Source Sans 3 Variable', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+  --gutter: clamp(16px, 4vw, 56px);
+  --max: 1440px;
+  --sec-pad: clamp(88px, 12vw, 180px);
+  --nav-h: 72px;
+
+  --step--1: clamp(.82rem, .79rem + .15vw, .9rem);
+  --step-0: clamp(1rem, .96rem + .2vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.1rem + .45vw, 1.45rem);
+  --step-2: clamp(1.5rem, 1.3rem + 1vw, 2.1rem);
+  --step-3: clamp(2rem, 1.5rem + 2.4vw, 3.4rem);
+  --step-4: clamp(2.6rem, 1.6rem + 4.6vw, 5.6rem);
+  --step-5: clamp(3rem, 1.4rem + 7.4vw, 8.6rem);
+
+  --ease: cubic-bezier(.2, .7, .1, 1);
+  --ease-key: cubic-bezier(.3, 1.6, .5, 1);
+  --focus: 0 0 0 2px var(--black), 0 0 0 4px var(--gold);
+  color-scheme: dark light;
+}
+
+/* ─────────────────────────── reset ─────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: calc(var(--nav-h) + 12px); }
+html.lenis, html { scroll-behavior: auto; }
+body {
+  margin: 0; background: var(--black); color: var(--ivory);
+  font: 400 var(--step-0)/1.6 var(--sans);
+  font-optical-sizing: auto; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+img, svg, video, canvas { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; }
+a { color: inherit; }
+h1, h2, h3, h4, p, ol, ul, dl, dd, figure, blockquote { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+[hidden] { display: none !important; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+::selection { background: var(--wine); color: var(--ivory); }
+
+.sr { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: fixed; left: 12px; top: -60px; z-index: 100; background: var(--ivory); color: var(--black); padding: 10px 16px; font-weight: 600; transition: top .2s; }
+.skip:focus { top: 12px; }
+
+.wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+
+/* ─────────────────────────── type ─────────────────────────── */
+.display {
+  font-family: var(--serif); font-weight: 340; font-variation-settings: 'opsz' 144;
+  letter-spacing: -.035em; line-height: .92; font-size: var(--step-5);
+  text-wrap: balance;
+}
+.display--l { font-size: var(--step-4); line-height: .95; }
+.display--m { font-size: var(--step-3); line-height: 1; letter-spacing: -.03em; }
+.hl { display: block; }
+.hl__line { display: block; }
+.hl__line.is-italic { font-style: italic; font-weight: 300; letter-spacing: -.045em; }
+.lede { font-size: var(--step-1); line-height: 1.5; max-width: 36ch; font-weight: 380; }
+
+.kicker {
+  display: flex; align-items: center; gap: 14px; margin-bottom: clamp(20px, 3vw, 36px);
+  font: 500 var(--step--1)/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+}
+.kicker__n { display: inline-flex; align-items: center; gap: 14px; opacity: .6; }
+.kicker__n::after { content: ''; width: 36px; height: 1px; background: currentColor; }
+
+/* ─────────────────────────── buttons ─────────────────────────── */
+.btn {
+  --bg: var(--ivory); --fg: var(--black); --edge: #cfc6b5;
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  min-height: 52px; padding: 0 26px; border-radius: 2px 2px 6px 6px;
+  font: 600 .95rem/1 var(--sans); letter-spacing: .02em; text-decoration: none; white-space: nowrap;
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease), background-color .2s, color .2s;
+}
+.btn .ico { width: 18px; height: 18px; transition: transform .3s var(--ease); }
+.btn:hover .ico { transform: translateX(4px); }
+/* A button that behaves like a white key: depth at the front edge, presses down. */
+.btn--key { background: var(--bg); color: var(--fg); box-shadow: 0 4px 0 var(--edge), 0 10px 24px -10px rgba(0,0,0,.6); }
+.btn--key:hover { transform: translateY(2px); box-shadow: 0 2px 0 var(--edge), 0 6px 16px -8px rgba(0,0,0,.6); }
+.btn--key:active { transform: translateY(4px); box-shadow: 0 0 0 var(--edge), 0 2px 8px -4px rgba(0,0,0,.6); }
+.btn--dark { --bg: var(--black); --fg: var(--ivory); --edge: #000; }
+.btn--sm { min-height: 40px; padding: 0 16px; font-size: .85rem; }
+.btn--wide { width: 100%; }
+.btn--line {
+  min-height: 52px; padding: 0 2px; border-radius: 0; background: none; color: currentColor;
+  background-image: linear-gradient(currentColor, currentColor); background-size: 100% 1px; background-position: 0 calc(100% - 12px); background-repeat: no-repeat;
+}
+.btn--line:hover { background-size: 30% 1px; }
+.btn--light { color: var(--ivory); }
+
+.ico { width: 20px; height: 20px; flex: none; }
+
+/* ─────────────────────────── review markers ─────────────────────────── */
+.slot-fact {
+  display: inline; padding: .05em .45em; border: 1px dashed currentColor; border-radius: 3px;
+  font: 500 clamp(11px, .72em, 14px)/1.6 var(--mono); letter-spacing: .02em; text-transform: none; font-style: normal;
+  color: var(--rose); background: color-mix(in srgb, var(--rose) 8%, transparent);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone; vertical-align: .1em;
+}
+.slot-fact::before { content: attr(data-cls) ' · '; opacity: .7; font-size: .85em; letter-spacing: .08em; }
+.slot-draft { text-decoration: underline dotted color-mix(in srgb, var(--rose) 70%, transparent); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+.slot-draft--block { text-decoration: none; position: relative; }
+.slot-draft--block::after {
+  content: 'draft'; position: absolute; top: 0; right: 100%; margin-right: 10px;
+  font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--rose); opacity: .8;
+}
+html.markers-off .slot-fact { border-color: transparent; background: none; }
+html.markers-off .slot-fact::before { content: none; }
+html.markers-off .slot-draft { text-decoration: none; }
+html.markers-off .slot-draft--block::after { display: none; }
+
+.review {
+  position: fixed; left: 12px; bottom: 12px; z-index: 60; max-width: min(400px, calc(100% - 24px)); padding: 8px 12px; border-radius: 6px;
+  background: rgba(21,21,21,.9); color: var(--ivory); border: 1px dashed var(--rose);
+  font: 400 11.5px/1.45 var(--mono); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.review__short { display: none; }
+@media (max-width: 760px) { .review { bottom: 78px; } .review__long { display: none; } .review__short { display: inline; } }
+.review strong { color: var(--rose); font-weight: 500; }
+.review__btn { margin-left: 8px; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ─────────────────────────── placeholder media ─────────────────────────── */
+.ph {
+  position: relative; display: grid; place-items: center; overflow: hidden;
+  background: linear-gradient(160deg, #d9cfbf, #cdbfac); color: var(--walnut);
+}
+.ph__staff {
+  position: absolute; inset: 0; opacity: .55;
+  background: repeating-linear-gradient(0deg, transparent 0 13px, rgba(112,76,61,.28) 13px 14px);
+  -webkit-mask: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+          mask: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+}
+.ph__label { position: relative; max-width: 80%; text-align: center; font: 500 12px/1.5 var(--mono); }
+.ph__label .slot-fact { color: var(--walnut); background: rgba(244,239,228,.7); }

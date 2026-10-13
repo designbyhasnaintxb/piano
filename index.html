@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>%TITLE%</title>
+  <meta name="description" content="%DESCRIPTION%">
+  <meta name="theme-color" content="#151515">
+  <link rel="canonical" href="%URL%">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="%TITLE%">
+  <meta property="og:description" content="%DESCRIPTION%">
+  <meta property="og:url" content="%URL%">
+  <meta property="og:image" content="/stills/scene-0.webp">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" as="image" href="/stills/scene-0.webp" media="(min-aspect-ratio: 9/10)" fetchpriority="high">
+  <link rel="preload" as="image" href="/stills/scene-0-p.webp" media="(max-aspect-ratio: 9/10)" fetchpriority="high">
+  <script>document.documentElement.classList.replace('no-js','js');</script>
+</head>
+<body>
+  <div class="stage" aria-hidden="true" data-stage>
+    <picture>
+      <source media="(max-aspect-ratio: 9/10)" srcset="/stills/scene-0-p.webp" data-poster-p>
+      <img class="stage__poster" src="/stills/scene-0.webp" alt="" width="1600" height="1000" fetchpriority="high" data-poster>
+    </picture>
+    <canvas class="stage__canvas" data-canvas></canvas>
+    <div class="stage__vignette"></div>
+  </div>
+  %BODY%
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
