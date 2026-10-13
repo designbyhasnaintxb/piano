@@ -42,19 +42,6 @@ main, .foot { position: relative; z-index: 1; }
 .brand__desc { margin-top: 5px; font: 500 9.5px/1 var(--mono); letter-spacing: .42em; text-transform: uppercase; opacity: .7; }
 .brand .slot-draft, .brand .slot-fact { all: unset; }
 
-.nav__keys ul { display: flex; border-top: 2px solid var(--mustard); }
-.navkey {
-  position: relative; display: flex; align-items: flex-end; justify-content: center;
-  width: 82px; height: 38px; padding-bottom: 7px; text-decoration: none;
-  font: 500 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
-  border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-top: 0; margin-left: -1px;
-  border-radius: 0 0 4px 4px; transition: transform .16s var(--ease-key), background-color .2s, box-shadow .16s;
-  box-shadow: inset 0 -3px 0 color-mix(in srgb, currentColor 12%, transparent);
-}
-.navkey:hover, .navkey:focus-visible { transform: translateY(3px); background: color-mix(in srgb, currentColor 8%, transparent); box-shadow: inset 0 -1px 0 color-mix(in srgb, currentColor 12%, transparent); }
-.navkey.is-active { background: color-mix(in srgb, currentColor 12%, transparent); }
-.navkey.is-active::after { content: ''; position: absolute; top: 6px; left: 50%; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--gold); }
-
 .nav__end { display: flex; align-items: center; gap: 14px; }
 .sound-toggle {
   display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px; border-radius: 20px;
@@ -62,10 +49,7 @@ main, .foot { position: relative; z-index: 1; }
   font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; transition: background-color .2s, border-color .2s;
 }
 .sound-toggle:hover { background: color-mix(in srgb, currentColor 8%, transparent); }
-.ico--sound__on { display: none; }
 .sound-toggle[aria-pressed='true'] { border-color: var(--gold); }
-.sound-toggle[aria-pressed='true'] .ico--sound__on { display: block; }
-.sound-toggle[aria-pressed='true'] .ico--sound__off { display: none; }
 .nav__menu { display: none; width: 44px; height: 44px; place-items: center; }
 .nav__menu-bars, .nav__menu-bars::before, .nav__menu-bars::after { display: block; width: 22px; height: 1.5px; background: currentColor; transition: transform .3s var(--ease); }
 .nav__menu-bars { position: relative; }

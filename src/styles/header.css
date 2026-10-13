@@ -1,0 +1,75 @@
+/* ─────────────────────────── header: an octave ───────────────────────────
+   Five links are the white keys C D E F G, with black keys where a real
+   keyboard has them (after C, D and F). Hover presses a key (and plays its
+   note when sound is on); the current section's key stays down in mustard.
+   On scroll the header lifts off the edge into a floating bar. */
+.nav {
+  top: 0; left: 0; right: 0; height: 84px; gap: clamp(14px, 2vw, 28px);
+  transition: top .5s var(--ease), left .5s var(--ease), right .5s var(--ease), height .5s var(--ease), color .35s;
+}
+.nav::before { border-radius: 0; transition: border-radius .5s var(--ease), opacity .35s, background-color .35s, box-shadow .5s; }
+.nav.is-scrolled { top: 10px; left: max(10px, calc((100vw - var(--max)) / 2)); right: max(10px, calc((100vw - var(--max)) / 2)); height: 64px; }
+.nav.is-scrolled::before { border-radius: 14px; border: 1px solid var(--line-light); box-shadow: 0 18px 40px -24px rgba(20,19,18,.35); }
+.nav.is-dark.is-scrolled::before { border-color: var(--line-dark); }
+
+.nav__keys { align-self: stretch; display: flex; align-items: flex-start; }
+.octave { position: relative; display: flex; height: 100%; padding: 0; }
+.octave::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--mustard); z-index: 3; } /* the felt strip */
+.octave__k { position: relative; }
+.navkey {
+  position: relative; display: flex; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 6px;
+  width: 92px; height: 100%; padding: 0 12px 11px; text-decoration: none; color: var(--black);
+  background: linear-gradient(180deg, #dcd6cb 0%, var(--ivory) 14%, #faf8f3 100%);
+  border: 1px solid rgba(20,19,18,.22); border-top: 0; margin-left: -1px; border-radius: 0 0 6px 6px;
+  box-shadow: inset 0 -5px 0 #e2dccf, inset 0 -6px 0 #c9c1b2;
+  transform-origin: top; transition: transform .14s var(--ease-key), box-shadow .14s, background-color .2s;
+  font-size: 10.5px; line-height: 1; text-transform: uppercase;
+}
+.navkey__note { order: 2; font-stretch: 64%; font-weight: 850; font-size: .95rem; line-height: .8; letter-spacing: 0; color: rgba(20,19,18,.3); transition: color .2s; }
+.navkey:hover, .navkey:focus-visible, .navkey.is-press {
+  transform: perspective(500px) rotateX(-7deg) translateY(2px);
+  box-shadow: inset 0 -2px 0 #e2dccf, inset 0 -3px 0 #c9c1b2, inset 0 12px 16px -12px rgba(20,19,18,.35);
+}
+.navkey:hover .navkey__note { color: var(--ochre); }
+.navkey.is-active { background: linear-gradient(180deg, #b98a14 0%, var(--mustard) 14%, #d3a32a 100%); box-shadow: inset 0 -3px 0 var(--mustard-edge), inset 0 -4px 0 #7d5d10; transform: perspective(500px) rotateX(-4deg) translateY(1px); }
+.navkey.is-active .navkey__note { color: var(--black); }
+.octave__black {
+  position: absolute; z-index: 2; top: 0; right: -13px; width: 24px; height: 46%;
+  background: linear-gradient(90deg, #070707, #2b2928 45%, #0d0d0d); border-radius: 0 0 4px 4px;
+  box-shadow: inset 0 -6px 0 #000, inset 0 -7px 0 #3a3836, 0 3px 6px rgba(0,0,0,.25); pointer-events: none;
+}
+.nav.is-scrolled .navkey { padding-bottom: 9px; }
+
+.nav__status { display: flex; align-items: center; gap: 9px; font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+.nav__cta { box-shadow: 0 3px 0 var(--mustard-edge); }
+
+/* sound: four equaliser bars, still when off, playing when on */
+.sound-toggle { gap: 10px; padding: 0 14px; }
+.eq { display: inline-flex; align-items: flex-end; gap: 2px; width: 16px; height: 14px; }
+.eq i { display: block; flex: 1; height: 3px; background: currentColor; border-radius: 1px; transition: height .3s; }
+.sound-toggle[aria-pressed='true'] .eq i { animation: eq 1s ease-in-out infinite; background: var(--mustard); }
+.sound-toggle[aria-pressed='true'] .eq i:nth-child(2) { animation-delay: -.3s; }
+.sound-toggle[aria-pressed='true'] .eq i:nth-child(3) { animation-delay: -.6s; }
+.sound-toggle[aria-pressed='true'] .eq i:nth-child(4) { animation-delay: -.15s; }
+@keyframes eq { 0%, 100% { height: 3px; } 50% { height: 14px; } }
+
+@media (max-width: 1240px) { .nav__status { display: none; } }
+@media (max-width: 1100px) { .nav { height: 72px; } .nav.is-scrolled { height: 60px; } .nav__keys { display: none; } }
+@media (max-width: 760px) { .nav { height: 64px; } .nav.is-scrolled { top: 8px; left: 8px; right: 8px; height: 56px; } }
+
+/* ─────────────────────────── marquee band ─────────────────────────── */
+.marquee { position: relative; z-index: 2; overflow: hidden; background: var(--mustard); color: var(--black); padding: clamp(14px, 2vw, 24px) 0; border-block: 1px solid var(--mustard-edge); }
+.marquee__track { display: flex; width: max-content; will-change: transform; }
+.marquee__run { display: flex; align-items: center; flex: none; }
+.marquee__i { padding-inline: clamp(18px, 2.4vw, 36px); font-stretch: 62%; font-weight: 900; font-size: clamp(2.4rem, 5.4vw, 5.6rem); line-height: 1; text-transform: uppercase; white-space: nowrap; }
+.marquee__note { width: .5em; height: .36em; font-size: clamp(2.4rem, 5.4vw, 5.6rem); border-radius: 50%; background: var(--black); transform: rotate(-20deg); flex: none; }
+
+/* ─────────────────────────── giant footer wordmark ─────────────────────────── */
+.foot__giant {
+  margin-top: 70px; font-size: clamp(5rem, 21vw, 22rem); line-height: .78; letter-spacing: -.01em; white-space: nowrap;
+  color: var(--ivory); overflow: hidden; text-align: center;
+}
+.foot__giant .char { display: inline-block; }
+
+.brand__name, .brand__desc { white-space: nowrap; }
+.nav:not(.is-scrolled) .nav__status { display: none; }

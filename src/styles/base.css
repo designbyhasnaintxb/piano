@@ -1,8 +1,4 @@
-@import '@fontsource-variable/fraunces/opsz.css';
-@import '@fontsource-variable/fraunces/opsz-italic.css';
-@import '@fontsource-variable/source-sans-3/wght.css';
-@import '@fontsource/ibm-plex-mono/latin-400.css';
-@import '@fontsource/ibm-plex-mono/latin-500.css';
+@import '@fontsource-variable/archivo/wdth.css';
 
 /* ─────────────────────────── tokens ─────────────────────────── */
 :root {
@@ -22,12 +18,14 @@
   --line-dark: rgba(241, 237, 230, .16);
   --line-light: rgba(20, 19, 18, .16);
 
-  --serif: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
-  --sans: 'Source Sans 3 Variable', 'Segoe UI', system-ui, sans-serif;
-  --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  /* One family, two voices: ultra-condensed heavy caps for display (the poster's
+     voice), normal width for reading. Labels use the same family, tracked out. */
+  --serif: 'Archivo Variable', 'Arial Narrow', system-ui, sans-serif;
+  --sans: 'Archivo Variable', system-ui, sans-serif;
+  --mono: 'Archivo Variable', system-ui, sans-serif;
 
   --gutter: clamp(16px, 4vw, 56px);
-  --max: 1440px;
+  --max: 1600px;
   --sec-pad: clamp(88px, 12vw, 180px);
   --nav-h: 72px;
 

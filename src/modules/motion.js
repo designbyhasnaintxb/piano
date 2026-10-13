@@ -50,6 +50,34 @@ export function initMotion() {
     });
 
   dividers();
+  marquee();
+  giant();
+}
+
+// The band drifts on its own and speeds up / reverses with scroll velocity.
+function marquee() {
+  const track = $('[data-marquee]');
+  if (!track) return;
+  const loop = gsap.to(track, { xPercent: -50, ease: 'none', duration: 38, repeat: -1 });
+  let dir = 1;
+  ScrollTrigger.create({
+    trigger: track, start: 'top bottom', end: 'bottom top',
+    onUpdate: (s) => {
+      const v = s.getVelocity();
+      if (Math.abs(v) > 20) dir = v > 0 ? 1 : -1;
+      gsap.to(loop, { timeScale: dir * Math.min(5, 1 + Math.abs(v) / 500), duration: 0.3, overwrite: true });
+      gsap.to(loop, { timeScale: dir, duration: 1.2, delay: 0.3, ease: 'power2.out', overwrite: false });
+    },
+  });
+  gsap.fromTo(track, { skewX: 0 }, { skewX: -6, ease: 'none', scrollTrigger: { trigger: track, start: 'top bottom', end: 'bottom top', scrub: true } });
+}
+
+// Footer wordmark: letters rise like keys being pressed, one per sixteenth.
+function giant() {
+  const el = $('[data-giant]');
+  if (!el) return;
+  const split = SplitText.create(el, { type: 'chars', charsClass: 'char' });
+  gsap.from(split.chars, { yPercent: 100, duration: 0.9, ease: 'expo.out', stagger: SIXTEENTH * 0.8, scrollTrigger: { trigger: el, start: 'top 95%', once: true } });
 }
 
 function hero() {

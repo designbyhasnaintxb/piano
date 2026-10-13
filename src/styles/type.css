@@ -1,0 +1,78 @@
+/* ─────────────────────────── type system ───────────────────────────
+   Loaded last. Archivo Variable carries the whole site:
+   · DISPLAY: width 62–68%, weight 800–900, caps (the poster's voice)
+   · TITLE:   width 82%, weight 650 (cards, questions, names)
+   · LABEL:   width 100%, weight 600, small caps-style tracking
+   · BODY:    width 100%, weight 400
+   No italics anywhere: emphasis is colour (mustard/ochre), not slant. */
+
+body { font-stretch: 100%; font-weight: 400; letter-spacing: -.003em; }
+em, i, cite { font-style: normal; }
+
+/* DISPLAY */
+.display, .jcap__t, .about__statement, .mpanel__n, .pcard__name, .mstep__q, .mresult__name,
+.timer__time, .metro__bpm span, .stat dd, .finale__beat, .menu__key, .pkey__meter, .foot__giant {
+  font-family: var(--serif); font-stretch: 64%; font-weight: 850; font-style: normal;
+  text-transform: uppercase; letter-spacing: -.005em; font-variation-settings: normal;
+}
+.display { line-height: .86; }
+.display--l { line-height: .88; }
+.display--m { line-height: .9; }
+.hero__title { font-size: clamp(3.4rem, 1.2rem + 8.6vw, 10.5rem); max-width: none; }
+.finale__t { font-size: clamp(3.4rem, 1.2rem + 8.6vw, 10.5rem); max-width: none; }
+.display--l { font-size: clamp(2.9rem, 1.2rem + 5.6vw, 7.4rem); }
+.display--m { font-size: clamp(2.5rem, 1.2rem + 4vw, 5.6rem); }
+.jcap__t { font-size: clamp(2.6rem, 1.2rem + 4.6vw, 6.4rem); line-height: .88; }
+.about__statement { font-size: clamp(2.2rem, 1rem + 3.9vw, 5.4rem); line-height: .92; max-width: 24ch; font-weight: 800; }
+.hl__line.is-italic { font-style: normal; font-weight: 850; letter-spacing: -.005em; color: var(--ochre-display); }
+.sec--dark .hl__line.is-italic, .sec--black .hl__line.is-italic, .pcard .hl__line.is-italic { color: var(--gold); }
+.sec--wine .hl__line.is-italic { color: var(--black); -webkit-text-stroke: 0; opacity: .72; }
+.mpanel__n { font-size: clamp(5rem, 10vw, 9rem); line-height: .8; }
+.pcard__name { font-size: clamp(2.2rem, 3.4vw, 3.4rem); line-height: .9; }
+.mstep__q { font-size: clamp(2.2rem, 3.8vw, 3.8rem); line-height: .9; }
+.mresult__name { font-size: clamp(2.2rem, 3.6vw, 3.6rem); line-height: .9; }
+.timer__time { font-size: clamp(4.4rem, 8vw, 7.2rem); line-height: .85; font-variant-numeric: tabular-nums; }
+.metro__bpm span { font-size: 4rem; line-height: .9; display: block; }
+.stat dd { font-size: clamp(3rem, 4.6vw, 4.6rem); line-height: .85; }
+.finale__beat { font-size: clamp(1.6rem, 2.6vw, 2.6rem); letter-spacing: .01em; }
+.menu__key { font-size: clamp(2.4rem, 10vw, 3.6rem); line-height: 1; }
+.pkey__meter { font-size: 2.2rem; }
+
+/* TITLE */
+.aud__name, .wcard__t, .mkey__name, .pkey__name, .programme__t strong, .lid__q, .bar__q, .mopt > span,
+.hero__watch-t, .lisa__quote, .inquiry__ok, .string__note, .mini__l, .inquiry__chosen strong, .trust dd,
+.mpanel__t, .first__after-t, .recital__after p, .timer__done-t, .pcard__short, .metro__term,
+.inquire__steps li > span, .aud__n, .bar__n, .programme__n, .brand__name, .foot__wm, .pcard__amt {
+  font-family: var(--sans); font-stretch: 82%; font-weight: 650; font-style: normal; letter-spacing: -.01em; font-variation-settings: normal;
+}
+.mpanel__t { font-size: clamp(1.8rem, 2.8vw, 2.8rem); line-height: 1; text-transform: uppercase; font-stretch: 70%; font-weight: 800; }
+.lisa__quote { font-size: clamp(1.4rem, 2vw, 1.9rem); line-height: 1.15; font-weight: 600; }
+.first__after-t, .recital__after p, .timer__done-t { font-size: clamp(1.4rem, 2.2vw, 2rem); text-transform: uppercase; font-stretch: 70%; font-weight: 800; letter-spacing: 0; }
+.aud__name, .wcard__t { font-size: clamp(1.4rem, 1.9vw, 1.9rem); line-height: 1.05; }
+.lid__q, .bar__q { font-size: clamp(1.1rem, 1.4vw, 1.35rem); }
+.mopt > span { font-size: clamp(1.1rem, 1.4vw, 1.3rem); }
+.aud__n, .bar__n, .programme__n, .inquire__steps li > span { font-stretch: 100%; font-weight: 800; color: var(--ochre); }
+.sec--dark .aud__n, .sec--black .programme__n { color: var(--gold); }
+.pcard__short { color: var(--gold); font-weight: 600; }
+.metro__term { text-transform: uppercase; letter-spacing: .08em; font-size: .9rem; font-stretch: 100%; }
+.brand__name { font-stretch: 68%; font-weight: 850; letter-spacing: .02em; font-size: 1.45rem; }
+.foot__wm { font-stretch: 68%; font-weight: 850; letter-spacing: .02em; font-size: 1.9rem; }
+
+/* LABEL — everything that used the mono voice */
+.kicker, .kicker__t, .trust dt, .markers dt, .stat dt, .pcard__facts dt, .pcard__meter, .pcard__unit, .mpanel__lisa > span:first-child,
+.mkey__n, .jcap__n, .matcher__count, .mresult__k, .mresult__sum, .tool__t, .chip, .metro__bpm small, .first__prompt, .first__hint,
+.tool__note, .audiences__t, .lisa__cap, .students__src, .packages__foot, .inquiry__chosen span, .ff > span, .ff legend,
+.inquire__contact dt, .foot__contact dt, .foot__base, .menu__n, .menu__contact, .sound-toggle, .navkey, .hero__watch-t small,
+.screen__label, .screen__play, .hero__cue, .review, .mini kbd, .brand__desc, .wcard__n, .why__media figcaption {
+  font-family: var(--sans); font-stretch: 100%; font-variation-settings: normal; font-variant-numeric: tabular-nums;
+}
+.kicker { font-weight: 700; letter-spacing: .16em; font-size: .78rem; }
+.trust dt, .markers dt, .pcard__facts dt, .inquire__contact dt, .foot__contact dt, .ff > span, .ff legend, .tool__t, .audiences__t,
+.mpanel__lisa > span:first-child, .mresult__k, .first__prompt, .lisa__cap, .hero__watch-t small, .navkey, .sound-toggle,
+.mkey__n, .jcap__n, .matcher__count, .wcard__n, .pcard__meter, .metro__bpm small, .menu__n, .brand__desc, .chip {
+  font-weight: 700; letter-spacing: .14em;
+}
+.first__hint, .tool__note, .packages__foot, .students__src, .mresult__sum, .screen__label, .foot__base, .menu__contact { font-weight: 500; letter-spacing: .01em; }
+.lede { font-weight: 400; font-stretch: 100%; letter-spacing: -.01em; }
+.btn { font-family: var(--sans); font-stretch: 90%; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; font-size: .86rem; }
+.btn--line { letter-spacing: .08em; }

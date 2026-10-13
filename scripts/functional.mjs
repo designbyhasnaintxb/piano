@@ -140,6 +140,14 @@ await check('form: valid submit opens an email to Lisa', async () => {
   console.log('    mailto →', decodeURIComponent(url).slice(0, 220).replace(/\n/g, ' | '));
   return url.startsWith('mailto:mottgal@gmail.com') && decodeURIComponent(url).includes('Test Parent') && decodeURIComponent(url).includes('Virtual lessons') && await vis('[data-form-ok]');
 });
+await check('header key glides to its section (smooth scroll)', async () => {
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(400);
+  await page.locator('.navkey[href="#faq"]').click();
+  await page.waitForTimeout(2600);
+  const top = await page.evaluate(() => document.querySelector('#faq').getBoundingClientRect().top);
+  return top > -10 && top < 140 && (await page.evaluate(() => location.hash)) === '#faq';
+});
 await check('3D stage loaded or fell back', async () => page.evaluate(() => !!window.__stage || document.querySelector('[data-poster]').complete));
 await check('no horizontal page scroll', async () => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
 

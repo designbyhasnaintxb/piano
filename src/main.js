@@ -2,6 +2,9 @@ import './styles/base.css';
 import './styles/layout.css';
 import './styles/sections.css';
 import './styles/responsive.css';
+import './styles/header.css';
+import './styles/type.css';
+import 'lenis/dist/lenis.css';
 
 import { reduced, gsap } from './lib/gsap.js';
 import { initChrome } from './modules/chrome.js';
@@ -15,6 +18,7 @@ import { initMatcher } from './modules/matcher.js';
 import { initPractice } from './modules/practice.js';
 import { initForm } from './modules/form.js';
 import { initJourney } from './modules/journey.js';
+import { initSmooth } from './lib/smooth.js';
 
 const data = JSON.parse(document.getElementById('site-data').textContent);
 const params = new URLSearchParams(location.search);
@@ -36,6 +40,7 @@ if (params.has('pose')) {
   setTimeout(() => { stage.stop(); window.__ready = true; }, +(params.get('t') || 1200));
 } else {
   const safe = (fn, ...a) => { try { fn(...a); } catch (e) { console.error(fn.name, e); } };
+  safe(initSmooth);
   safe(initChrome);
   safe(initPlayNote);
   safe(initMethod);

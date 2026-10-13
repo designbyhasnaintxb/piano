@@ -77,11 +77,7 @@ const arrow = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable
 
 const kicker = (v, n) => `<p class="kicker"><span class="kicker__n">${n}</span><span class="kicker__t">${t(v)}</span></p>`;
 
-const soundIcon = `<svg class="ico ico--sound" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-  <path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" fill="currentColor"/>
-  <path class="ico--sound__on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.4"/>
-  <path class="ico--sound__off" d="M16 9.5l5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="1.4"/>
-</svg>`;
+const soundIcon = `<span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>`;
 
 /* ───────────────────────────── sections ─────────────────────────────
    Section flow follows the Livepower reference: promise → about statement →
@@ -100,9 +96,10 @@ function nav(c) {
     <span class="brand__wm"><span class="brand__name">${t(c.brand.name)}</span><span class="brand__desc">${t(c.brand.descriptor)}</span></span>
   </a>
   <nav class="nav__keys" aria-label="Primary">
-    <ul>${items.map(([h, l]) => `<li><a class="navkey" href="${h}"><span>${l}</span></a></li>`).join('')}</ul>
+    <ul class="octave">${items.map(([h, l], i) => `<li class="octave__k"><a class="navkey" href="${h}" data-pitch="${[60, 62, 64, 65, 67][i]}"><span class="navkey__note" aria-hidden="true">${'CDEFG'[i]}</span><span class="navkey__l">${l}</span></a>${[0, 1, 3].includes(i) ? '<span class="octave__black" aria-hidden="true"></span>' : ''}</li>`).join('')}</ul>
   </nav>
   <div class="nav__end">
+    <p class="nav__status"><span class="hero__dot" aria-hidden="true"></span>${t(c.contact.status)}</p>
     <button class="sound-toggle" type="button" aria-pressed="false" data-sound-toggle>
       ${soundIcon}<span class="sound-toggle__label">Sound off</span>
     </button>
@@ -112,7 +109,7 @@ function nav(c) {
     </button>
   </div>
 </header>
-<div class="menu" id="menu" hidden data-menu>
+<div class="menu" id="menu" hidden data-menu data-lenis-prevent>
   <ul class="menu__keys">${[...items, ['#path', 'Find your path'], ['#practice', 'Practice room'], ['#inquire', 'Start lessons']]
     .map(([h, l], i) => `<li><a href="${h}" class="menu__key"><span class="menu__n">${String(i + 1).padStart(2, '0')}</span>${l}</a></li>`).join('')}</ul>
   <p class="menu__contact"><a href="tel:${a(c.contact.phoneHref)}">${t(c.contact.phoneNote)} · ${t(c.contact.phone)}</a><a href="mailto:${a(c.contact.email)}">${t(c.contact.email)}</a></p>
@@ -170,6 +167,15 @@ function journey(c) {
       ${c.journeyImages.map((im) => img(im.src, im.alt, 'jstudent', '20vw')).join('')}
     </div>
   </div>
+</section>`;
+}
+
+function marquee(c) {
+  const items = [plain(c.hero.headline).join(' '), 'Since 1993', ...plain(c.contact.areas), 'Online lessons', plain(c.contact.status)];
+  const run = items.map((x) => `<span class="marquee__i">${esc(x)}</span><span class="marquee__note" aria-hidden="true"></span>`).join('');
+  return `
+<section class="marquee" aria-label="${a(c.contact.status)} in ${a(c.contact.location)}, and online">
+  <div class="marquee__track" aria-hidden="true" data-marquee><div class="marquee__run">${run}</div><div class="marquee__run">${run}</div></div>
 </section>`;
 }
 
@@ -606,6 +612,7 @@ function footer(c) {
       <div><dt>Areas</dt><dd>${t(c.contact.location)}<br>${t(c.contact.virtualNote)}</dd></div>
     </dl>
   </div>
+  <p class="foot__giant wrap" aria-hidden="true" data-giant>${t(c.brand.name)}</p>
   <div class="wrap foot__base">${staff('foot__staff')}<p>© <span data-year>${new Date().getFullYear()}</span> ${t(c.brand.legalName)}</p><p>${t(c.contact.status)}</p></div>
 </footer>
 <nav class="sticky-nav" aria-label="Quick action"><a class="sticky-cta" href="#inquire" data-sticky><span data-sticky-label>Start lessons</span>${arrow}</a></nav>`;
@@ -633,7 +640,7 @@ export function renderPage(c) {
   };
 
   return {
-    body: [nav(c), review, '<main id="main">', hero(c), journey(c), lisa(c), why(c), firstNote(c), method(c), packages(c),
+    body: [nav(c), review, '<main id="main">', hero(c), journey(c), marquee(c), lisa(c), why(c), firstNote(c), method(c), packages(c),
       recital(c), objections(c), matcher(c), practice(c), faq(c), finale(c), inquire(c), '</main>', footer(c),
       `<script type="application/json" id="site-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`].join('\n'),
     title: plain(c.meta.title),

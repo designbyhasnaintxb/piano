@@ -3,6 +3,8 @@
 import { gsap, ScrollTrigger, $, $$ } from '../lib/gsap.js';
 import { sound } from '../lib/audio.js';
 import { store, prefs } from '../lib/store.js';
+import { playNote } from '../lib/audio.js';
+import { smooth } from '../lib/smooth.js';
 
 export function initChrome() {
   const nav = $('[data-nav]');
@@ -14,8 +16,15 @@ export function initChrome() {
     ScrollTrigger.create({ trigger: sec, start: 'top top+=36', end: 'bottom top+=36', onToggle: (s) => nav.classList.toggle('is-dark', s.isActive) });
   });
 
-  /* active nav key */
+  /* the octave: hovering or focusing a key presses it and plays its note (if sound is on) */
   const keys = $$('.navkey');
+  keys.forEach((k) => {
+    const press = () => { playNote(+k.dataset.pitch, 0.45, 0.5); };
+    k.addEventListener('pointerenter', press);
+    k.addEventListener('focus', press);
+  });
+
+  /* active nav key */
   keys.forEach((k) => {
     const sec = $(k.getAttribute('href'));
     if (!sec) return;
@@ -31,6 +40,7 @@ export function initChrome() {
     btn.setAttribute('aria-expanded', open);
     menu.hidden = !open;
     document.body.style.overflow = open ? 'hidden' : '';
+    if (open) smooth.stop(); else smooth.start();
     if (open) nav.classList.remove('is-dark');
     if (open) {
       gsap.fromTo($$('.menu__key', menu), { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: 0.04, duration: 0.5 });
