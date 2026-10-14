@@ -97,14 +97,14 @@ function nav(c) {
     <span class="brand__wm"><span class="brand__name">${t(c.brand.name)}</span><span class="brand__desc">${t(c.brand.descriptor)}</span></span>
   </a>
   <nav class="nav__keys" aria-label="Primary">
-    <ul class="octave">${items.map(([h, l], i) => `<li class="octave__k"><a class="navkey" href="${h}" data-pitch="${[60, 62, 64, 65, 67][i]}"><span class="navkey__note" aria-hidden="true">${'CDEFG'[i]}</span><span class="navkey__l">${l}</span></a>${[0, 1, 3].includes(i) ? '<span class="octave__black" aria-hidden="true"></span>' : ''}</li>`).join('')}</ul>
+    <ul class="nav__links">${items.map(([h, l], i) => `<li><a class="navkey" href="${h}" data-pitch="${[60, 62, 64, 65, 67][i]}">${l}</a></li>`).join('')}</ul>
+    <span class="nav__dot" aria-hidden="true" data-nav-dot></span>
   </nav>
   <div class="nav__end">
-    <p class="nav__status"><span class="hero__dot" aria-hidden="true"></span>${t(c.contact.status)}</p>
     <button class="sound-toggle" type="button" aria-pressed="false" data-sound-toggle>
       ${soundIcon}<span class="sound-toggle__label">Sound off</span>
     </button>
-    <a class="btn btn--key btn--sm nav__cta" href="#inquire" data-cta="nav">Start lessons</a>
+    <a class="nav__cta" href="#inquire" data-cta="nav">Start lessons</a>
     <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn>
       <span class="nav__menu-bars" aria-hidden="true"></span><span class="sr">Menu</span>
     </button>

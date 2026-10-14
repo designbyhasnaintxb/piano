@@ -85,3 +85,6 @@ em, i, cite { font-style: normal; }
 .brand__name { letter-spacing: .3em; font-size: 1.15rem; }
 .foot__wm { letter-spacing: .3em; }
 @media (max-width: 760px) { .brand__name { font-size: 1rem; letter-spacing: .24em; } }
+
+/* minimal header labels keep their wider tracking */
+.navkey, .sound-toggle { letter-spacing: .14em; }

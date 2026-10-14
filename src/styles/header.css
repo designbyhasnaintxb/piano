@@ -1,61 +1,50 @@
-/* ─────────────────────────── header: an octave ───────────────────────────
-   Five links are the white keys C D E F G, with black keys where a real
-   keyboard has them (after C, D and F). Hover presses a key (and plays its
-   note when sound is on); the current section's key stays down in mustard.
-   On scroll the header lifts off the edge into a floating bar. */
-.nav {
-  top: 0; left: 0; right: 0; height: 84px; gap: clamp(14px, 2vw, 28px);
-  transition: top .5s var(--ease), left .5s var(--ease), right .5s var(--ease), height .5s var(--ease), color .35s;
-}
-.nav::before { border-radius: 0; transition: border-radius .5s var(--ease), opacity .35s, background-color .35s, box-shadow .5s; }
-.nav.is-scrolled { top: 10px; left: max(10px, calc((100vw - var(--max)) / 2)); right: max(10px, calc((100vw - var(--max)) / 2)); height: 64px; }
-.nav.is-scrolled::before { border-radius: 14px; border: 1px solid var(--line-light); box-shadow: 0 18px 40px -24px rgba(20,19,18,.35); }
-.nav.is-dark.is-scrolled::before { border-color: var(--line-dark); }
+/* ─────────────────────────── header: elegant & minimal ───────────────────────────
+   Logo · five quiet links · sound · one slim button. The only flourish is a
+   small mustard note head that glides under the hovered (or current) link. */
+.nav { top: 0; left: 0; right: 0; height: 88px; gap: clamp(16px, 3vw, 48px); transition: height .5s var(--ease), color .35s; }
+.nav::before { opacity: 1; background: rgba(229,224,216,.62); border-bottom: 1px solid transparent; transition: background-color .4s, border-color .4s; }
+.nav.is-scrolled { height: 68px; }
+.nav.is-scrolled::before { background: rgba(229,224,216,.86); border-bottom-color: var(--line-light); }
+.nav.is-dark::before { background: rgba(20,19,18,.78); border-bottom-color: var(--line-dark); }
 
-.nav__keys { align-self: stretch; display: flex; align-items: flex-start; }
-.octave { position: relative; display: flex; height: 100%; padding: 0; }
-.octave::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--mustard); z-index: 3; } /* the felt strip */
-.octave__k { position: relative; }
+.nav__keys { position: relative; margin-inline: auto; }
+.nav__links { display: flex; gap: clamp(22px, 2.6vw, 44px); }
 .navkey {
-  position: relative; display: flex; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 6px;
-  width: 92px; height: 100%; padding: 0 12px 11px; text-decoration: none; color: var(--black);
-  background: linear-gradient(180deg, #dcd6cb 0%, var(--ivory) 14%, #faf8f3 100%);
-  border: 1px solid rgba(20,19,18,.22); border-top: 0; margin-left: -1px; border-radius: 0 0 6px 6px;
-  box-shadow: inset 0 -5px 0 #e2dccf, inset 0 -6px 0 #c9c1b2;
-  transform-origin: top; transition: transform .14s var(--ease-key), box-shadow .14s, background-color .2s;
-  font-size: 11px; line-height: 1; text-transform: uppercase;
+  display: block; padding: 10px 0; text-decoration: none; color: inherit;
+  font-size: 11.5px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; line-height: 1;
+  opacity: .72; transition: opacity .25s;
 }
-.navkey__note { order: 2; font-size: 1.05rem; line-height: .8; color: rgba(20,19,18,.3); transition: color .2s; }
-.navkey:hover, .navkey:focus-visible, .navkey.is-press {
-  transform: perspective(500px) rotateX(-7deg) translateY(2px);
-  box-shadow: inset 0 -2px 0 #e2dccf, inset 0 -3px 0 #c9c1b2, inset 0 12px 16px -12px rgba(20,19,18,.35);
+.navkey:hover, .navkey:focus-visible, .navkey.is-active { opacity: 1; }
+.nav__dot {
+  position: absolute; left: 0; bottom: -4px; width: 7px; height: 5px; margin-left: -3.5px; border-radius: 50%;
+  background: var(--mustard); transform: translateX(var(--dot-x, 0)) rotate(-20deg); opacity: 0;
+  transition: transform .5s cubic-bezier(.3, 1.4, .5, 1), opacity .3s;
 }
-.navkey:hover .navkey__note { color: var(--ochre); }
-.navkey.is-active { background: linear-gradient(180deg, #b98a14 0%, var(--mustard) 14%, #d3a32a 100%); box-shadow: inset 0 -3px 0 var(--mustard-edge), inset 0 -4px 0 #7d5d10; transform: perspective(500px) rotateX(-4deg) translateY(1px); }
-.navkey.is-active .navkey__note { color: var(--black); }
-.octave__black {
-  position: absolute; z-index: 2; top: 0; right: -13px; width: 24px; height: 46%;
-  background: linear-gradient(90deg, #070707, #2b2928 45%, #0d0d0d); border-radius: 0 0 4px 4px;
-  box-shadow: inset 0 -6px 0 #000, inset 0 -7px 0 #3a3836, 0 3px 6px rgba(0,0,0,.25); pointer-events: none;
-}
-.nav.is-scrolled .navkey { padding-bottom: 9px; }
+.nav__dot.is-on { opacity: 1; }
 
-.nav__status { display: flex; align-items: center; gap: 9px; font-size: 11px; text-transform: uppercase; white-space: nowrap; }
-.nav__cta { box-shadow: 0 3px 0 var(--mustard-edge); }
+.nav__end { gap: clamp(16px, 2vw, 30px); }
+.sound-toggle { border: 0; padding: 0; min-height: 40px; gap: 9px; font-size: 11px; letter-spacing: .14em; opacity: .72; }
+.sound-toggle:hover { background: none; opacity: 1; }
+.sound-toggle[aria-pressed='true'] { opacity: 1; }
+.nav__cta {
+  display: inline-flex; align-items: center; height: 40px; padding: 0 20px; text-decoration: none; color: inherit;
+  border: 1px solid currentColor; border-radius: 0; font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+  transition: background-color .3s, color .3s;
+}
+.nav__cta:hover, .nav__cta:focus-visible { background: var(--black); color: var(--ivory); border-color: var(--black); }
+.nav.is-dark .nav__cta:hover, .nav.is-dark .nav__cta:focus-visible { background: var(--ivory); color: var(--black); border-color: var(--ivory); }
 
 /* sound: four equaliser bars, still when off, playing when on */
-.sound-toggle { gap: 10px; padding: 0 14px; }
-.eq { display: inline-flex; align-items: flex-end; gap: 2px; width: 16px; height: 14px; }
-.eq i { display: block; flex: 1; height: 3px; background: currentColor; border-radius: 1px; transition: height .3s; }
+.eq { display: inline-flex; align-items: flex-end; gap: 2px; width: 14px; height: 12px; }
+.eq i { display: block; flex: 1; height: 2px; background: currentColor; border-radius: 1px; transition: height .3s; }
 .sound-toggle[aria-pressed='true'] .eq i { animation: eq 1s ease-in-out infinite; background: var(--mustard); }
 .sound-toggle[aria-pressed='true'] .eq i:nth-child(2) { animation-delay: -.3s; }
 .sound-toggle[aria-pressed='true'] .eq i:nth-child(3) { animation-delay: -.6s; }
 .sound-toggle[aria-pressed='true'] .eq i:nth-child(4) { animation-delay: -.15s; }
-@keyframes eq { 0%, 100% { height: 3px; } 50% { height: 14px; } }
+@keyframes eq { 0%, 100% { height: 2px; } 50% { height: 12px; } }
 
-@media (max-width: 1240px) { .nav__status { display: none; } }
-@media (max-width: 1100px) { .nav { height: 72px; } .nav.is-scrolled { height: 60px; } .nav__keys { display: none; } }
-@media (max-width: 760px) { .nav { height: 64px; } .nav.is-scrolled { top: 8px; left: 8px; right: 8px; height: 56px; } }
+@media (max-width: 1100px) { .nav { height: 72px; } .nav.is-scrolled { height: 60px; } .nav__keys { display: none; } .nav__end { margin-left: auto; } }
+@media (max-width: 760px) { .nav { height: 64px; } .nav.is-scrolled { height: 56px; } }
 
 /* ─────────────────────────── marquee band ─────────────────────────── */
 .marquee { position: relative; z-index: 2; overflow: hidden; background: var(--mustard); color: var(--black); padding: clamp(14px, 2vw, 24px) 0; border-block: 1px solid var(--mustard-edge); }
@@ -72,7 +61,6 @@
 .foot__giant .char { display: inline-block; }
 
 .brand__name, .brand__desc { white-space: nowrap; }
-.nav:not(.is-scrolled) .nav__status { display: none; }
 
 /* ─────────────────────────── logo mark ─────────────────────────── */
 .mark { overflow: visible; }

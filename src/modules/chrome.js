@@ -16,21 +16,34 @@ export function initChrome() {
     ScrollTrigger.create({ trigger: sec, start: 'top top+=36', end: 'bottom top+=36', onToggle: (s) => nav.classList.toggle('is-dark', s.isActive) });
   });
 
-  /* the octave: hovering or focusing a key presses it and plays its note (if sound is on) */
+  /* links: a small note head glides under the hovered link, and rests under the
+     current section's link. Hover also plays the link's note when sound is on. */
   const keys = $$('.navkey');
+  const dot = $('[data-nav-dot]');
+  const nav0 = $('.nav__keys');
+  const moveDot = (k) => {
+    if (!dot) return;
+    if (!k) { dot.classList.remove('is-on'); return; }
+    const x = k.offsetLeft + k.offsetWidth / 2;
+    dot.style.setProperty('--dot-x', `${x}px`);
+    dot.classList.add('is-on');
+  };
+  const current = () => keys.find((k) => k.classList.contains('is-active'));
   keys.forEach((k) => {
-    const press = () => { playNote(+k.dataset.pitch, 0.45, 0.5); };
-    k.addEventListener('pointerenter', press);
-    k.addEventListener('focus', press);
+    const enter = () => { moveDot(k); playNote(+k.dataset.pitch, 0.4, 0.5); };
+    k.addEventListener('pointerenter', enter);
+    k.addEventListener('focus', enter);
   });
+  nav0?.addEventListener('pointerleave', () => moveDot(current()));
+  nav0?.addEventListener('focusout', (e) => { if (!nav0.contains(e.relatedTarget)) moveDot(current()); });
 
-  /* active nav key */
   keys.forEach((k) => {
     const sec = $(k.getAttribute('href'));
     if (!sec) return;
     ScrollTrigger.create({ trigger: sec, start: 'top center', end: 'bottom center', onToggle: (s) => {
       k.classList.toggle('is-active', s.isActive);
       if (s.isActive) k.setAttribute('aria-current', 'location'); else k.removeAttribute('aria-current');
+      if (!nav0?.matches(':hover')) moveDot(current());
     } });
   });
 
