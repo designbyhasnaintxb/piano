@@ -2,7 +2,7 @@ node_modules
 dist
 .DS_Store
 *.log
-lisa-mott-site-dist.zip
+lisa-mott-site-*.zip
 lisa-mott-preview.html
 dist-preview
 logo-qa.html
