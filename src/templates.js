@@ -97,14 +97,14 @@ function nav(c) {
     <span class="brand__wm"><span class="brand__name">${t(c.brand.name)}</span><span class="brand__desc">${t(c.brand.descriptor)}</span></span>
   </a>
   <nav class="nav__keys" aria-label="Primary">
-    <ul class="nav__links">${items.map(([h, l], i) => `<li><a class="navkey" href="${h}" data-pitch="${[60, 62, 64, 65, 67][i]}">${l}</a></li>`).join('')}</ul>
+    <ul class="nav__links">${items.map(([h, l], i) => `<li><a class="navkey" href="${h}" data-pitch="${[60, 62, 64, 65, 67][i]}"><span class="roll"><span class="roll__a">${l}</span><span class="roll__b" aria-hidden="true">${l.toLowerCase()}</span></span></a></li>`).join('')}</ul>
     <span class="nav__dot" aria-hidden="true" data-nav-dot></span>
   </nav>
   <div class="nav__end">
     <button class="sound-toggle" type="button" aria-pressed="false" data-sound-toggle>
       ${soundIcon}<span class="sound-toggle__label">Sound off</span>
     </button>
-    <a class="nav__cta" href="#inquire" data-cta="nav">Start lessons</a>
+    <a class="nav__cta" href="#inquire" data-cta="nav"><span class="roll"><span class="roll__a">Start lessons</span><span class="roll__b" aria-hidden="true">let's begin</span></span><svg class="nav__cta-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
     <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn>
       <span class="nav__menu-bars" aria-hidden="true"></span><span class="sr">Menu</span>
     </button>

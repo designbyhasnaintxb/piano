@@ -1,5 +1,6 @@
-@import '@fontsource/instrument-serif/latin-400.css';
-@import '@fontsource-variable/hanken-grotesk/wght.css';
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/fraunces/full-italic.css';
+@import '@fontsource-variable/bricolage-grotesque/standard.css';
 
 /* ─────────────────────────── tokens ─────────────────────────── */
 :root {
@@ -19,11 +20,13 @@
   --line-dark: rgba(241, 237, 230, .16);
   --line-light: rgba(20, 19, 18, .16);
 
-  /* Display: a light, condensed, high-contrast serif set in capitals.
-     Text & UI: a Swiss grotesk. (Free stand-ins for Items Condensed + Suisse Int'l.) */
-  --serif: 'Instrument Serif', 'Times New Roman', serif;
-  --sans: 'Hanken Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
-  --mono: 'Hanken Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
+  /* Display: a heavy, soft serif ("gorgeous") with an elegant italic for accent
+     words ("beautiful"). Text & UI: a characterful bold grotesk ("Antarctica"). */
+  --serif: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --sans: 'Bricolage Grotesque Variable', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'Bricolage Grotesque Variable', 'Helvetica Neue', Arial, sans-serif;
+  --soft: 'SOFT' 100, 'WONK' 0, 'opsz' 144;
+  --soft-italic: 'SOFT' 60, 'WONK' 1, 'opsz' 144;
 
   --gutter: clamp(16px, 4vw, 56px);
   --max: 1600px;

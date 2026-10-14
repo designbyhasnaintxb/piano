@@ -47,7 +47,7 @@ To finish the site: replace each `fact()` with `ok(…)`, approve or rewrite eac
 ## Design system
 
 - **Palette** (from the reference poster): greige `#e5e0d8`, surface `#f1ede6`, ink `#141312`, mustard `#c9971b`, ochre `#7a5806` / `#9a7008` for accent text (contrast-checked).
-- **Type** (modelled on iasoglobal.com): headings in **Instrument Serif**, in capitals; text, labels and buttons in **Hanken Grotesk**. These are free stand-ins for the reference's paid fonts (Items Condensed, Suisse Int'l). If you license those, change `--serif` and `--sans` in `src/styles/base.css`.
+- **Type** (from the client's references): headlines in **Fraunces** at heavy weight with its soft setting ("gorgeous"), with an elegant Fraunces italic for each heading's accent line ("beautiful"). Text, labels and buttons are in **Bricolage Grotesque** ("Antarctica"), with labels in small, widely spaced capitals. Both fonts are free; they are set by `--serif` and `--sans` in `src/styles/base.css`.
 - **Layout:** 1600px content width, with Lenis smooth scrolling (`src/lib/smooth.js`; off under reduced motion).
 - **Header:** the nav is a real octave. White keys C–G are the links, black keys sit where a keyboard has them, and hovering a key plays its note when sound is on. The header floats into a compact bar once you scroll.
 
