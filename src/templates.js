@@ -29,7 +29,7 @@ function lines(v, italic = []) {
   const draftCls = REVIEW && isSlot(v) && v.__slot === 'draft' ? ' slot-draft slot-draft--block' : '';
   const note = REVIEW && v?.note ? ` data-note="${esc(v.note)}"` : '';
   return `<span class="hl${draftCls}"${note}>${arr.map((l, i) =>
-    `<span class="hl__line${italic.includes(i) ? ' is-italic' : ''}">${esc(l)}</span>`).join('')}</span>`;
+    `<span class="hl__line${italic.includes(i) ? ' is-italic' : ''}">${esc(l)}</span>`).join(' ')}</span>`;
 }
 
 /** Image slot → <img> when verified, labelled placeholder frame otherwise. */

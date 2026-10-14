@@ -6,7 +6,6 @@
 }
 .hero__copy { align-self: end; padding-bottom: clamp(28px, 5vh, 56px); }
 .hero__title { max-width: 11ch; margin-bottom: clamp(22px, 3vw, 34px); }
-.hero__title .hl__line:nth-child(3) { color: var(--ochre-display); }
 .hero__sub { max-width: 40ch; color: color-mix(in srgb, currentColor 86%, transparent); margin-bottom: 32px; }
 .hero__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 30px; }
 .hero__trust { position: relative; padding-bottom: 26px; }
@@ -311,7 +310,6 @@
 /* ═══════════════════════════ 12 FINALE ═══════════════════════════ */
 .finale { position: relative; min-height: 120svh; display: flex; align-items: flex-end; padding: calc(var(--nav-h) + 8vh) 0 clamp(60px, 12vh, 140px); }
 .finale__t { font-size: var(--step-5); margin-bottom: 36px; max-width: 9ch; }
-.finale__t .hl__line:nth-child(2) { color: var(--ochre-display); }
 .finale__ctas { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; }
 
 .inquire__grid { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(40px, 6vw, 110px); align-items: start; }

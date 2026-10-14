@@ -14,7 +14,7 @@
 .roll { position: relative; display: block; height: 22px; overflow: hidden; }
 .roll__a, .roll__b { display: flex; align-items: center; height: 22px; white-space: nowrap; transition: transform .55s cubic-bezier(.7, 0, .2, 1); }
 .roll__a { font-size: 11.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; opacity: .78; }
-.roll__b { font-family: var(--serif); font-style: italic; font-weight: 500; font-variation-settings: var(--soft-italic); font-size: 16px; line-height: 1; padding-bottom: 2px; letter-spacing: -.01em; color: var(--ochre); }
+.roll__b { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 18px; line-height: 1; padding-bottom: 2px; letter-spacing: -.01em; color: var(--ochre); }
 .nav.is-dark .roll__b { color: var(--gold); }
 .navkey:hover .roll__a, .navkey:hover .roll__b, .navkey:focus-visible .roll__a, .navkey:focus-visible .roll__b,
 .nav__cta:hover .roll__a, .nav__cta:hover .roll__b, .nav__cta:focus-visible .roll__a, .nav__cta:focus-visible .roll__b { transform: translateY(-100%); }
@@ -57,12 +57,12 @@
 .marquee { position: relative; z-index: 2; overflow: hidden; background: var(--mustard); color: var(--black); padding: clamp(14px, 2vw, 24px) 0; border-block: 1px solid var(--mustard-edge); }
 .marquee__track { display: flex; width: max-content; will-change: transform; }
 .marquee__run { display: flex; align-items: center; flex: none; }
-.marquee__i { padding-inline: clamp(18px, 2.4vw, 36px); font-size: clamp(2.6rem, 5.8vw, 6rem); line-height: 1; white-space: nowrap; }
+.marquee__i { padding-inline: clamp(18px, 2.4vw, 36px); font-size: clamp(2.4rem, 5vw, 5.2rem); line-height: 1.1; white-space: nowrap; }
 .marquee__note { width: .5em; height: .36em; font-size: clamp(2.4rem, 5.4vw, 5.6rem); border-radius: 50%; background: var(--black); transform: rotate(-20deg); flex: none; }
 
 /* ─────────────────────────── giant footer wordmark ─────────────────────────── */
 .foot__giant {
-  margin-top: 70px; font-size: clamp(5rem, 21vw, 22rem); line-height: .78; letter-spacing: -.01em; white-space: nowrap;
+  margin-top: 70px; font-size: clamp(5rem, 19vw, 20rem); line-height: .9; font-style: italic; letter-spacing: -.01em; white-space: nowrap;
   color: var(--ivory); overflow: hidden; text-align: center;
 }
 .foot__giant .char { display: inline-block; }

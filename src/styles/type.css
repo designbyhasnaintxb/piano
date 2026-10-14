@@ -1,11 +1,10 @@
 /* ─────────────────────────── type system ───────────────────────────
-   From the client's references:
-   · DISPLAY  Fraunces 800, SOFT 100 — heavy, rounded serif, sentence case ("gorgeous")
-   · ACCENT   Fraunces italic 500, WONK on — the elegant italic line ("beautiful")
-   · TEXT/UI  Bricolage Grotesque — bold, characterful grotesk ("Antarctica")
-   · LABEL    Bricolage 500, small capitals, wide tracking ("BATANGAS") */
+   Cormorant Garamond 500 for headings — graceful, mature, never shouted:
+   sentence case, modest sizes, generous leading so headings sit in 2–3 lines
+   and nothing (descenders, italic swashes) is ever clipped. The accent phrase
+   of each heading is in Cormorant italic. Jost for everything you read and tap. */
 
-body { font-family: var(--sans); font-weight: 400; letter-spacing: -.01em; font-variation-settings: 'opsz' 14; }
+body { font-family: var(--sans); font-weight: 400; letter-spacing: 0; font-size: clamp(1.02rem, .98rem + .2vw, 1.12rem); }
 em, i, cite { font-style: normal; }
 
 /* DISPLAY */
@@ -13,66 +12,68 @@ em, i, cite { font-style: normal; }
 .timer__time, .metro__bpm span, .stat dd, .finale__beat, .menu__key, .pkey__meter, .foot__giant,
 .aud__name, .wcard__t, .first__after-t, .recital__after p, .timer__done-t, .marquee__i, .brand__name, .foot__wm,
 .programme__t strong, .lisa__quote, .string__note, .mini__l, .aud__n, .bar__n, .programme__n, .inquire__steps li > span, .offer__t {
-  font-family: var(--serif); font-weight: 800; font-style: normal; font-stretch: normal;
-  font-variation-settings: var(--soft); text-transform: none; letter-spacing: -.03em;
+  font-family: var(--serif); font-weight: 500; font-style: normal; font-stretch: normal;
+  font-variation-settings: normal; text-transform: none; letter-spacing: -.01em; font-variant-numeric: lining-nums;
 }
-.display { line-height: .95; }
-.hero__title { font-size: clamp(3.4rem, 1.4rem + 7.2vw, 9.2rem); line-height: .92; max-width: none; }
-.finale__t { font-size: clamp(3.2rem, 1.2rem + 5.6vw, 7.2rem); line-height: .94; max-width: 12ch; }
-.display--l { font-size: clamp(2.8rem, 1.3rem + 4.6vw, 6.2rem); line-height: .95; }
-.display--m { font-size: clamp(2.4rem, 1.2rem + 3.4vw, 4.8rem); line-height: .98; }
-.jcap__t { font-size: clamp(2.6rem, 1.3rem + 4vw, 5.6rem); line-height: .94; }
-.about__statement { font-size: clamp(2.1rem, 1.1rem + 3.3vw, 4.6rem); line-height: 1; max-width: 24ch; font-weight: 700; }
+/* headings flow as sentences (2–3 lines) instead of one phrase per line */
+.hl__line { display: inline; }
+.display { line-height: 1.08; text-wrap: balance; }
+.hero__title { font-size: clamp(2.8rem, 1.5rem + 4.4vw, 6.4rem); line-height: 1.04; max-width: 12ch; }
+.finale__t { font-size: clamp(2.6rem, 1.4rem + 3.8vw, 5.4rem); line-height: 1.06; max-width: 13ch; }
+.display--l { font-size: clamp(2.3rem, 1.4rem + 2.9vw, 4.4rem); line-height: 1.08; max-width: 18ch; }
+.display--m { font-size: clamp(2.1rem, 1.3rem + 2.3vw, 3.6rem); line-height: 1.1; max-width: 18ch; }
+.recital__head .display, .why__head .display { max-width: 22ch; }
+.jcap__t { font-size: clamp(2.2rem, 1.4rem + 2.6vw, 4.2rem); line-height: 1.08; }
+.about__statement { font-size: clamp(1.9rem, 1.2rem + 2.1vw, 3.3rem); line-height: 1.16; max-width: 32ch; }
 
-/* the accent line of every heading: the elegant italic */
-.hl__line.is-italic { font-style: italic; font-weight: 500; font-variation-settings: var(--soft-italic); letter-spacing: -.02em; color: var(--ochre-display); }
+/* the accent phrase */
+.hl__line.is-italic { font-style: italic; font-weight: 500; letter-spacing: -.005em; color: var(--ochre-display); }
 .sec--dark .hl__line.is-italic, .sec--black .hl__line.is-italic, .pcard .hl__line.is-italic { color: var(--gold); }
-.sec--wine .hl__line.is-italic { color: var(--black); opacity: .78; }
+.sec--wine .hl__line.is-italic { color: var(--black); opacity: .8; }
 
-.mpanel__n { font-size: clamp(5rem, 10vw, 9rem); line-height: .82; }
-.mpanel__t { font-size: clamp(1.9rem, 3vw, 3rem); line-height: 1; }
-.pcard__name { font-size: clamp(2.2rem, 3.4vw, 3.4rem); line-height: .98; }
-.mstep__q { font-size: clamp(2.2rem, 3.8vw, 3.6rem); line-height: 1; }
-.mresult__name { font-size: clamp(2.2rem, 3.6vw, 3.4rem); line-height: 1; }
-.timer__time { font-size: clamp(4.4rem, 8vw, 7rem); line-height: .85; font-variant-numeric: lining-nums tabular-nums; }
-.metro__bpm span { font-size: 4rem; line-height: .9; display: block; }
-.stat dd { font-size: clamp(3rem, 4.6vw, 4.4rem); line-height: .9; }
-.finale__beat { font-size: clamp(1.7rem, 2.8vw, 2.7rem); }
-.finale__beat span:nth-child(2) { font-style: italic; font-weight: 500; font-variation-settings: var(--soft-italic); }
-.menu__key { font-size: clamp(2.4rem, 10vw, 3.4rem); line-height: 1.05; }
-.pkey__meter { font-size: 2.2rem; }
-.aud__name, .wcard__t { font-size: clamp(1.5rem, 2vw, 2rem); line-height: 1.02; font-weight: 700; }
-.offer__t { font-size: 1.15rem; line-height: 1.2; font-weight: 700; letter-spacing: -.015em; }
-.first__after-t, .recital__after p, .timer__done-t { font-size: clamp(1.6rem, 2.4vw, 2.3rem); line-height: 1.05; font-style: italic; font-weight: 500; font-variation-settings: var(--soft-italic); }
-.programme__t strong { font-size: 1.5rem; line-height: 1; }
-.lisa__quote { font-size: clamp(1.6rem, 2.3vw, 2.2rem); line-height: 1.1; font-style: italic; font-weight: 500; font-variation-settings: var(--soft-italic); }
-.aud__n, .bar__n, .programme__n, .inquire__steps li > span { font-size: 1.2rem; font-style: italic; font-weight: 500; font-variation-settings: var(--soft-italic); color: var(--ochre); }
+.mpanel__n { font-size: clamp(4.2rem, 8vw, 7rem); line-height: .9; }
+.mpanel__t { font-size: clamp(1.9rem, 2.6vw, 2.6rem); line-height: 1.1; }
+.pcard__name { font-size: clamp(2rem, 2.8vw, 2.8rem); line-height: 1.05; }
+.mstep__q { font-size: clamp(2rem, 3vw, 3rem); line-height: 1.1; }
+.mresult__name { font-size: clamp(2rem, 3vw, 2.9rem); line-height: 1.08; }
+.timer__time { font-size: clamp(4rem, 7vw, 6.2rem); line-height: .95; font-variant-numeric: lining-nums tabular-nums; }
+.metro__bpm span { font-size: 3.8rem; line-height: 1; display: block; }
+.stat dd { font-size: clamp(2.8rem, 4vw, 3.8rem); line-height: 1; }
+.finale__beat { font-size: clamp(1.6rem, 2.4vw, 2.3rem); }
+.finale__beat span:nth-child(2) { font-style: italic; }
+.menu__key { font-size: clamp(2.2rem, 9vw, 3rem); line-height: 1.15; }
+.pkey__meter { font-size: 2rem; }
+.aud__name, .wcard__t { font-size: clamp(1.5rem, 1.9vw, 1.9rem); line-height: 1.12; font-weight: 600; }
+.offer__t { font-size: 1.3rem; line-height: 1.2; font-weight: 600; letter-spacing: 0; }
+.first__after-t, .recital__after p, .timer__done-t { font-size: clamp(1.6rem, 2.2vw, 2.1rem); line-height: 1.15; font-style: italic; }
+.programme__t strong { font-size: 1.5rem; line-height: 1.1; font-weight: 600; }
+.lisa__quote { font-size: clamp(1.6rem, 2.2vw, 2.1rem); line-height: 1.22; font-style: italic; }
+.aud__n, .bar__n, .programme__n, .inquire__steps li > span { font-size: 1.3rem; font-style: italic; color: var(--ochre); }
 .sec--dark .aud__n, .sec--black .programme__n { color: var(--gold); }
-.mini__l { font-size: 1.4rem; }
+.mini__l { font-size: 1.4rem; font-weight: 600; }
 .string__note { font-size: 2.4rem; }
-/* marquee alternates "gorgeous" and "beautiful" */
-.marquee__i:nth-child(4n+3) { font-style: italic; font-weight: 500; font-variation-settings: var(--soft-italic); }
+.marquee__i:nth-child(4n+3) { font-style: italic; }
 
-/* wordmark: heavy serif name over a widely spaced label, like the references */
-.brand__name { font-size: 1.5rem; line-height: .9; letter-spacing: -.025em; }
-.brand__desc { margin-top: 5px; font-size: 8.5px; font-weight: 500; letter-spacing: .38em; }
-.foot__wm { font-size: 2.4rem; letter-spacing: -.03em; }
-.foot__wm span { letter-spacing: .38em; }
+/* wordmark */
+.brand__name { font-size: 1.6rem; line-height: .9; letter-spacing: .01em; font-weight: 600; }
+.brand__desc { margin-top: 6px; font-size: 8.5px; font-weight: 500; letter-spacing: .36em; }
+.foot__wm { font-size: 2.6rem; letter-spacing: .01em; font-weight: 600; }
+.foot__wm span { letter-spacing: .36em; }
 
-/* TITLE — UI headings in the grotesk */
+/* TITLE — UI-level headings in Jost */
 .pkey__name, .lid__q, .bar__q, .mopt > span, .hero__watch-t, .mkey__name, .inquiry__chosen strong, .trust dd,
 .inquiry__ok, .pcard__short, .metro__term, .pcard__amt {
-  font-family: var(--sans); font-weight: 600; font-style: normal; font-stretch: normal; letter-spacing: -.015em; font-variation-settings: normal; text-transform: none;
+  font-family: var(--sans); font-weight: 500; font-style: normal; font-stretch: normal; letter-spacing: 0; font-variation-settings: normal; text-transform: none;
 }
-.lid__q, .bar__q { font-size: clamp(1.08rem, 1.3vw, 1.25rem); }
-.mopt > span { font-size: clamp(1.05rem, 1.3vw, 1.2rem); }
-.mkey__name { font-size: clamp(.95rem, 1.2vw, 1.15rem); }
-.pkey__name { font-size: 1.15rem; }
-.trust dd { font-size: 1rem; }
+.lid__q, .bar__q { font-size: clamp(1.08rem, 1.3vw, 1.22rem); }
+.mopt > span { font-size: clamp(1.05rem, 1.3vw, 1.18rem); }
+.mkey__name { font-size: clamp(.95rem, 1.2vw, 1.12rem); }
+.pkey__name { font-size: 1.12rem; }
+.trust dd { font-size: 1.02rem; }
 .pcard__short { color: var(--gold); }
-.metro__term { text-transform: uppercase; letter-spacing: .12em; font-size: .8rem; }
+.metro__term { text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; }
 
-/* LABEL — small wide capitals */
+/* LABEL — small wide capitals (labels only; never headings) */
 .kicker, .kicker__t, .trust dt, .markers dt, .stat dt, .pcard__facts dt, .pcard__meter, .pcard__unit, .mpanel__lisa > span:first-child,
 .mkey__n, .jcap__n, .matcher__count, .mresult__k, .mresult__sum, .tool__t, .chip, .metro__bpm small, .first__prompt, .first__hint,
 .tool__note, .audiences__t, .lisa__cap, .packages__foot, .inquiry__chosen span, .ff > span, .ff legend,
@@ -80,16 +81,21 @@ em, i, cite { font-style: normal; }
 .screen__label, .screen__play, .hero__cue, .review, .mini kbd, .brand__desc, .wcard__n, .why__media figcaption {
   font-family: var(--sans); font-stretch: normal; font-variation-settings: normal; font-variant-numeric: tabular-nums; font-style: normal;
 }
-.kicker { font-weight: 500; letter-spacing: .2em; font-size: .74rem; }
+.kicker { font-weight: 500; letter-spacing: .18em; font-size: .74rem; }
 .trust dt, .markers dt, .pcard__facts dt, .inquire__contact dt, .foot__contact dt, .ff > span, .ff legend, .tool__t, .audiences__t,
 .mpanel__lisa > span:first-child, .mresult__k, .first__prompt, .lisa__cap, .hero__watch-t small,
 .mkey__n, .jcap__n, .matcher__count, .wcard__n, .pcard__meter, .metro__bpm small, .menu__n, .chip {
-  font-weight: 500; letter-spacing: .16em;
+  font-weight: 500; letter-spacing: .14em;
 }
 .first__hint, .tool__note, .packages__foot, .mresult__sum, .screen__label, .foot__base, .menu__contact { font-weight: 400; letter-spacing: 0; }
-.lede { font-family: var(--sans); font-weight: 400; letter-spacing: -.015em; font-size: clamp(1.02rem, .95rem + .3vw, 1.2rem); line-height: 1.55; }
-.lisa__bio { font-size: clamp(1rem, .95rem + .25vw, 1.15rem); }
+.lede { font-family: var(--sans); font-weight: 400; letter-spacing: 0; font-size: clamp(1.05rem, .98rem + .3vw, 1.22rem); line-height: 1.6; }
+.lisa__bio { font-size: clamp(1.02rem, .98rem + .25vw, 1.15rem); line-height: 1.7; }
 
 /* buttons */
-.btn { font-family: var(--sans); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; font-size: .78rem; }
-.btn--line { letter-spacing: .1em; }
+.btn { font-family: var(--sans); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; font-size: .78rem; }
+.btn--line { letter-spacing: .12em; }
+
+/* Reveal masks (SplitText) must never crop descenders or italic overhangs:
+   give each mask breathing room and take it back with negative margins. */
+[class$='-mask'], .m-line { padding: .08em .12em .2em; margin: -.08em -.12em -.2em; }
+@media (max-width: 760px) { .about__statement { font-size: 1.55rem; line-height: 1.2; } }

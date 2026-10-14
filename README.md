@@ -47,9 +47,11 @@ To finish the site: replace each `fact()` with `ok(…)`, approve or rewrite eac
 ## Design system
 
 - **Palette** (from the reference poster): greige `#e5e0d8`, surface `#f1ede6`, ink `#141312`, mustard `#c9971b`, ochre `#7a5806` / `#9a7008` for accent text (contrast-checked).
-- **Type** (from the client's references): headlines in **Fraunces** at heavy weight with its soft setting ("gorgeous"), with an elegant Fraunces italic for each heading's accent line ("beautiful"). Text, labels and buttons are in **Bricolage Grotesque** ("Antarctica"), with labels in small, widely spaced capitals. Both fonts are free; they are set by `--serif` and `--sans` in `src/styles/base.css`.
+- **Type:** headings in **Cormorant Garamond** 500, in sentence case. They're modest in size so they sit in 2–3 lines, and each heading's accent phrase is in Cormorant italic. Text, labels and buttons are in **Jost**, with body text at about 17px for easy reading. The aim is a graceful, mature, premium feel. Fonts are set by `--serif` and `--sans` in `src/styles/base.css`.
 - **Layout:** 1600px content width, with Lenis smooth scrolling (`src/lib/smooth.js`; off under reduced motion).
 - **Header:** minimal. On hover, each link rolls its label up into the same word in the italic serif, and a small mustard note head glides underneath it (and rests under the current section). There's a text-only sound toggle and a pill-shaped "Start lessons" button that rolls the same way. A frosted backing keeps it legible over the 3D piano.
+
+- **Photos:** `scripts/grade-photos.py` gives all photos one treatment. It mutes the loud blue and green lamps behind Lisa, applies a warm grade, crops, and upscales the low-resolution video stills 2×. Re-run it if the source images change.
 
 ## Technical notes
 

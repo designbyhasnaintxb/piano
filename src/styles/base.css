@@ -1,6 +1,7 @@
-@import '@fontsource-variable/fraunces/full.css';
-@import '@fontsource-variable/fraunces/full-italic.css';
-@import '@fontsource-variable/bricolage-grotesque/standard.css';
+@import '@fontsource/cormorant-garamond/latin-500.css';
+@import '@fontsource/cormorant-garamond/latin-500-italic.css';
+@import '@fontsource/cormorant-garamond/latin-600.css';
+@import '@fontsource-variable/jost/wght.css';
 
 /* ─────────────────────────── tokens ─────────────────────────── */
 :root {
@@ -20,13 +21,13 @@
   --line-dark: rgba(241, 237, 230, .16);
   --line-light: rgba(20, 19, 18, .16);
 
-  /* Display: a heavy, soft serif ("gorgeous") with an elegant italic for accent
-     words ("beautiful"). Text & UI: a characterful bold grotesk ("Antarctica"). */
-  --serif: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
-  --sans: 'Bricolage Grotesque Variable', 'Helvetica Neue', Arial, sans-serif;
-  --mono: 'Bricolage Grotesque Variable', 'Helvetica Neue', Arial, sans-serif;
-  --soft: 'SOFT' 100, 'WONK' 0, 'opsz' 144;
-  --soft-italic: 'SOFT' 60, 'WONK' 1, 'opsz' 144;
+  /* Display: Cormorant Garamond — a refined, graceful Garamond with a beautiful
+     italic (concert-programme elegance). Text & UI: Jost — clean and very legible. */
+  --serif: 'Cormorant Garamond', 'Garamond', 'Times New Roman', serif;
+  --sans: 'Jost Variable', 'Futura', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'Jost Variable', 'Futura', 'Helvetica Neue', Arial, sans-serif;
+  --soft: normal;
+  --soft-italic: normal;
 
   --gutter: clamp(16px, 4vw, 56px);
   --max: 1600px;
